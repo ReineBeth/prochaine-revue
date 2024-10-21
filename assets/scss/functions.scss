@@ -1,0 +1,4 @@
+@function pxToRem($pixels) {
+	$base-font-size: 16; // La taille de la police de base
+	@return ($pixels / $base-font-size) * 1rem;
+}

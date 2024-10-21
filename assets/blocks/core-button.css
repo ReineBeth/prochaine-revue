@@ -1,0 +1,20 @@
+.is-style-fond-pale a,
+.is-style-fond-pale button {
+	background-color: transparent;
+	border: 3px solid #478245;
+}
+
+.is-style-fond-pale a:focus,
+.is-style-fond-pale button:focus {
+	outline: 3px dashed #478245;
+	color: #fff;
+	outline-offset: 4px;
+}
+
+.is-style-fond-pale a:focus,
+.is-style-fond-pale button:focus,
+.is-style-fond-pale a:hover,
+.is-style-fond-pale button:hover {
+	background-color: #478245;
+	color: #fff;
+}

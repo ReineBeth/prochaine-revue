@@ -1,0 +1,12 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Node.js et compilations éventuelles
+node_modules/
+*.log
+*.tmp
+
+# Précompilations CSS/JS si nécessaires
+*.map
+dist/

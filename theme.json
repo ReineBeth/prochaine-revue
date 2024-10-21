@@ -1,0 +1,469 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 1,
+	"settings": {
+		"appearanceTools": true,
+		"color": {
+			"defaultPalette": false,
+			"defaultDuotone": false,
+			"palette": [
+				{
+					"color": "#f9f9f9",
+					"name": "Base",
+					"slug": "base"
+				},
+				{
+					"color": "#ffffff",
+					"name": "Base / Two",
+					"slug": "base-2"
+				},
+				{
+					"color": "#111111",
+					"name": "Contrast",
+					"slug": "contrast"
+				},
+				{
+					"color": "#3a5a40",
+					"name": "Primary",
+					"slug": "primary"
+				},
+				{
+					"color": "#3a5a40",
+					"name": "Secondary",
+					"slug": "secondary"
+				},
+				{
+					"color": "#92d16e",
+					"name": "Action pâle",
+					"slug": "action-pale"
+				},
+				{
+					"color": "#478245",
+					"name": "Action foncé",
+					"slug": "action-fonce"
+				},
+				{
+					"color": "#6f7b72",
+					"name": "Neutral 1",
+					"slug": "neutral-1"
+				},
+				{
+					"color": "#344e41",
+					"name": "Neutral 2",
+					"slug": "neutral-2"
+				},
+				{
+					"color": "#dad7cd",
+					"name": "Neutral 3",
+					"slug": "neutral-3"
+				}
+			]
+		},
+		"dimensions": {
+			"minHeight": false
+		},
+		"layout": {
+			"contentSize": "1280px",
+			"wideSize": "1440px"
+		},
+		"position": {
+			"sticky": true
+		},
+		"shadow": {
+			"defaultPresets": false,
+			"presets": [
+				{
+					"name": "TODO Small",
+					"slug": "sm",
+					"shadow": "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+				}
+			]
+		},
+		"typography": {
+			"customFontSize": true,
+			"fontFamilies": [
+				{
+					"name": "Title",
+					"slug": "title",
+					"fontFamily": "Libre Bodoni, serif",
+					"fontFace": [
+						{
+							"fontFamily": "Libre Bodoni",
+							"fontWeight": "bold",
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/libre-bodoni/LibreBodoni-BoldItalic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Libre Bodoni",
+							"fontWeight": "bold",
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/libre-bodoni/LibreBodoni-Bold.woff2"
+							]
+						},
+						{
+							"fontFamily": "Libre Bodoni",
+							"fontWeight": "normal",
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/libre-bodoni/LibreBodoni-Italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Libre Bodoni",
+							"fontWeight": 500,
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/libre-bodoni/LibreBodoni-Medium.woff2"
+							]
+						},
+						{
+							"fontFamily": "Libre Bodoni",
+							"fontWeight": 400,
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/libre-bodoni/LibreBodoni-Regular.woff2"
+							]
+						},
+						{
+							"fontFamily": "Libre Bodoni",
+							"fontWeight": 500,
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/libre-bodoni/LibreBodoni-MediumItalic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Libre Bodoni",
+							"fontWeight": 600,
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/libre-bodoni/LibreBodoni-SemiBold.woff2"
+							]
+						},
+						{
+							"fontFamily": "Libre Bodoni",
+							"fontWeight": 600,
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/libre-bodoni/LibreBodoni-SemiBoldItalic.woff2"
+							]
+						}
+					]
+				},
+				{
+					"name": "Text",
+					"slug": "text",
+					"fontFamily": "Raleway, sans-serif",
+					"fontFace": [
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": "bold",
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-ExtraBoldItalic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": "bold",
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-ExtraBold.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": "bold",
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-Bold.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": "bold",
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-BoldItalic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 900,
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/libre-bodoni/LibreBodoni-Regular.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 900,
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-Black.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 200,
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-ExtraLightItalic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 300,
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-Light.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 300,
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-LightItalic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 200,
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-ExtraLight.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 500,
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-MediumItalic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": "normal",
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-Italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 500,
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-Medium.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 100,
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-Thin.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 100,
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-ThinItalic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 600,
+							"fontStyle": "italic",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-SemiBoldItalic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": "normal",
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-Regular.woff2"
+							]
+						},
+						{
+							"fontFamily": "Raleway",
+							"fontWeight": 600,
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [
+								"file:./assets/fonts/raleway/Raleway-SemiBold.woff2"
+							]
+						}
+					]
+				}
+			]
+		},
+		"useRootPaddingAwareAlignments": true,
+		"blocks": {}
+	},
+	"styles": {
+		"color": {
+			"text": "#232222",
+			"background": "#f9f9f9"
+		},
+		"elements": {
+			"button": {
+				"color": {
+					"text": "#232222",
+					"background": "#92D16E"
+				},
+				"typography": {
+					"fontFamily": "Raleway",
+					"fontWeight": "bold"
+				},
+				":hover": {
+					"color": {
+						"text": "#fff",
+						"background": "#478245"
+					}
+				},
+				":focus": {
+					"outline": {
+						"offset": "4px",
+						"style": "dashed",
+						"color": "#92D16E",
+						"width": "3px"
+					},
+					"color": {
+						"text": "#fff",
+						"background": "#478245"
+					}
+				}
+			},
+			"caption": {},
+			"cite": {},
+			"heading": {
+				"color": {
+					"text": "",
+					"background": ""
+				},
+				"typography": {
+					"fontFamily": "Libre Bodoni",
+					"fontWeight": "bold"
+				}
+			},
+			"h1": {
+				"color": {
+					"text": "",
+					"background": ""
+				},
+				"typography": {
+					"fontSize": "2rem"
+				}
+			},
+			"h2": {
+				"typography": {
+					"fontSize": "1.75rem"
+				}
+			},
+			"h3": {
+				"typography": {
+					"fontSize": "1.5rem"
+				}
+			},
+			"h4": {
+				"typography": {
+					"fontSize": "1.3125rem"
+				}
+			},
+			"h5": {
+				"typography": {
+					"fontSize": "1.125rem"
+				}
+			},
+			"h6": {
+				"typography": {
+					"fontSize": "1rem"
+				}
+			},
+			"link": {
+				"typography": {
+					"fontWeight": "bold"
+				},
+				"color": {
+					"text": "#478245"
+				},
+				":hover": {
+					"typography": {
+						"textDecoration": "none"
+					}
+				}
+			}
+		},
+		"blocks": {
+			"core/code": {
+				"color": {
+					"text": "",
+					"background": ""
+				}
+			},
+			"core/image": {
+				"border": {
+					"radius": "16px",
+					"color": "#3A5A40",
+					"width": "3px",
+					"style": "solid"
+				}
+			},
+			"core/list": {
+				"typography": {
+					"fontFamily": "Raleway"
+				}
+			},
+			"core/paragraph": {
+				"typography": {
+					"fontFamily": "Raleway",
+					"fontSize": "1rem"
+				}
+			},
+			"core/navigation": {
+				"typography": {
+					"fontFamily": "Raleway"
+				}
+			},
+			"core/navigation-link": {}
+		}
+	},
+	"customTemplates": [],
+	"templateParts": [],
+	"patterns": []
+}

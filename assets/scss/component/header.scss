@@ -1,0 +1,17 @@
+@use '../variables.scss' as var;
+
+.header {
+	&-top {
+		background-color: var.$color-primary;
+	}
+
+	&-bottom {
+		background-color: var.$color-secondary;
+
+		.wp-block-pages-list__item {
+			outline: 1px solid red;
+			font-weight: bold;
+			font-family: 'Raleway';
+		}
+	}
+}
