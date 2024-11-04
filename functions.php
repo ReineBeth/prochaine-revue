@@ -33,5 +33,9 @@ function themeslug_block_editor_assets() {
     }
 }
 // FIN Ajouter script au thème
+
+add_theme_support('editor-styles');
+add_theme_support('wp-block-styles');
+add_theme_support('align-wide');
 ?>
 
