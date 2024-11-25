@@ -1,5 +1,7 @@
 // @use './font-face.scss';
 // @use './typographie.scss';
+
+@use './layout.scss';
 @use './component/header.scss';
 @use './component/footer.scss';
 @use './component/button.scss';
