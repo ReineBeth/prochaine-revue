@@ -11,3 +11,6 @@ node_modules/
 *.map
 dist/
 style.css
+
+package-lock.json
+package.json
