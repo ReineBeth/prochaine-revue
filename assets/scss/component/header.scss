@@ -34,15 +34,26 @@
 	&-bottom {
 		background-color: var.$color-secondary;
 		padding: 0 16px;
-
 		.wp-block-navigation-item {
 			padding: 10px 0;
 			position: relative;
 
-			&:hover {
+			a[aria-current='page'] {
 				&::after {
 					content: '';
 					background-color: var.$color-action-fonce;
+					position: absolute;
+					height: 16px;
+					bottom: -8px;
+					left: -8px;
+					right: -8px;
+				}
+			}
+
+			&:hover {
+				&::after {
+					content: '';
+					background-color: var.$color-action-pale;
 					position: absolute;
 					height: 16px;
 					bottom: -8px;
