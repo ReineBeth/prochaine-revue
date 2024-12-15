@@ -1,0 +1,36 @@
+@use '../variables.scss' as var;
+
+.footer {
+    background: var.$color-primary;
+    color: var.$color-white;
+    padding: 10px;
+    margin-bottom: 0;
+    
+    .wrapper-footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    .wp-block-paragraph {
+        font-weight: bold;
+        font-family: 'Raleway';
+        font-size: 18px;
+    }
+
+    .lien-haut-page {
+        color: var.$color-white;
+        display: flex;
+        align-items: center;
+        
+
+        .fleche {
+            margin-top: 0;
+        }
+    }
+
+    .wp-block-site-logo.is-default-size img {
+        height: 80px;
+        width: 80px;
+    }
+}
