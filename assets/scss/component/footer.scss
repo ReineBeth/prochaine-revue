@@ -18,14 +18,30 @@
         font-size: 18px;
     }
 
+    .wp-block-image {
+        margin-top: 0;
+    }
+
+    .wrapper-reseaux-sociaux {
+        margin-top: 15px;
+    }
+
     .lien-haut-page {
         color: var.$color-white;
         display: flex;
         align-items: center;
+
+        @media (min-width: 510px) {
+			flex-direction: column-reverse;
+		}
         
 
         .fleche {
             margin-top: 0;
+
+            @media (min-width: 510px) {
+                padding-bottom: 5px;
+            }
         }
     }
 
@@ -42,7 +58,7 @@
         background: var.$color-white;
 
         svg {
-            fill: black !important;
+            fill: var.$color-black !important;
         }
     }
 }
