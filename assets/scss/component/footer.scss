@@ -33,4 +33,16 @@
         height: 80px;
         width: 80px;
     }
+
+    .wp-block-social-links {
+        margin: 0;
+    }
+
+   .wp-block-social-link {
+        background: var.$color-white;
+
+        svg {
+            fill: black !important;
+        }
+    }
 }
