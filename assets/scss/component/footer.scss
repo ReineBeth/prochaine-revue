@@ -1,15 +1,22 @@
 @use '../variables.scss' as var;
 
 .footer {
-    background: var.$color-primary;
     color: var.$color-white;
     padding: 10px;
     margin-bottom: 0;
+    justify-content: center;
+    background: var.$color-primary;
+    
+    .column-footer {
+        max-width: 1440px;
+    }
+
     
     .wrapper-footer {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        max-width: 1440px;
     }
     
     .wp-block-paragraph {
@@ -60,5 +67,6 @@
         svg {
             fill: var.$color-black !important;
         }
-    }
+    }   
+    
 }
