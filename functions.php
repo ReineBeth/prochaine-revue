@@ -32,6 +32,26 @@ function themeslug_block_editor_assets() {
         error_log('Échec du chargement de block-editor.js');
     }
 }
+
+//Cree un shortcode pour les fiels de la page lecture-article
+function my_custom_acf_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'field' => '',
+    ), $atts);
+
+    $value = get_field($atts['field']);
+    
+    if($atts['field'] == 'article_pdf' && !empty($value)) {
+        return '<object data="' . esc_url($value) . '" type="application/pdf" width="100%" height="800px">
+            <p>Votre navigateur ne peut pas afficher ce PDF. 
+            <a href="' . esc_url($value) . '">Téléchargez-le ici</a></p>
+        </object>';
+    }
+    
+    return $value;
+}
+add_shortcode('my_acf', 'my_custom_acf_shortcode');
+
 // FIN Ajouter script au thème
 
 add_theme_support('editor-styles');

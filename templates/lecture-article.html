@@ -1,0 +1,42 @@
+<!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"template-lecture-article"} -->
+<main class="wp-site-blocks template-lecture-article">
+    <!-- wp:group {"layout":{"type":"constrained"}} -->
+    <div class="wp-block-group">
+        <!-- wp:post-title {"level":1,"className":"article-title"} /-->
+
+        <!-- wp:group {"className":"article-auteurs"} -->
+        <div class="wp-block-group article-auteurs">
+            <!-- wp:paragraph -->
+            <p>Auteurs : <!-- wp:shortcode -->[my_acf field="auteurs_article"]<!-- /wp:shortcode --></p>
+            <!-- /wp:paragraph -->
+        </div>
+        <!-- /wp:group -->
+
+        <!-- Résumé -->
+        <!-- wp:group {"className":"resume_article"} -->
+        <div class="wp-block-group resume_article">
+            <!-- wp:heading -->
+            <h2>Résumé</h2>
+            <!-- /wp:heading -->
+
+            <!-- wp:shortcode -->
+            [my_acf field="resume_article"]
+            <!-- /wp:shortcode -->
+        </div>
+        <!-- /wp:group -->
+
+        <!-- wp:group {"className":"pdf-viewer"} -->
+        <div class="wp-block-group pdf-viewer">
+            <!-- wp:shortcode -->
+            [my_acf field="article_pdf"]
+            <!-- /wp:shortcode -->
+        </div>
+        <!-- /wp:group -->
+    </div>
+    <!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->
