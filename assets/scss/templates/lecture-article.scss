@@ -1,0 +1,48 @@
+.template-lecture-article {
+
+    .lecture-article-containeur {
+        padding: 35px 40px;
+    }
+    
+
+    .auteurs-article-containeur {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin: 0;
+        padding-left: 20px;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .article-title {
+        font-family: Libre Bodoni;
+        font-size: 48px;
+        font-weight: 400;
+
+    }
+
+    .resume-article {
+        padding: 40px 0;
+    }
+
+    .resume-article-titre, .texte-titre {
+        font-family: Libre Bodoni;
+        font-size: 40px;
+        font-weight: 400;
+    }
+
+    .auteurs-article {
+        margin: 0;
+    }
+
+    
+    .lecture-article-retour {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 30px;
+    }
+}    
