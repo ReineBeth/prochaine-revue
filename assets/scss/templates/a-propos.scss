@@ -1,0 +1,47 @@
+@use '../variables.scss' as var;
+
+.template-a-propos {
+
+    h1, h2, h3 {
+        font-family: Libre Bodoni;
+        font-weight: 400;
+    }
+
+    h1 {
+    font-size: 32px;
+    }
+
+    h2 {
+    font-size: 28px;
+    }
+
+    h3 {
+    font-size: 21px;
+    }
+
+    section {
+        padding: 30px;
+    }
+
+    .a-propos-containeur {
+
+    }
+
+    .section-origine {
+
+    }
+
+    .section-comite {
+        background: var.$color-secondary;
+    }
+
+    .section-services {
+        grid-area: service;
+        background: var.$color-neutral-2;
+        color: var.$color-white;
+    }
+
+
+    .section-partenaire {
+    }
+}
