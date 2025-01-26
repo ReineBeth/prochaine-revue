@@ -1,0 +1,34 @@
+.section-partenaires {
+
+    .partenaire-galerie-container {
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
+
+        .galerie-partenaires {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+
+            @media (min-width: 900px) {
+                gap: 0;
+            }
+    
+            img {
+                border: none !important;
+                width: fit-content !important;
+            }
+        }
+    }
+
+    
+
+    
+    .wp-block-gallery.has-nested-images:not(.is-cropped) figure.wp-block-image:not(#individual-image) {
+        margin-bottom: 0;
+    }
+
+    .wp-block-gallery.has-nested-images figure.wp-block-image {
+        align-items: center;
+    }
+}

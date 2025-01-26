@@ -21,18 +21,28 @@
 
     section {
         padding: 30px;
-    }
-
-    .a-propos-containeur {
-
+        margin-top: 0;
     }
 
     .section-origine {
+        .img-container .wp-block-image {
+            display: flex;
+            justify-content: center;
 
+            img { 
+                width: 350px;
+                height: 350px;
+                object-fit: cover;
+            }
+        }
     }
 
     .section-comite {
         background: var.$color-secondary;
+
+        .pr-carte-container {
+            padding-top: 60px;
+        }
     }
 
     .section-services {
@@ -41,7 +51,11 @@
         color: var.$color-white;
     }
 
+    .mentorat-articles-containeur {
+        gap: 30px;
+    }
 
-    .section-partenaire {
+    .wp-block-template-part {
+        margin-top: 0;
     }
 }

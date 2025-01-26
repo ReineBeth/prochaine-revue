@@ -47,10 +47,15 @@ function my_custom_acf_shortcode($atts) {
             <a href="' . esc_url($value) . '">Téléchargez-le ici</a></p>
         </object>';
     }
-    
+
+    if($atts['field'] == 'img-a-propos') {
+        return '<div class="wp-block-image">' . '<img src="' . $value['url'] . '" alt="' . $value['alt'] . '">' . '</div>';
+    }
+
     return $value;
 }
 add_shortcode('my_acf', 'my_custom_acf_shortcode');
+
 
 // FIN Ajouter script au thème
 

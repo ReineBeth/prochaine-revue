@@ -464,6 +464,17 @@
 		}
 	},
 	"customTemplates": [],
-	"templateParts": [],
+	"templateParts": [
+		{
+            "name": "a-propos-contenu-cartes",
+            "title": "Section de la page à propos qui contient les cartes des membres de l'équipe",
+            "area": "general"
+        },
+		{
+            "name": "partenaires",
+            "title": "Section des partenaires, présente dans la page d'accueil et la page à propos",
+            "area": "general"
+        }
+	],
 	"patterns": []
 }
