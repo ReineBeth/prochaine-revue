@@ -6,55 +6,65 @@
     <div class="wp-block-group a-propos-containeur">
         <!-- wp:group {"tagName":"section", "className":"section-origine"} -->
         <section class="wp-block-group section-origine">
-            <!-- wp:columns -->
-            <div class="wp-block-columns">
-                <!-- wp:column -->
-                <div class="wp-block-column">
-                        <!-- wp:heading -->
-                        <h1 class="wp-block-heading">À propos</h1>
-                        <!-- /wp:heading -->
-                        <!-- wp:shortcode -->[my_acf field="p-a-propos"]<!-- /wp:shortcode -->
-                </div>
-                    <!-- /wp:column -->
-                    
+            <!-- wp:group -->
+            <div class="wp-block-group section-origine-container">
+                <!-- wp:columns -->
+                <div class="wp-block-columns">
                     <!-- wp:column -->
                     <div class="wp-block-column">
-                        <!-- wp:group -->
-                        <div class="wp-block-group img-container">
-                            <!-- wp:shortcode -->[my_acf field="img-a-propos"]<!-- /wp:shortcode -->
-                        </div>
-                        <!-- /wp:group -->
+                            <!-- wp:heading -->
+                            <h1 class="wp-block-heading">À propos</h1>
+                            <!-- /wp:heading -->
+                            <!-- wp:shortcode -->[my_acf field="p-a-propos"]<!-- /wp:shortcode -->
                     </div>
+                        <!-- /wp:column -->
+                        
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <!-- wp:group -->
+                            <div class="wp-block-group img-container">
+                                <!-- wp:shortcode -->[my_acf field="img-a-propos"]<!-- /wp:shortcode -->
+                            </div>
+                            <!-- /wp:group -->
+                        </div>
+                    <!-- /wp:column -->
+                </div>
+                <!-- wp:column -->
+                <div class="wp-block-column">
+                    <!-- wp:heading -->
+                    <h2 class="wp-block-heading">Origine du projet</h2>
+                    <!-- /wp:heading -->
+                    <!-- wp:shortcode -->[my_acf field="p-origine"]<!-- /wp:shortcode -->
+                </div>
                 <!-- /wp:column -->
+                <!-- /wp:columns -->
+            <!-- /wp:group -->
             </div>
-            <!-- wp:column -->
-            <div class="wp-block-column">
-                <!-- wp:heading -->
-                <h2 class="wp-block-heading">Origine du projet</h2>
-                <!-- /wp:heading -->
-                <!-- wp:shortcode -->[my_acf field="p-origine"]<!-- /wp:shortcode -->
-            </div>
-            <!-- /wp:column -->
-            <!-- /wp:columns -->
         </section>
         <!-- /wp:group -->
 
         <!-- wp:group {"tagName":"section", "className":"section-comite"} -->
         <section class="wp-block-group section-comite">
-            <h2>Comité</h2>
-            <!-- wp:shortcode -->[my_acf field="p-comite"]<!-- /wp:shortcode -->
-            <!-- wp:template-part {"slug":"a-propos-contenu-cartes"} /-->
+            <!-- wp:group -->
+            <div class="wp-block-group section-comite-container">
+                <h2>Comité</h2>
+                <!-- wp:shortcode -->[my_acf field="p-comite"]<!-- /wp:shortcode -->
+                <!-- wp:template-part {"slug":"a-propos-contenu-cartes"} /-->
+            <!-- /wp:group -->
+            </div>
         </section>
         <!-- /wp:group -->
 
         <!-- wp:group {"tagName":"section", "className":"section-service"} -->
         <section class="wp-block-group section-services">
-            <!-- wp:column -->
-            <div class="wp-block-column">
-                <!-- wp:heading -->
-                <h2 class="wp-block-heading services-titre">Nos services</h2>
-                <!-- /wp:heading -->
-                <!-- wp:shortcode -->[my_acf field="p-services"]<!-- /wp:shortcode -->
+            <!-- wp:group -->
+            <div class="wp-block-group section-services-container">
+                <!-- wp:column -->
+                <div class="wp-block-column">
+                    <!-- wp:heading -->
+                    <h2 class="wp-block-heading services-titre">Nos services</h2>
+                    <!-- /wp:heading -->
+                    <!-- wp:shortcode -->[my_acf field="p-services"]<!-- /wp:shortcode -->
 
             </div>
             <!-- /wp:columns -->
@@ -73,11 +83,11 @@
                     <div class="wp-block-column">
                         <h3 class="wp-block-heading articles-titre">Articles</h3>
                     <!-- wp:shortcode -->[my_acf field="p-articles"]<!-- /wp:shortcode -->
-
                 </div>
                 <!-- /wp:column -->
             </div>
-
+            <!-- /wp:group -->
+            </div>
         </section>
         <!-- /wp:group -->
 

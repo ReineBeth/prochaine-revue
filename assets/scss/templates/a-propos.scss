@@ -24,6 +24,15 @@
         margin-top: 0;
     }
 
+    .section-origine-container, .section-comite-container, .section-services-container, .section-partenaires-container {
+        max-width: 1200px
+    }
+
+    .section-origine, .section-comite, .section-services, .section-partenaires {
+        display: flex;
+        justify-content: center;
+    }
+
     .section-origine {
         .img-container .wp-block-image {
             display: flex;
