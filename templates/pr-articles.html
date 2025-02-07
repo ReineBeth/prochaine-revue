@@ -1,0 +1,27 @@
+<!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"pr_article"} -->
+<main class="wp-site-blocks articles-list">
+	<h1>Nos Articles</h1>
+
+	<!-- wp:query {"queryId":1,"query":{"perPage":10,"postType":"pr_article"}} -->
+	<div class="wp-block-query">
+		<!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+		<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+		<div class="wp-block-group">
+			<!-- wp:post-title {"level":3} /-->
+
+			<!-- wp:custom-article/auteurs /-->
+
+			<!-- wp:custom-article/description /-->
+
+			<!-- wp:custom-article/pdf /-->
+		</div>
+		<!-- /wp:group -->
+		<!-- /wp:post-template -->
+	</div>
+	<!-- /wp:query -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->
