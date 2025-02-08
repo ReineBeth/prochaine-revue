@@ -191,6 +191,24 @@ add_filter('rest_prepare_pr_article', function ($response, $post, $request) {
 }, 10, 3);
 // TEST 2
 
+
+// Créer une taxonomie pour les auteurs
+function create_custom_taxonomy() {
+    register_taxonomy(
+        'auteurs', // Slug de la taxonomie
+        'post',  // Type de post (post, page ou CPT)
+        array(
+            'label' => 'Auteurs',
+            'hierarchical' => false, // true pour type catégorie, false pour type tag
+            'public' => true,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'show_in_rest' => true
+        )
+    );
+}
+add_action('init', 'create_custom_taxonomy');
+
 // FIN Ajouter script au thème
 
 add_theme_support('editor-styles');
