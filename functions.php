@@ -71,7 +71,8 @@ function create_articles_post_type() {
             'has_archive' => true,
             'supports' => array('title', 'editor', 'thumbnail'),
             'menu_icon' => 'dashicons-media-document',
-            'show_in_rest' => true // Important pour Gutenberg
+            'show_in_rest' => true, // Important pour Gutenberg
+            'taxonomies' => ['pr-auteurs']
         )
     );
 }

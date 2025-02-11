@@ -1,0 +1,13 @@
+.template-auteurs {
+    display: flex;
+    justify-content: center;
+
+    .auteurs-container {
+    padding: 35px 40px;
+    max-width: 1440px;
+
+        .pr-accordeon {
+        padding-top: 50px;
+        }   
+    }    
+}
