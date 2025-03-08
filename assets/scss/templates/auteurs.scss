@@ -9,5 +9,43 @@
         .pr-accordeon {
         padding-top: 50px;
         }   
-    }    
+    }
+}
+
+.recherche {
+    display: flex;
+    justify-content: center;
+}
+
+.recherche-auteurs-container {
+    margin: 20px 0;
+    width: 600px;
+    background: #3A5A40;
+    border-radius: 8px;
+    padding: 30px;
+    
+     h3 {
+        color: white;
+        margin-top: 0;
+     }
+}
+
+.recherche-auteur-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    border-color: #92D16E;
+    border-width: 4px;
+}
+
+.recherche-auteur-input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,124,186,0.2);
+}
+
+.container-input {
+    display: flex;
+    justify-content: center;
 }

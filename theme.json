@@ -474,6 +474,21 @@
             "name": "partenaires",
             "title": "Section des partenaires, présente dans la page d'accueil et la page à propos",
             "area": "general"
+        },
+		{
+            "name": "auteurs",
+            "title": "Section des partenaires, présente dans la page d'accueil et la page à propos",
+            "area": "general"
+        },		
+		{
+            "name": "header",
+            "title": "header",
+            "area": "header"
+        },
+		{
+            "name": "footer",
+            "title": "footer",
+            "area": "footer"
         }
 	],
 	"patterns": []
