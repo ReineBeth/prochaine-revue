@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Tetris</title>
+		<style>
+			canvas {
+				border: 2px solid #333;
+				margin: 20px auto;
+				display: block;
+			}
+			.score {
+				text-align: center;
+				font-family: Arial, sans-serif;
+				font-size: 20px;
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="score">Score: <span id="score">0</span></div>
+		<canvas id="tetris" width="240" height="400"></canvas>
+
+		<script>
+			const canvas = document.getElementById('tetris');
+			const context = canvas.getContext('2d');
+			const scoreElement = document.getElementById('score');
+
+			// Configuration
+			const BLOCK_SIZE = 20;
+			const COLS = 12;
+			const ROWS = 20;
+			let score = 0;
+
+			// Pièces de Tetris
+			const PIECES = [
+				[[1, 1, 1, 1]], // I
+				[
+					[1, 1],
+					[1, 1],
+				], // O
+				[
+					[1, 1, 1],
+					[0, 1, 0],
+				], // T
+				[
+					[1, 1, 1],
+					[1, 0, 0],
+				], // L
+				[
+					[1, 1, 1],
+					[0, 0, 1],
+				], // J
+				[
+					[1, 1, 0],
+					[0, 1, 1],
+				], // Z
+				[
+					[0, 1, 1],
+					[1, 1, 0],
+				], // S
+			];
+
+			// Tableau de jeu
+			let board = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+
+			// Pièce courante
+			let piece = {
+				pos: { x: 0, y: 0 },
+				shape: null,
+			};
+
+			// Créer une nouvelle pièce
+			function newPiece() {
+				piece.shape = PIECES[Math.floor(Math.random() * PIECES.length)];
+				piece.pos.x = Math.floor(COLS / 2 - piece.shape[0].length / 2);
+				piece.pos.y = 0;
+
+				if (collision()) {
+					// Game Over
+					board = Array.from({ length: ROWS }, () =>
+						Array(COLS).fill(0)
+					);
+					score = 0;
+					scoreElement.textContent = score;
+				}
+			}
+
+			// Vérifier les collisions
+			function collision() {
+				for (let y = 0; y < piece.shape.length; y++) {
+					for (let x = 0; x < piece.shape[y].length; x++) {
+						if (
+							piece.shape[y][x] &&
+							(board[y + piece.pos.y] === undefined ||
+								board[y + piece.pos.y][x + piece.pos.x] ===
+									undefined ||
+								board[y + piece.pos.y][x + piece.pos.x] === 1)
+						) {
+							return true;
+						}
+					}
+				}
+				return false;
+			}
+
+			// Fusionner la pièce avec le tableau
+			function merge() {
+				for (let y = 0; y < piece.shape.length; y++) {
+					for (let x = 0; x < piece.shape[y].length; x++) {
+						if (piece.shape[y][x]) {
+							board[y + piece.pos.y][x + piece.pos.x] = 1;
+						}
+					}
+				}
+			}
+
+			// Faire descendre la pièce
+			function drop() {
+				piece.pos.y++;
+				if (collision()) {
+					piece.pos.y--;
+					merge();
+					lineCheck();
+					newPiece();
+				}
+			}
+
+			// Vérifier et effacer les lignes complètes
+			function lineCheck() {
+				for (let y = ROWS - 1; y >= 0; y--) {
+					if (board[y].every((value) => value === 1)) {
+						board.splice(y, 1);
+						board.unshift(Array(COLS).fill(0));
+						score += 100;
+						scoreElement.textContent = score;
+					}
+				}
+			}
+
+			// Déplacer la pièce
+			function move(dir) {
+				piece.pos.x += dir;
+				if (collision()) {
+					piece.pos.x -= dir;
+				}
+			}
+
+			// Rotation de la pièce
+			function rotate() {
+				const rotated = piece.shape[0].map((_, i) =>
+					piece.shape.map((row) => row[i]).reverse()
+				);
+				const prevShape = piece.shape;
+				piece.shape = rotated;
+				if (collision()) {
+					piece.shape = prevShape;
+				}
+			}
+
+			// Dessiner le jeu
+			function draw() {
+				context.fillStyle = '#000';
+				context.fillRect(0, 0, canvas.width, canvas.height);
+
+				// Dessiner le tableau
+				board.forEach((row, y) => {
+					row.forEach((value, x) => {
+						if (value) {
+							context.fillStyle = '#fff';
+							context.fillRect(
+								x * BLOCK_SIZE,
+								y * BLOCK_SIZE,
+								BLOCK_SIZE - 1,
+								BLOCK_SIZE - 1
+							);
+						}
+					});
+				});
+
+				// Dessiner la pièce courante
+				piece.shape.forEach((row, y) => {
+					row.forEach((value, x) => {
+						if (value) {
+							context.fillStyle = '#f00';
+							context.fillRect(
+								(piece.pos.x + x) * BLOCK_SIZE,
+								(piece.pos.y + y) * BLOCK_SIZE,
+								BLOCK_SIZE - 1,
+								BLOCK_SIZE - 1
+							);
+						}
+					});
+				});
+			}
+
+			// Contrôles
+			document.addEventListener('keydown', (event) => {
+				switch (event.keyCode) {
+					case 37: // Gauche
+						move(-1);
+						break;
+					case 39: // Droite
+						move(1);
+						break;
+					case 40: // Bas
+						drop();
+						break;
+					case 38: // Haut (rotation)
+						rotate();
+						break;
+				}
+				draw();
+			});
+
+			// Boucle de jeu
+			function gameLoop() {
+				drop();
+				draw();
+				setTimeout(gameLoop, 1000);
+			}
+
+			// Démarrer le jeu
+			newPiece();
+			gameLoop();
+		</script>
+	</body>
+</html>

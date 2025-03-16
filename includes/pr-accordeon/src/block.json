@@ -1,0 +1,62 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "create-block/pr-accordeon",
+	"version": "0.1.0",
+	"title": "Pr Accordeon",
+	"category": "widgets",
+	"icon": "list-view",
+	"description": "Accordéon bloc ouvrable / fermable contenant du texte",
+	"example": {},
+	"supports": {
+		"html": false,
+		"innerBlocks": true,
+		"multiple": true
+	},
+	"textdomain": "pr-accordeon",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"viewScript": "file:./view.js",
+	"style": "file:./style-index.css",
+	"attributes": {
+        "titleField": {
+            "type": "string",
+            "default": ""
+        },
+        "headingLevel": {
+            "type": "string",
+            "default": "3"
+        },
+        "mode": {
+            "type": "string",
+            "default": "static"
+        },
+        "authorCount": {
+            "type": "number",
+            "default": 5
+        },
+        "showAllAuthors": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+	"allowedBlocks": [
+		"core/categories",
+		"core/column",
+		"core/columns",
+		"core/comments-title",
+		"core/file",
+		"core/form",
+		"core/form-input",
+		"core/gallery",
+		"core/group",
+		"core/heading",
+		"core/html",
+		"core/image",
+		"core/list",
+		"core/list-item",
+		"core/navigation-link",
+		"core/paragraph",
+		"core/table"
+	]
+}

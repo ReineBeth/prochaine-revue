@@ -1,6 +1,12 @@
 
 
 <?php
+// Inclure les fonctionnalités des plugins
+require_once get_template_directory() . './includes/pr-nom-composant/pr-nom-composant.php';
+require_once get_template_directory() . './includes/pr-accordeon/pr-accordeon.php';
+require_once get_template_directory() . './includes/pr-carte/pr-carte.php';
+require_once get_template_directory() . './includes/pr-tuile/pr-tuile.php';
+
 // Connecter le style au thème
 function prochaine_revue_enqueue_styles() {
     wp_enqueue_style(
@@ -56,14 +62,13 @@ function my_custom_acf_shortcode($atts) {
 }
 add_shortcode('my_acf', 'my_custom_acf_shortcode');
 
-// TEST
 function create_articles_post_type() {
     register_post_type('pr_article',
         array(
             'labels' => array(
                 'name' => __('Articles'),
                 'singular_name' => __('Article'),
-                'menu_name' => __('Articles'),
+                'menu_name' => __('PR Articles'),
                 'add_new' => __('Ajouter un Article'),
                 'add_new_item' => __('Ajouter un nouvel Article')
             ),
@@ -179,9 +184,6 @@ register_block_type('custom-article/pdf', array(
 ));
 
 
-// TEST
-
-// TEST 2
 add_filter('rest_prepare_pr_article', function ($response, $post, $request) {
     $acf_fields = get_fields($post->ID);
     if ($acf_fields) {
@@ -189,8 +191,93 @@ add_filter('rest_prepare_pr_article', function ($response, $post, $request) {
     }
     return $response;
 }, 10, 3);
-// TEST 2
 
+// TEST CRÉER PAGE ARTICLES AUTOMATIQUMENT 
+// Fonction pour mettre à jour toutes les pages d'articles existantes
+function update_article_pages_template() {
+    // Récupère le template
+    $template_path = get_template_directory() . '/templates/lecture-article.html';
+    $template_content = file_get_contents($template_path);
+
+    // Récupère toutes les pages enfants de la page "articles"
+    $articles_page = get_page_by_path('articles');
+    if (!$articles_page) return;
+
+    $pages = get_pages(array(
+        'child_of' => $articles_page->ID
+    ));
+
+    foreach ($pages as $page) {
+        // Pour chaque page, trouve l'article PR correspondant
+        $article = get_posts(array(
+            'post_type' => 'pr_article',
+            'title' => $page->post_title,
+            'posts_per_page' => 1
+        ));
+
+        if (!empty($article)) {
+            $article_id = $article[0]->ID;
+            // Met à jour le contenu avec le nouveau template
+            $updated_content = str_replace(
+                '[my_acf field="',
+                '[my_acf post_id="' . $article_id . '" field="',
+                $template_content
+            );
+
+            // Met à jour la page
+            wp_update_post(array(
+                'ID' => $page->ID,
+                'post_content' => $updated_content
+            ));
+        }
+    }
+}
+
+// Ajoute un hook pour détecter les modifications du fichier template
+function check_template_modification() {
+    $template_path = get_template_directory() . '/templates/lecture-article.html';
+    $last_modified = get_option('lecture_article_template_modified');
+    $current_modified = filemtime($template_path);
+
+    if ($last_modified != $current_modified) {
+        update_article_pages_template();
+        update_option('lecture_article_template_modified', $current_modified);
+    }
+}
+add_action('init', 'check_template_modification');
+
+function initialize_template_modification_check() {
+    $template_path = get_template_directory() . '/templates/lecture-article.html';
+    add_option('lecture_article_template_modified', filemtime($template_path));
+}
+add_action('after_switch_theme', 'initialize_template_modification_check');
+
+function add_articles_parent_class($classes) {
+    if (is_page() && ($parent_id = wp_get_post_parent_id(get_the_ID()))) {
+        $parent = get_post($parent_id);
+        if ($parent->post_name === 'articles') {
+            $classes[] = 'page-parent-articles';
+        }
+    }
+    return $classes;
+}
+add_filter('body_class', 'add_articles_parent_class');
+
+function add_custom_class_to_post_title($block_content, $block) {
+    if (!is_admin() && isset($block['blockName']) && $block['blockName'] === 'core/post-title') {
+        global $post;
+
+        // Vérifie si l'URL est sous /prochaine-revue/articles/
+        if (strpos($_SERVER['REQUEST_URI'], '/prochaine-revue/articles/') !== false) {
+            // Ajoute la classe "wp-default-title"
+            $block_content = str_replace('<h1', '<h1 class="pr-display-none"', $block_content);
+        }
+    }
+    return $block_content;
+}
+add_filter('render_block', 'add_custom_class_to_post_title', 10, 2);
+
+// TEST CRÉER PAGE ARTICLES AUTOMATIQUMENT 
 
 // Créer une taxonomie pour les auteurs
 function create_custom_taxonomy() {
@@ -215,4 +302,3 @@ add_theme_support('editor-styles');
 add_theme_support('wp-block-styles');
 add_theme_support('align-wide');
 ?>
-

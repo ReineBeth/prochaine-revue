@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "create-block/pr-carte",
+	"version": "0.1.0",
+	"title": "Carte",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Carte représentant un membre de l'équipe.",
+	"example": {},
+	"attributes": {
+		"titleField": {
+			"type": "string",
+			"default": ""
+		},
+		"subtitleField": {
+			"type": "string",
+			"default": ""
+		},
+		"textField": {
+			"type": "string",
+			"default": ""
+		},
+		"imageUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"isFlipped": {
+			"type": "boolean",
+			"default": false
+		},
+		"cards": {
+			"type": "array",
+			"default": []
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "pr-carte",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

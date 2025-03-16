@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Accordéon</title>
+
+		<style>
+			.pr-accordeon-container {
+				border: 3px solid #478245;
+				border-radius: 4px;
+				background-color: #fff;
+				margin: 16px 0;
+				transition: all 1s ease;
+			}
+
+			.pr-accordeon-container h3 {
+				margin: 0;
+			}
+
+			.pr-accordeon-trigger {
+				border: 0;
+				background-color: #fff;
+				width: 100%;
+				text-align: start;
+				padding: 16px 8px;
+				position: relative;
+				cursor: pointer;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.pr-accordeon-trigger::after {
+				content: "";
+				width: 24px;
+				aspect-ratio: 1 / 1;
+				display: block;
+				background-image: url("./images/chevron-down.svg");
+				background-position: center center;
+				background-repeat: no-repeat;
+			}
+
+			.pr-accordeon-trigger.open::after {
+				transform: rotate(180deg);
+				transition: transform 1s ease;
+			}
+
+			.pr-accordeon-content {
+				padding: 16px 8px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Code qui n'est pas utiliser dans le composant -->
+
+		<div class="pr-accordeon">
+			<div class="pr-accordeon-container">
+				<h3>
+					<button
+						type="button"
+						aria-expanded="true"
+						class="pr-accordeon-trigger js-trigger"
+						aria-controls="content-id-1"
+						id="accordeon-1-id"
+					>
+						Trigger 1
+					</button>
+				</h3>
+				<div
+					id="content-id-1"
+					role="region"
+					aria-labelledby="accordeon-1-id"
+					class="pr-accordeon-content js-content"
+					hidden
+				>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
+					officia ex ea repellendus, ipsa at nam dolorum iste, facere ratione
+					nulla blanditiis enim voluptatum non porro? Natus quaerat saepe
+					officia aspernatur corrupti, alias, error magnam dicta laudantium qui
+					minus! Enim quas eius facilis! Fuga officia inventore, quia delectus
+					sapiente sint?
+				</div>
+			</div>
+			<div class="pr-accordeon-container">
+				<h3>
+					<button
+						type="button"
+						aria-expanded="true"
+						class="pr-accordeon-trigger js-trigger"
+						aria-controls="content-id-2"
+						id="accordeon-2-id"
+					>
+						Trigger 2
+					</button>
+				</h3>
+				<div
+					id="content-id-2"
+					role="region"
+					aria-labelledby="accordeon-2-id"
+					class="pr-accordeon-content js-content"
+					hidden
+				>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam eius
+					perspiciatis deleniti incidunt dolorem maiores architecto debitis
+					atque odit earum!
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script>
+		const triggerAccordeon = document.querySelectorAll(".js-trigger");
+
+		triggerAccordeon.forEach((element) => {
+			element.addEventListener("click", function () {
+				const ariaControls = element.getAttribute("aria-controls");
+				const content = document.getElementById(ariaControls);
+
+				content.toggleAttribute("hidden");
+				element.classList.toggle("open");
+			});
+		});
+	</script>
+</html>
