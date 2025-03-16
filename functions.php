@@ -76,7 +76,8 @@ function create_articles_post_type() {
             'has_archive' => true,
             'supports' => array('title', 'editor', 'thumbnail'),
             'menu_icon' => 'dashicons-media-document',
-            'show_in_rest' => true // Important pour Gutenberg
+            'show_in_rest' => true, // Important pour Gutenberg
+            'taxonomies' => ['pr-auteurs']
         )
     );
 }
@@ -296,7 +297,54 @@ function create_custom_taxonomy() {
 }
 add_action('init', 'create_custom_taxonomy');
 
+
+// Enregistrement du shortcode des auteurs
+add_action('init', function() {
+    add_shortcode('liste_auteurs_articles', function() {
+        return display_authors_with_articles();
+    });
+});
 // FIN Ajouter script au thème
+
+
+function ajouter_script_recherche_auteurs() {
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('recherche-auteurs');
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const searchText = e.target.value.toLowerCase();
+                // On cible les conteneurs principaux des accordéons
+                const auteursContainers = document.querySelectorAll('.pr-accordeon-container');
+                
+                auteursContainers.forEach(container => {
+                    const button = container.querySelector('.pr-accordeon-trigger');
+                    if (button) {
+                        const auteurText = button.textContent.toLowerCase();
+                        if (auteurText.includes(searchText)) {
+                            container.style.display = 'block';  // ou '' selon votre style par défaut
+                            container.style.visibility = 'visible';
+                            container.style.margin = '';        // Réinitialise la marge
+                            container.style.height = '';        // Réinitialise la hauteur
+                            container.style.opacity = '1';
+                        } else {
+                            container.style.display = 'none';
+                            container.style.visibility = 'hidden';
+                            container.style.margin = '0';
+                            container.style.height = '0';
+                            container.style.opacity = '0';
+                        }
+                    }
+                });
+            });
+        }
+    });
+    </script>
+    <?php
+}
+add_action('wp_footer', 'ajouter_script_recherche_auteurs');
 
 add_theme_support('editor-styles');
 add_theme_support('wp-block-styles');
