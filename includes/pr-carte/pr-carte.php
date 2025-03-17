@@ -68,9 +68,9 @@ add_action('init', 'create_block_pr_carte_block_init');
 function enqueue_pr_carte_assets() {
     wp_enqueue_script(
         'pr-carte-flip',
-        plugins_url('assets/js/flip.js', __FILE__),
+        get_template_directory_uri() . '/includes/pr-carte/assets/js/flip.js',
         array(),
-        filemtime(plugin_dir_path(__FILE__) . 'assets/js/flip.js'),
+        filemtime(get_template_directory() . '/includes/pr-carte/assets/js/flip.js'),
         true
     );
 }
