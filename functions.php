@@ -5,6 +5,7 @@
 require_once get_template_directory() . './includes/pr-accordeon/pr-accordeon.php';
 require_once get_template_directory() . './includes/pr-carte/pr-carte.php';
 require_once get_template_directory() . './includes/pr-tuile/pr-tuile.php';
+require_once get_template_directory() . './includes/pr-bloc-recherche/pr-bloc-recherche.php';
 
 // Connecter le style au thème
 function prochaine_revue_enqueue_styles() {
@@ -304,46 +305,6 @@ add_action('init', function() {
     });
 });
 // FIN Ajouter script au thème
-
-
-function ajouter_script_recherche_auteurs() {
-    ?>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('recherche-auteurs');
-        
-        if (searchInput) {
-            searchInput.addEventListener('input', function(e) {
-                const searchText = e.target.value.toLowerCase();
-                // On cible les conteneurs principaux des accordéons
-                const auteursContainers = document.querySelectorAll('.pr-accordeon-container');
-                
-                auteursContainers.forEach(container => {
-                    const button = container.querySelector('.pr-accordeon-trigger');
-                    if (button) {
-                        const auteurText = button.textContent.toLowerCase();
-                        if (auteurText.includes(searchText)) {
-                            container.style.display = 'block';  // ou '' selon votre style par défaut
-                            container.style.visibility = 'visible';
-                            container.style.margin = '';        // Réinitialise la marge
-                            container.style.height = '';        // Réinitialise la hauteur
-                            container.style.opacity = '1';
-                        } else {
-                            container.style.display = 'none';
-                            container.style.visibility = 'hidden';
-                            container.style.margin = '0';
-                            container.style.height = '0';
-                            container.style.opacity = '0';
-                        }
-                    }
-                });
-            });
-        }
-    });
-    </script>
-    <?php
-}
-add_action('wp_footer', 'ajouter_script_recherche_auteurs');
 
 add_theme_support('editor-styles');
 add_theme_support('wp-block-styles');

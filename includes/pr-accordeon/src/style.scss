@@ -59,3 +59,23 @@
 .pr-accordeon-content {
 	padding: 16px 8px;
 }
+
+
+.pr-accordeon-container {
+    max-height: 1000px;
+    opacity: 1;
+    overflow: hidden;
+    transform: translateY(0);
+    transition: all 0.5s ease-in-out;
+}
+
+.pr-accordeon-container.hidden-item {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
