@@ -46,4 +46,25 @@ registerBlockType(metadata.name, {
 	icon: tileIcon,
 	edit: Edit,
 	save,
+	attributes: {
+		mode: {
+			type: "string",
+			default: "static",
+		},
+		tiles: {
+			type: "array",
+			default: [],
+		},
+		articlesCount: {
+			type: "number",
+			default: 3,
+		},
+		showAllArticles: {
+			type: "boolean",
+			default: false,
+		},
+	},
+	supports: {
+		html: false, // Désactiver l'édition HTML car le rendu est géré par PHP
+	},
 });

@@ -31,5 +31,6 @@
 	"textdomain": "pr-tuile",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css"
+	"style": "file:./style-index.css",
+	"render": "render_pr_tuile_block"
 }
