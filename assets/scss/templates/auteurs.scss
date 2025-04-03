@@ -1,3 +1,5 @@
+@use '../variables.scss' as var;
+
 .template-auteurs {
     display: flex;
     justify-content: center;
@@ -21,12 +23,12 @@
 .recherche-auteurs-container {
     margin: 20px 0;
     width: 600px;
-    background: #3A5A40;
+    background: var.$color-primary;
     border-radius: 8px;
     padding: 30px;
     
      h3 {
-        color: white;
+        color: var.$color-white;
         margin-top: 0;
      }
 }
@@ -34,10 +36,10 @@
 .recherche-auteur-input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var.$color-primary;
     border-radius: 4px;
     font-size: 16px;
-    border-color: #92D16E;
+    border-color: var.$color-action-pale;
     border-width: 4px;
 }
 
@@ -49,4 +51,23 @@
 .container-input {
     display: flex;
     justify-content: center;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.recherche-auteur-input {
+    width: 100%;
+    padding-right: 30px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 20px;
+    color: var.$color-primary;
+    pointer-events: none;
 }
