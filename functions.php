@@ -255,7 +255,7 @@ function floating_share_button_shortcode() {
     
     $output .= '</div>'; // Fin des boutons de partage
     $output .= '<div class="share-toggle">';
-    $output .= '<svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 362.621 362.621" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#ffffff;" d="M288.753,121.491c33.495,0,60.746-27.251,60.746-60.746S322.248,0,288.753,0 s-60.745,27.25-60.745,60.746c0,6.307,0.968,12.393,2.76,18.117l-126.099,76.937c-9.707-8.322-22.301-13.366-36.059-13.366 c-30.596,0-55.487,24.891-55.487,55.487s24.892,55.487,55.487,55.487c10.889,0,21.047-3.165,29.626-8.606l101.722,58.194 c-0.584,3.058-0.902,6.209-0.902,9.435c0,27.676,22.516,50.192,50.191,50.192s50.191-22.516,50.191-50.192 s-22.516-50.191-50.191-50.191c-13.637,0-26.014,5.474-35.069,14.331l-95.542-54.658c3.498-7.265,5.46-15.403,5.46-23.991 c0-5.99-0.966-11.757-2.73-17.166l125.184-76.379C257.488,114.959,272.368,121.491,288.753,121.491z"></path> </g></svg>';
+    $output .= '<svg height="40px" width="40px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 362.621 362.621" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#ffffff;" d="M288.753,121.491c33.495,0,60.746-27.251,60.746-60.746S322.248,0,288.753,0 s-60.745,27.25-60.745,60.746c0,6.307,0.968,12.393,2.76,18.117l-126.099,76.937c-9.707-8.322-22.301-13.366-36.059-13.366 c-30.596,0-55.487,24.891-55.487,55.487s24.892,55.487,55.487,55.487c10.889,0,21.047-3.165,29.626-8.606l101.722,58.194 c-0.584,3.058-0.902,6.209-0.902,9.435c0,27.676,22.516,50.192,50.191,50.192s50.191-22.516,50.191-50.192 s-22.516-50.191-50.191-50.191c-13.637,0-26.014,5.474-35.069,14.331l-95.542-54.658c3.498-7.265,5.46-15.403,5.46-23.991 c0-5.99-0.966-11.757-2.73-17.166l125.184-76.379C257.488,114.959,272.368,121.491,288.753,121.491z"></path> </g></svg>';
     $output .= '</div>';
     $output .= '</div>'; // Fin du bouton flottant
 
@@ -425,6 +425,156 @@ function ajouter_script_recherche_auteurs() {
 }
 add_action('wp_footer', 'ajouter_script_recherche_auteurs');
 
+
+// Outil de citation
+
+function citation_tool_shortcode() {
+    // Récupérer les métadonnées de l'article
+    global $post;
+    
+    // Récupérer les informations de l'article
+    $author = get_field('auteurs_article', $post->ID) ? get_field('auteurs_article', $post->ID) : get_the_author();
+    $title = get_the_title();
+    $journal = get_bloginfo('name'); // A FAIRE
+    $volume = get_field('volume', $post->ID) ? get_field('volume', $post->ID) : ''; // A FAIRE
+    $issue = get_field('numero', $post->ID) ? get_field('numero', $post->ID) : ''; // A FAIRE
+    $date = get_the_date('F Y'); // A FAIRE
+    $year = get_the_date('Y'); // A FAIRE
+    $pages = get_field('pages', $post->ID) ? get_field('pages', $post->ID) : ''; // A FAIRE
+    $url = get_permalink();
+    
+    // Construire les différents formats de citation
+    // Format MLA
+    $mla_citation = $author . '. « ' . $title . '. » <em>' . $journal . '</em>';
+    if ($volume) $mla_citation .= ', volume ' . $volume;
+    if ($issue) $mla_citation .= ', numéro ' . $issue;
+    $mla_citation .= ', ' . $date;
+    if ($pages) $mla_citation .= ', p. ' . $pages;
+    $mla_citation .= '. ' . $url;
+    
+    // Format APA
+    $apa_citation = $author . ' (' . $year . '). ' . $title . '. <em>' . $journal . '</em>';
+    if ($volume) $apa_citation .= ', ' . $volume;
+    if ($issue) $apa_citation .= '(' . $issue . ')';
+    if ($pages) $apa_citation .= ', ' . $pages;
+    $apa_citation .= '. ' . $url;
+    
+    // Format Chicago
+    $chicago_citation = $author . ' « ' . $title . ' ». <em>' . $journal . '</em>';
+    if ($volume) $chicago_citation .= ' ' . $volume;
+    if ($issue) $chicago_citation .= ', n° ' . $issue;
+    $chicago_citation .= ' (' . $year . ')';
+    if ($pages) $chicago_citation .= ' : ' . $pages;
+    $chicago_citation .= '. ' . $url;
+    
+    // Échapper les variables pour JavaScript
+    $js_author = esc_js($author);
+    $js_title = esc_js($title);
+    $js_journal = esc_js($journal);
+    $js_volume = esc_js($volume);
+    $js_issue = esc_js($issue);
+    $js_year = esc_js($year);
+    $js_pages = esc_js($pages);
+    $js_url = esc_js($url);
+    
+    // Générer le HTML pour l'outil de citation
+    $output = '<div class="citation-tool-container">';
+    $output .= '<button id="citation-button" class="citation-button"><svg height="40px" width="40px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g id="right_x5F_quote"> <g> <path style="fill:#ffffff;" d="M0,4v12h8c0,4.41-3.586,8-8,8v4c6.617,0,12-5.383,12-12V4H0z"></path> <path style="fill:#ffffff;" d="M20,4v12h8c0,4.41-3.586,8-8,8v4c6.617,0,12-5.383,12-12V4H20z"></path> </g> </g> </g> </g></svg></button>';
+    
+    // Modale pour la citation
+    $output .= '<div id="citation-modal" class="citation-modal">';
+    $output .= '<div class="citation-modal-content">';
+    $output .= '<div class="citation-modal-header">';
+    $output .= '<h2>Outils de citation</h2>';
+    $output .= '<span class="citation-close"><svg fill="#ffffff" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 460.775 460.775" xml:space="preserve" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M285.08,230.397L456.218,59.27c6.076-6.077,6.076-15.911,0-21.986L423.511,4.565c-2.913-2.911-6.866-4.55-10.992-4.55 c-4.127,0-8.08,1.639-10.993,4.55l-171.138,171.14L59.25,4.565c-2.913-2.911-6.866-4.55-10.993-4.55 c-4.126,0-8.08,1.639-10.992,4.55L4.558,37.284c-6.077,6.075-6.077,15.909,0,21.986l171.138,171.128L4.575,401.505 c-6.074,6.077-6.074,15.911,0,21.986l32.709,32.719c2.911,2.911,6.865,4.55,10.992,4.55c4.127,0,8.08-1.639,10.994-4.55 l171.117-171.12l171.118,171.12c2.913,2.911,6.866,4.55,10.993,4.55c4.128,0,8.081-1.639,10.992-4.55l32.709-32.719 c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z"></path> </g></svg></span>';
+    $output .= '</div>'; // Fin de l'en-tête
+    
+    $output .= '<div class="citation-modal-body">';
+    $output .= '<h3>Citer cet article</h3>';
+    
+    // Format MLA
+    $output .= '<div class="citation-format">';
+    $output .= '<h4>MLA</h4>';
+    $output .= '<p class="citation-text">' . $mla_citation . '</p>';
+    $output .= '</div>';
+    
+    // Format APA
+    $output .= '<div class="citation-format">';
+    $output .= '<h4>APA</h4>';
+    $output .= '<p class="citation-text">' . $apa_citation . '</p>';
+    $output .= '</div>';
+    
+    // Format Chicago
+    $output .= '<div class="citation-format">';
+    $output .= '<h4>Chicago</h4>';
+    $output .= '<p class="citation-text">' . $chicago_citation . '</p>';
+    $output .= '</div>';
+    
+    // Section pour exporter la notice
+    $output .= '<hr class="citation-divider">';
+    $output .= '<h3>Exporter la notice de cet article</h3>';
+    $output .= '<div class="citation-export-buttons">';
+    
+    // Boutons d'export
+    $output .= '<a href="#" class="citation-export-button" data-format="ris" onclick="exportCitation(\'ris\'); return false;">RIS</a>';
+    $output .= '<a href="#" class="citation-export-button" data-format="enw" onclick="exportCitation(\'enw\'); return false;">ENW</a>';
+    $output .= '<a href="#" class="citation-export-button" data-format="bib" onclick="exportCitation(\'bib\'); return false;">BIB</a>';
+    $output .= '</div>'; // Fin des boutons d'export
+    
+    // Description des formats
+    $output .= '<div class="citation-format-description">';
+    $output .= '<div class="format-desc" data-format="ris">EndNote, Papers, Reference Manager, RefWorks, Zotero</div>';
+    $output .= '<div class="format-desc" data-format="enw">EndNote (version X9.1 et +), Zotero</div>';
+    $output .= '<div class="format-desc" data-format="bib">BibTeX, JabRef, Mendeley, Zotero</div>';
+    $output .= '</div>'; // Fin des descriptions
+    
+    $output .= '</div>'; // Fin du corps
+    $output .= '</div>'; // Fin du contenu
+    $output .= '</div>'; // Fin de la modale
+    
+    $output .= '</div>'; // Fin du conteneur principal
+
+    wp_enqueue_script('citation-tool', get_template_directory_uri() . '/assets/js/citation-tool.js', array('jquery'), '1.0', true);
+    
+    return $output;
+}
+
+add_shortcode('citation_tool', 'citation_tool_shortcode');
+function enqueue_citation_tool_script() {
+    if (is_singular('pr_article') || is_singular('post')) {
+        wp_enqueue_script('citation-tool', get_template_directory_uri() . '/assets/js/citation-tool.js', array(), '1.0', true);
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_citation_tool_script');
+
+function add_citation_inline_script() {
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        const citationButton = document.getElementById('citation-button');
+        const citationModal = document.getElementById('citation-modal');
+        
+
+        // Fermer la modale quand on clique sur le X
+        const closeButton = document.querySelector('.citation-close');
+        if (closeButton) {
+            closeButton.addEventListener('click', function() {
+                citationModal.style.display = 'none';
+            });
+        }
+        
+        // Fermer la modale quand on clique en dehors du contenu
+        window.addEventListener('click', function(event) {
+            if (event.target === citationModal) {
+                citationModal.style.display = 'none';
+            }
+        });
+    });
+    </script>
+    <?php
+}
+add_action('wp_footer', 'add_citation_inline_script');
 
 // FIN Ajouter script au thème
 
