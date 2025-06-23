@@ -435,34 +435,33 @@ function citation_tool_shortcode() {
     // Récupérer les informations de l'article
     $author = get_field('auteurs_article', $post->ID) ? get_field('auteurs_article', $post->ID) : get_the_author();
     $title = get_the_title();
-    $journal = get_bloginfo('name'); // A FAIRE
-    $volume = get_field('volume', $post->ID) ? get_field('volume', $post->ID) : ''; // A FAIRE
-    $issue = get_field('numero', $post->ID) ? get_field('numero', $post->ID) : ''; // A FAIRE
-    $date = get_the_date('F Y'); // A FAIRE
-    $year = get_the_date('Y'); // A FAIRE
-    $pages = get_field('pages', $post->ID) ? get_field('pages', $post->ID) : ''; // A FAIRE
+    $revue = get_field('titre_revue', $post->ID) ? get_field('titre_revue', $post->ID) : '';
+    $volume = get_field('volume', $post->ID) ? get_field('volume', $post->ID) : '';
+    $numero_volume = get_field('numero_volume', $post->ID) ? get_field('numero_volume', $post->ID) : '';
+    $year =  get_field('annee_publication', $post->ID) ? get_field('annee_publication', $post->ID) : '';
+    $pages = get_field('pages', $post->ID) ? get_field('pages', $post->ID) : '';
     $url = get_permalink();
-    
+
     // Construire les différents formats de citation
     // Format MLA
-    $mla_citation = $author . '. « ' . $title . '. » <em>' . $journal . '</em>';
+    $mla_citation = $author . '. « ' . $title . '. » <em>' . $revue . '</em>';
     if ($volume) $mla_citation .= ', volume ' . $volume;
-    if ($issue) $mla_citation .= ', numéro ' . $issue;
-    $mla_citation .= ', ' . $date;
+    if ($numero_volume) $mla_citation .= ', numéro ' . $numero_volume;
+    $mla_citation .= ', ' . $year;
     if ($pages) $mla_citation .= ', p. ' . $pages;
     $mla_citation .= '. ' . $url;
     
     // Format APA
-    $apa_citation = $author . ' (' . $year . '). ' . $title . '. <em>' . $journal . '</em>';
+    $apa_citation = $author . ' (' . $year . '). ' . $title . '. <em>' . $revue . '</em>';
     if ($volume) $apa_citation .= ', ' . $volume;
-    if ($issue) $apa_citation .= '(' . $issue . ')';
+    if ($numero_volume) $apa_citation .= '(' . $numero_volume . ')';
     if ($pages) $apa_citation .= ', ' . $pages;
     $apa_citation .= '. ' . $url;
     
     // Format Chicago
-    $chicago_citation = $author . ' « ' . $title . ' ». <em>' . $journal . '</em>';
+    $chicago_citation = $author . ' « ' . $title . ' ». <em>' . $revue . '</em>';
     if ($volume) $chicago_citation .= ' ' . $volume;
-    if ($issue) $chicago_citation .= ', n° ' . $issue;
+    if ($numero_volume) $chicago_citation .= ', n° ' . $numero_volume;
     $chicago_citation .= ' (' . $year . ')';
     if ($pages) $chicago_citation .= ' : ' . $pages;
     $chicago_citation .= '. ' . $url;
@@ -470,9 +469,9 @@ function citation_tool_shortcode() {
     // Échapper les variables pour JavaScript
     $js_author = esc_js($author);
     $js_title = esc_js($title);
-    $js_journal = esc_js($journal);
-    $js_volume = esc_js($volume);
-    $js_issue = esc_js($issue);
+    // $js_journal = esc_js($journal);
+    $js_volume = esc_js($revue);
+    $js_issue = esc_js($numero_volume);
     $js_year = esc_js($year);
     $js_pages = esc_js($pages);
     $js_url = esc_js($url);
