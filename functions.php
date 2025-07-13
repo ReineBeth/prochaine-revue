@@ -509,24 +509,6 @@ function citation_tool_shortcode() {
     $output .= '<p class="citation-text">' . $chicago_citation . '</p>';
     $output .= '</div>';
     
-    // Section pour exporter la notice
-    $output .= '<hr class="citation-divider">';
-    $output .= '<h3>Exporter la notice de cet article</h3>';
-    $output .= '<div class="citation-export-buttons">';
-    
-    // Boutons d'export
-    $output .= '<a href="#" class="citation-export-button" data-format="ris" onclick="exportCitation(\'ris\'); return false;">RIS</a>';
-    $output .= '<a href="#" class="citation-export-button" data-format="enw" onclick="exportCitation(\'enw\'); return false;">ENW</a>';
-    $output .= '<a href="#" class="citation-export-button" data-format="bib" onclick="exportCitation(\'bib\'); return false;">BIB</a>';
-    $output .= '</div>'; // Fin des boutons d'export
-    
-    // Description des formats
-    $output .= '<div class="citation-format-description">';
-    $output .= '<div class="format-desc" data-format="ris">EndNote, Papers, Reference Manager, RefWorks, Zotero</div>';
-    $output .= '<div class="format-desc" data-format="enw">EndNote (version X9.1 et +), Zotero</div>';
-    $output .= '<div class="format-desc" data-format="bib">BibTeX, JabRef, Mendeley, Zotero</div>';
-    $output .= '</div>'; // Fin des descriptions
-    
     $output .= '</div>'; // Fin du corps
     $output .= '</div>'; // Fin du contenu
     $output .= '</div>'; // Fin de la modale
