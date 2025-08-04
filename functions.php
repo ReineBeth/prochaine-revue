@@ -43,22 +43,27 @@ function themeslug_block_editor_assets() {
 function my_custom_acf_shortcode($atts) {
     $atts = shortcode_atts(array(
         'field' => '',
+        'post_id' => get_the_ID(), // Par défaut, utilise l'ID de la page/post courante
     ), $atts);
-
-    $value = get_field($atts['field']);
+    
+    // Utiliser le post_id fourni ou l'ID courant
+    $post_id = $atts['post_id'] ? $atts['post_id'] : get_the_ID();
+    $value = get_field($atts['field'], $post_id);
     
     if($atts['field'] == 'article_pdf' && !empty($value)) {
-        return '<object data="' . esc_url($value) . '" type="application/pdf" width="100%" height="800px">
+        // Gérer le cas où $value est un tableau (format array) ou une URL
+        $pdf_url = is_array($value) ? $value['url'] : $value;
+        return '<object data="' . esc_url($pdf_url) . '" type="application/pdf" width="100%" height="800px">
             <p>Votre navigateur ne peut pas afficher ce PDF. 
-            <a href="' . esc_url($value) . '">Téléchargez-le ici</a></p>
+            <a href="' . esc_url($pdf_url) . '">Téléchargez-le ici</a></p>
         </object>';
     }
-
-    if($atts['field'] == 'img-a-propos') {
-        return '<div class="wp-block-image">' . '<img src="' . $value['url'] . '" alt="' . $value['alt'] . '">' . '</div>';
+    if($atts['field'] == 'img-a-propos' && !empty($value)) {
+        $img_url = is_array($value) ? $value['url'] : $value;
+        $img_alt = is_array($value) ? $value['alt'] : '';
+        return '<div class="wp-block-image">' . '<img src="' . $img_url . '" alt="' . $img_alt . '">' . '</div>';
     }
-
-    return $value;
+    return $value ? $value : '';
 }
 add_shortcode('my_acf', 'my_custom_acf_shortcode');
 
@@ -562,4 +567,14 @@ add_action('wp_footer', 'add_citation_inline_script');
 add_theme_support('editor-styles');
 add_theme_support('wp-block-styles');
 add_theme_support('align-wide');
+
+
+
+// !!!!!!!!!!!!!!!!! TEST
+// !!!!!!!!!!!!!!!!! TEST
+// !!!!!!!!!!!!!!!!! TEST
+
+// !!!!!!!!!!!!!!!!! TEST
+// !!!!!!!!!!!!!!!!! TEST
+// !!!!!!!!!!!!!!!!! TEST
 ?>

@@ -1,0 +1,44 @@
+<!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"template-single-pr-article"} -->
+<main
+	class="wp-site-blocks template-single-pr-article template-lecture-article"
+>
+	<!-- wp:group {"className":"conteneur-article"} -->
+	<div class="wp-block-group conteneur-article lecture-article-containeur">
+		<!-- wp:post-title {"level":1} /-->
+
+		<!-- wp:custom-article/auteurs /-->
+
+		<!-- wp:heading {"level":2} -->
+		<h2 class="resume-article-titre">Description de l'article</h2>
+		<!-- /wp:heading -->
+
+		<!-- wp:custom-article/description /-->
+
+		<div class="wp-block-group pdf-viewer">
+			<!-- wp:heading -->
+			<h2 class="texte-titre">Texte intégral (PDF)</h2>
+			<!-- /wp:heading -->
+			<!-- wp:shortcode -->
+			[my_acf field="article_pdf"]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:group -->
+		<!-- wp:group -->
+		<div class="wp-block-group conteneur-btn">
+			<!-- wp:shortcode -->
+			[floating_share]
+			<!-- /wp:shortcode -->
+			<!-- wp:shortcode -->
+			[citation_tool]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:group -->
+		<!-- wp:custom-article/pdf /-->
+	</div>
+	<!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->
