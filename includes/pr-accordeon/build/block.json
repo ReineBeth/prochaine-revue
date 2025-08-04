@@ -38,6 +38,9 @@
     "showAllAuthors": {
       "type": "boolean",
       "default": false
+    },
+    "uniqueId": {
+      "type": "string"
     }
   },
   "allowedBlocks": [

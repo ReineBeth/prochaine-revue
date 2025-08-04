@@ -51,7 +51,7 @@
   width: 24px;
   aspect-ratio: 1/1;
   display: block;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjNDc4MjQ1Ij48cGF0aCBkPSJNMCA3LjMzbDIuODI5LTIuODMgOS4xNzUgOS4zMzkgOS4xNjctOS4zMzkgMi44MjkgMi44My0xMS45OTYgMTIuMTd6Ii8+PC9zdmc+DQo=);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjNDc4MjQ1Ij48cGF0aCBkPSJNMCA3LjMzbDIuODI5LTIuODMgOS4xNzUgOS4zMzkgOS4xNjctOS4zMzkgMi44MjkgMi44My0xMS45OTYgMTIuMTd6Ii8+PC9zdmc+Cg==);
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -63,4 +63,23 @@
 
 .pr-accordeon-content {
   padding: 16px 8px;
+}
+
+.pr-accordeon-container {
+  max-height: 1000px;
+  opacity: 1;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: all 0.5s ease-in-out;
+}
+
+.pr-accordeon-container.hidden-item {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
 }

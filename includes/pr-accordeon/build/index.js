@@ -32,14 +32,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const AccordeonItem = ({
   title,
   headingLevel,
   children,
-  id
+  id,
+  uniqueId
 }) => {
   const [isOpen, setIsOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
   const HeadingTag = `h${headingLevel}`;
+  const contentId = `content-${uniqueId || id}`;
+  const triggerId = `trigger-${uniqueId || id}`;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
     className: "pr-accordeon-container",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(HeadingTag, {
@@ -47,15 +51,15 @@ const AccordeonItem = ({
         type: "button",
         "aria-expanded": isOpen,
         className: `pr-accordeon-trigger js-trigger ${isOpen ? "is-open" : ""}`,
-        "aria-controls": `content-${id}`,
-        id: `trigger-${id}`,
+        "aria-controls": contentId,
+        id: triggerId,
         onClick: () => setIsOpen(!isOpen),
         children: title
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-      id: `content-${id}`,
+      id: contentId,
       role: "region",
-      "aria-labelledby": `trigger-${id}`,
+      "aria-labelledby": triggerId,
       className: `pr-accordeon-content js-content ${isOpen ? "is-open" : ""}`,
       hidden: !isOpen,
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
@@ -67,15 +71,24 @@ const AccordeonItem = ({
 };
 function Edit({
   attributes,
-  setAttributes
+  setAttributes,
+  clientId
 }) {
   const {
     titleField,
     headingLevel,
     mode,
     authorCount,
-    showAllAuthors
+    showAllAuthors,
+    uniqueId
   } = attributes;
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+    if (!uniqueId) {
+      setAttributes({
+        uniqueId: `accordion-${clientId}`
+      });
+    }
+  }, [clientId, setAttributes]);
   const authors = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
     if (mode !== "dynamic") return null;
     return select("core").getEntityRecords("taxonomy", "pr-auteurs", {
@@ -166,6 +179,7 @@ function Edit({
         title: titleField || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Titre de l'accordéon", "pr-accordeon"),
         headingLevel: headingLevel,
         id: "static",
+        uniqueId: uniqueId,
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           ...innerBlocksProps
         })
@@ -173,6 +187,7 @@ function Edit({
         title: author.name,
         headingLevel: headingLevel,
         id: author.id,
+        uniqueId: uniqueId,
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("p", {
           children: ["Articles de ", author.name]
         })
@@ -266,7 +281,8 @@ function save({
     headingLevel,
     mode,
     authorCount,
-    showAllAuthors
+    showAllAuthors,
+    uniqueId
   } = attributes;
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
     className: "pr-accordeon"
@@ -278,6 +294,8 @@ function save({
 
   // Pour le mode statique uniquement, car le mode dynamique sera rendu côté serveur
   if (mode === "static") {
+    const contentId = `content-${uniqueId}`;
+    const triggerId = `trigger-${uniqueId}`;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       ...blockProps,
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -287,14 +305,16 @@ function save({
             type: "button",
             "aria-expanded": "false",
             className: "pr-accordeon-trigger js-trigger",
-            "aria-controls": "content-static",
-            id: "trigger-static",
+            "aria-controls": contentId // ✅ Utilisez la variable
+            ,
+            id: triggerId,
             children: titleField || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Titre de l'accordéon", "pr-accordeon")
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          id: "content-static",
+          id: contentId,
           role: "region",
-          "aria-labelledby": "trigger-static",
+          "aria-labelledby": triggerId // ✅ Utilisez la variable
+          ,
           className: "pr-accordeon-content js-content",
           hidden: true,
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
@@ -312,7 +332,8 @@ function save({
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "pr-accordeon-dynamic",
       "data-show-all": showAllAuthors,
-      "data-count": authorCount
+      "data-count": authorCount,
+      "data-unique-id": uniqueId
     })
   });
 }
@@ -419,7 +440,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/pr-accordeon","version":"0.1.0","title":"Pr Accordeon","category":"widgets","icon":"list-view","description":"Accordéon bloc ouvrable / fermable contenant du texte","example":{},"supports":{"html":false,"innerBlocks":true,"multiple":true},"textdomain":"pr-accordeon","editorScript":"file:./index.js","editorStyle":"file:./index.css","viewScript":"file:./view.js","style":"file:./style-index.css","attributes":{"titleField":{"type":"string","default":""},"headingLevel":{"type":"string","default":"3"},"mode":{"type":"string","default":"static"},"authorCount":{"type":"number","default":5},"showAllAuthors":{"type":"boolean","default":false}},"allowedBlocks":["core/categories","core/column","core/columns","core/comments-title","core/file","core/form","core/form-input","core/gallery","core/group","core/heading","core/html","core/image","core/list","core/list-item","core/navigation-link","core/paragraph","core/table"]}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/pr-accordeon","version":"0.1.0","title":"Pr Accordeon","category":"widgets","icon":"list-view","description":"Accordéon bloc ouvrable / fermable contenant du texte","example":{},"supports":{"html":false,"innerBlocks":true,"multiple":true},"textdomain":"pr-accordeon","editorScript":"file:./index.js","editorStyle":"file:./index.css","viewScript":"file:./view.js","style":"file:./style-index.css","attributes":{"titleField":{"type":"string","default":""},"headingLevel":{"type":"string","default":"3"},"mode":{"type":"string","default":"static"},"authorCount":{"type":"number","default":5},"showAllAuthors":{"type":"boolean","default":false},"uniqueId":{"type":"string"}},"allowedBlocks":["core/categories","core/column","core/columns","core/comments-title","core/file","core/form","core/form-input","core/gallery","core/group","core/heading","core/html","core/image","core/list","core/list-item","core/navigation-link","core/paragraph","core/table"]}');
 
 /***/ })
 

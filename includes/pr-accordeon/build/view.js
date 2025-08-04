@@ -24,14 +24,27 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
  */
 
-const triggerAccordeon = document.querySelectorAll(".js-trigger");
-console.log("trigger", triggerAccordeon);
-triggerAccordeon.forEach(element => {
-  element.addEventListener("click", function () {
-    const ariaControls = element.getAttribute("aria-controls");
-    const content = document.getElementById(ariaControls);
-    content.toggleAttribute("hidden");
-    element.classList.toggle("open");
+document.addEventListener("DOMContentLoaded", function () {
+  // Sélectionner tous les triggers d'accordéon
+  const triggers = document.querySelectorAll(".pr-accordeon-trigger.js-trigger");
+  triggers.forEach(trigger => {
+    trigger.addEventListener("click", function () {
+      // Récupérer l'ID du contenu associé
+      const contentId = this.getAttribute("aria-controls");
+      const content = document.getElementById(contentId);
+      if (content) {
+        // Vérifier l'état actuel
+        const isExpanded = this.getAttribute("aria-expanded") === "true";
+
+        // Toggle l'état
+        this.setAttribute("aria-expanded", !isExpanded);
+        content.hidden = isExpanded;
+
+        // Toggle les classes CSS si nécessaire
+        this.classList.toggle("is-open", !isExpanded);
+        content.classList.toggle("is-open", !isExpanded);
+      }
+    });
   });
 });
 /******/ })()

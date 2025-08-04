@@ -19,27 +19,30 @@
 	"viewScript": "file:./view.js",
 	"style": "file:./style-index.css",
 	"attributes": {
-        "titleField": {
-            "type": "string",
-            "default": ""
-        },
-        "headingLevel": {
-            "type": "string",
-            "default": "3"
-        },
-        "mode": {
-            "type": "string",
-            "default": "static"
-        },
-        "authorCount": {
-            "type": "number",
-            "default": 5
-        },
-        "showAllAuthors": {
-            "type": "boolean",
-            "default": false
-        }
-    },
+		"titleField": {
+			"type": "string",
+			"default": ""
+		},
+		"headingLevel": {
+			"type": "string",
+			"default": "3"
+		},
+		"mode": {
+			"type": "string",
+			"default": "static"
+		},
+		"authorCount": {
+			"type": "number",
+			"default": 5
+		},
+		"showAllAuthors": {
+			"type": "boolean",
+			"default": false
+		},
+		"uniqueId": {
+			"type": "string"
+		}
+	},
 	"allowedBlocks": [
 		"core/categories",
 		"core/column",
