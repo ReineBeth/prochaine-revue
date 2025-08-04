@@ -217,7 +217,7 @@ function floating_share_button_shortcode() {
     
     // Construire les URLs de partage
     $facebook_url = 'https://www.facebook.com/sharer/sharer.php?u=' . $url;
-    $twitter_url = 'https://twitter.com/intent/tweet?url=' . $url . '&text=' . $title;
+    $x_url = 'https://x.com/' . $url . '&text=' . $title;
     $linkedin_url = 'https://www.linkedin.com/sharing/share-offsite/?url=' . $url;
     $whatsapp_url = 'https://wa.me/?text=' . $title . ' ' . $url;
     $messenger_url = 'https://www.facebook.com/dialog/send?link=' . $url . '&app_id=YOUR_FACEBOOK_APP_ID&redirect_uri=' . $url;
@@ -233,9 +233,9 @@ function floating_share_button_shortcode() {
     $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>';
     $output .= '</a>';
     
-    // Twitter/X
-    $output .= '<a href="' . esc_url($twitter_url) . '" target="_blank" rel="noopener noreferrer" class="share-button twitter">';
-    $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19.9 7.24c.013.194.013.388.013.582 0 5.963-4.582 12.834-12.834 12.834-2.551 0-4.921-.746-6.917-2.02.363.044.713.063 1.088.063 2.107 0 4.043-.713 5.587-1.924-1.975-.038-3.638-1.326-4.205-3.106.275.05.55.75.838.075.4 0 .8-.05 1.175-.15-2.05-.413-3.6-2.226-3.6-4.401v-.05c.6.338 1.3.538 2.038.563-1.2-.8-2-2.176-2-3.726 0-.825.225-1.587.6-2.25 2.176 2.688 5.45 4.45 9.113 4.638-.075-.337-.1-.675-.1-1.013 0-2.45 2-4.45 4.476-4.45 1.275 0 2.425.538 3.237 1.4.988-.188 1.95-.55 2.787-1.038-.325 1.013-1.013 1.875-1.925 2.413.888-.1 1.75-.325 2.538-.65-.613.863-1.375 1.638-2.251 2.263z"/></svg>';
+    // /X
+    $output .= '<a href="' . esc_url($x_url) . '" target="_blank" rel="noopener noreferrer" class="share-button x">';
+    $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M18.42,14.009L27.891,3h-2.244l-8.224,9.559L10.855,3H3.28l9.932,14.455L3.28,29h2.244l8.684-10.095,6.936,10.095h7.576l-10.301-14.991h0Zm-3.074,3.573l-1.006-1.439L6.333,4.69h3.447l6.462,9.243,1.006,1.439,8.4,12.015h-3.447l-6.854-9.804h0Z"></path></svg>';
     $output .= '</a>';
     
     // LinkedIn
