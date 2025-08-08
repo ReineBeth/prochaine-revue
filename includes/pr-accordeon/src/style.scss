@@ -15,6 +15,16 @@
 	}
 }
 
+.author-articles-title {
+	font-family: Libre Bodoni;
+	font-size: 22px;
+	padding-top: 16px;
+}
+
+.author-description {
+	margin: 0;
+}
+
 .pr-accordeon-container h2,
 .pr-accordeon-container h3,
 .pr-accordeon-container h4,
@@ -57,9 +67,8 @@
 }
 
 .pr-accordeon-content {
-	padding: 16px 8px;
+	padding: 0 16px 8px 16px;
 }
-
 
 .pr-accordeon-container {
     max-height: 1000px;

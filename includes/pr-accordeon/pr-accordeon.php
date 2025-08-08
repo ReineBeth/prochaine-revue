@@ -58,9 +58,13 @@ function render_accordeon_block($attributes, $content) {
 
             $output .= '<div class="pr-accordeon-content-inner">';
 
+			if (!empty($term->description)) {
+       		$output .= '<p class="author-description">' . esc_html($term->description) . '</p>';
+    }
+
             // Articles de l'auteur
             $args = [
-                'post_type' => 'articles',
+                'post_type' => 'pr_article',
                 'posts_per_page' => -1,
                 'tax_query' => [
                     [
@@ -74,16 +78,16 @@ function render_accordeon_block($attributes, $content) {
             $articles_query = new WP_Query($args);
 
             if ($articles_query->have_posts()) {
-                $output .= '<ul class="author-articles">';
+                $output .= '<h4 class="author-articles-title">Liste des articles</h4>' . '<ul class="author-articles">';
                 while ($articles_query->have_posts()) {
                     $articles_query->the_post();
                     $output .= '<li>';
                     $output .= '<a href="' . get_permalink() . '">' . get_the_title() . '</a>';
 
-                    $pdf_url = get_field('article_pdf');
-                    if ($pdf_url) {
-                        $output .= ' - <a href="' . esc_url($pdf_url) . '">PDF</a>';
-                    }
+                    // $pdf_url = get_field('article_pdf');
+                    // if ($pdf_url) {
+                    //     $output .= ' - <a href="' . esc_url($pdf_url) . '">PDF</a>';
+                    // }
 
                     $output .= '</li>';
                 }

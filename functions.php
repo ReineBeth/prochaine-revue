@@ -82,7 +82,6 @@ function create_articles_post_type() {
             'supports' => array('title', 'editor', 'thumbnail'),
             'menu_icon' => 'dashicons-media-document',
             'show_in_rest' => true, // Important pour Gutenberg
-            'taxonomies' => ['pr-auteurs']
         )
     );
 }
@@ -367,21 +366,21 @@ add_filter('render_block', 'add_custom_class_to_post_title', 10, 2);
 // TEST CRÉER PAGE ARTICLES AUTOMATIQUMENT 
 
 // Créer une taxonomie pour les auteurs
-function create_custom_taxonomy() {
-    register_taxonomy(
-        'auteurs', // Slug de la taxonomie
-        'post',  // Type de post (post, page ou CPT)
-        array(
-            'label' => 'Auteurs',
-            'hierarchical' => false, // true pour type catégorie, false pour type tag
-            'public' => true,
-            'show_ui' => true,
-            'show_admin_column' => true,
-            'show_in_rest' => true
-        )
-    );
-}
-add_action('init', 'create_custom_taxonomy');
+// function create_custom_taxonomy() {
+//     register_taxonomy(
+//         'auteurs', // Slug de la taxonomie
+//         'pr_article',  // Type de post (post, page ou CPT)
+//         array(
+//             'label' => 'Auteurs',
+//             'hierarchical' => false, // true pour type catégorie, false pour type tag
+//             'public' => true,
+//             'show_ui' => true,
+//             'show_admin_column' => true,
+//             'show_in_rest' => true
+//         )
+//     );
+// }
+// add_action('init', 'create_custom_taxonomy');
 
 
 // Enregistrement du shortcode des auteurs
