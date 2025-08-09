@@ -153,10 +153,13 @@ add_action('enqueue_block_editor_assets', 'enqueue_custom_article_blocks');
 register_block_type('custom-article/auteurs', array(
     'render_callback' => function($attributes, $content) {
         $post_id = get_the_ID();
-        $auteurs = get_field('article_auteurs', $post_id);
-        if ($auteurs) {
-            return '<div class="article-auteurs">Auteurs: ' . esc_html($auteurs) . '</div>';
+        $terms = get_the_terms($post_id, 'pr-auteurs');
+
+        if ($terms && !is_wp_error($terms)) {
+            $noms = wp_list_pluck($terms, 'name');
+            return '<div class="article-auteurs">Par ' . esc_html(implode(', ', $noms)) . '</div>';
         }
+
         return '';
     }
 ));
