@@ -164,13 +164,15 @@ register_block_type('custom-article/auteurs', array(
     }
 ));
 
+
+
 // Rendu de la description
 register_block_type('custom-article/description', array(
     'render_callback' => function($attributes, $content) {
         $post_id = get_the_ID();
         $description = get_field('article_description', $post_id);
         if ($description) {
-            return '<div class="article-description">' . esc_html($description) . '</div>';
+            return '<p class="article-description">' . esc_html($description) . '</p>';
         }
         return '';
     }
