@@ -28,11 +28,20 @@
         margin-top: 0;
     }
 
-    .section-origine-container, .section-comite-container, .section-services-container, .section-partenaires-container {
+	.section-repondre-defis-container {
+		display: flex;
+		gap: 30px;
+
+		.texte-container {
+			max-width: 1000px;
+		}
+	}
+
+    .section-origine-container, .section-comite-container, .section-repondre-defis-container, .section-partenaires-container, .section-equipes-container {
         max-width: 1440px;
     }
 
-    .section-origine, .section-comite, .section-services, .section-partenaires {
+    .section-origine, .section-comite, .section-repondre-defis, .section-partenaires, .section-equipes {
         display: flex;
         justify-content: center;
     }
@@ -58,10 +67,16 @@
         }
     }
 
-    .section-services {
-        grid-area: service;
+    .section-repondre-defis {
+        grid-area: defis;
         background: var.$color-neutral-2;
         color: var.$color-white;
+
+		img {
+			    width: 326px;
+                height: 326px;
+                object-fit: cover;
+		}
     }
 
     .mentorat-articles-containeur {

@@ -52,7 +52,9 @@
                 <!-- wp:column -->
                 <div class="wp-block-column">
                     <!-- wp:heading -->
-                    <h2 class="wp-block-heading">Notre mission: Démocratiser la recherche et la publication</h2>
+                    <h2 class="wp-block-heading">
+                        Notre mission: Démocratiser la recherche et la publication
+                    </h2>
                     <!-- /wp:heading -->
 
                     <!-- wp:shortcode -->
@@ -77,31 +79,39 @@
         </section>
         <!-- /wp:group -->
 
-        <!-- wp:group {"tagName":"section", "className":"section-service"} -->
-        <section class="wp-block-group section-services">
-            <!-- wp:column -->
-            <div class="wp-block-column">
-                <!-- wp:group -->
-                <div class="wp-block-group img-container">
+        <!-- wp:group {"tagName":"section", "className":"section-repondre-defis"} -->
+        <section class="wp-block-group section-repondre-defis">
+            <!-- wp:group -->
+            <div class="wp-block-group section-repondre-defis-container">
+
+                <!-- wp:column -->
+                <div class="wp-block-column">
+                    <!-- wp:group -->
+                    <div class="wp-block-group img-container">
+                        <!-- wp:shortcode -->
+                        [my_acf field="img-repondre-aux-defis"]
+                        <!-- /wp:shortcode -->
+                    </div>
+                    <!-- /wp:group -->
+                </div>
+                <!-- /wp:column -->
+
+                <!-- wp:column -->
+                <div class="wp-block-column texte-container">
+                    <!-- wp:heading -->
+                    <h1 class="wp-block-heading">
+                        Répondre aux défis actuels de la recherche
+                    </h1>
+                    <!-- /wp:heading -->
+
                     <!-- wp:shortcode -->
-                    [my_acf field="img-repondre-aux-defis"]
+                    [my_acf field="p-repondre-aux-defis"]
                     <!-- /wp:shortcode -->
                 </div>
-                <!-- /wp:group -->
-            </div>
-            <!-- /wp:column -->
+                <!-- /wp:column -->
 
-            <!-- wp:column -->
-            <div class="wp-block-column">
-                <!-- wp:heading -->
-                <h1 class="wp-block-heading">Répondre aux défis actuels de la recherche</h1>
-                <!-- /wp:heading -->
-
-                <!-- wp:shortcode -->
-                [my_acf field="p-repondre-aux-defis"]
-                <!-- /wp:shortcode -->
             </div>
-            <!-- /wp:column -->
+            <!-- /wp:group -->
         </section>
         <!-- /wp:group -->
 
@@ -117,8 +127,12 @@
         <!-- /wp:group -->
 
         <!-- wp:group {"tagName":"section", "className":"section-equipe"} -->
-        <section class="wp-block-group section-equipe">
-            <!-- wp:template-part {"slug":"a-propos-equipes"} /-->
+        <section class="wp-block-group section-equipes">
+            <!-- wp:group -->
+            <div class="wp-block-group section-equipes-container">
+                <!-- wp:template-part {"slug":"a-propos-equipes"} /-->
+            </div>
+            <!-- /wp:group -->
         </section>
         <!-- /wp:group -->
 
