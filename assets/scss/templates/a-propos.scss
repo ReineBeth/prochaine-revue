@@ -24,22 +24,49 @@
     }
 
     section {
-        padding: 30px;
+        padding: 60px 30px;
         margin-top: 0;
     }
 
 	.section-repondre-defis-container {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 30px;
+	}
+
 
 		.texte-container {
 			max-width: 1000px;
 		}
+
+		.img-container {
+			display: flex;
+			justify-content: center;
+			min-width: 326px;
+		}
+	}
+
+	.section-equipes-container {
+		width: 100%;
 	}
 
     .section-origine-container, .section-comite-container, .section-repondre-defis-container, .section-partenaires-container, .section-equipes-container {
         max-width: 1440px;
+
+		@media (min-width:1600px){
+			width: 1440px;
+		}
     }
+
+	.section-partenaires-container {
+		h2 {
+			margin-top: 0;
+		}
+	}
+
+	.section-partenaires {
+		padding-top: 0 !important;
+	}
 
     .section-origine, .section-comite, .section-repondre-defis, .section-partenaires, .section-equipes {
         display: flex;
@@ -86,4 +113,11 @@
     .wp-block-template-part {
         margin-top: 0;
     }
+
+	.a-propos-equipes {
+		.has-global-padding.is-layout-constrained.wp-block-group-is-layout-constrained, .pr-accordeon, .wp-block-heading {
+			max-width: none;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+	}
 }
