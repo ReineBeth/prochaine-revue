@@ -322,19 +322,6 @@ function update_article_pages_template() {
     }
 }
 
-// Ajoute un hook pour détecter les modifications du fichier template
-function check_template_modification() {
-    $template_path = get_template_directory() . '/templates/lecture-article.html';
-    $last_modified = get_option('lecture_article_template_modified');
-    $current_modified = filemtime($template_path);
-
-    if ($last_modified != $current_modified) {
-        update_article_pages_template();
-        update_option('lecture_article_template_modified', $current_modified);
-    }
-}
-add_action('init', 'check_template_modification');
-
 function initialize_template_modification_check() {
     $template_path = get_template_directory() . '/templates/lecture-article.html';
     add_option('lecture_article_template_modified', filemtime($template_path));
