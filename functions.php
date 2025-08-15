@@ -58,7 +58,7 @@ function my_custom_acf_shortcode($atts) {
             <a href="' . esc_url($pdf_url) . '">Téléchargez-le ici</a></p>
         </object>';
     }
-    if($atts['field'] == 'img-a-propos' && !empty($value)) {
+    if($atts['field'] == 'img-a-propos' || $atts['field'] == 'img-repondre-aux-defis' && !empty($value)) {
         $img_url = is_array($value) ? $value['url'] : $value;
         $img_alt = is_array($value) ? $value['alt'] : '';
         return '<div class="wp-block-image">' . '<img src="' . $img_url . '" alt="' . $img_alt . '">' . '</div>';
