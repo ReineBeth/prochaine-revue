@@ -157,14 +157,12 @@ register_block_type('custom-article/auteurs', array(
 
         if ($terms && !is_wp_error($terms)) {
             $noms = wp_list_pluck($terms, 'name');
-            return '<div class="article-auteurs">Par ' . esc_html(implode(', ', $noms)) . '</div>';
+            return '<p class="article-auteurs pr-mt-8">Par ' . esc_html(implode(', ', $noms)) . '</p>';
         }
 
         return '';
     }
 ));
-
-
 
 // Rendu de la description
 register_block_type('custom-article/description', array(
@@ -172,7 +170,7 @@ register_block_type('custom-article/description', array(
         $post_id = get_the_ID();
         $description = get_field('article_description', $post_id);
         if ($description) {
-            return '<p class="article-description">' . esc_html($description) . '</p>';
+            return '<p class="article-description pr-mt-8">' . esc_html($description) . '</p>';
         }
         return '';
     }
@@ -368,33 +366,6 @@ function add_custom_class_to_post_title($block_content, $block) {
 }
 add_filter('render_block', 'add_custom_class_to_post_title', 10, 2);
 
-// TEST CRÉER PAGE ARTICLES AUTOMATIQUMENT 
-
-// Créer une taxonomie pour les auteurs
-// function create_custom_taxonomy() {
-//     register_taxonomy(
-//         'auteurs', // Slug de la taxonomie
-//         'pr_article',  // Type de post (post, page ou CPT)
-//         array(
-//             'label' => 'Auteurs',
-//             'hierarchical' => false, // true pour type catégorie, false pour type tag
-//             'public' => true,
-//             'show_ui' => true,
-//             'show_admin_column' => true,
-//             'show_in_rest' => true
-//         )
-//     );
-// }
-// add_action('init', 'create_custom_taxonomy');
-
-
-// Enregistrement du shortcode des auteurs
-// add_action('init', function() {
-//     add_shortcode('liste_auteurs_articles', function() {
-//         return display_authors_with_articles();
-//     });
-// });
-
 function ajouter_script_recherche_auteurs() {
     ?>
     <script>
@@ -566,9 +537,23 @@ function add_citation_inline_script() {
 }
 add_action('wp_footer', 'add_citation_inline_script');
 
-// FIN Ajouter script au thème
+
 
 add_theme_support('editor-styles');
 add_theme_support('wp-block-styles');
 add_theme_support('align-wide');
+
+add_action('wp_head', function() {
+    $base = get_template_directory_uri() . '/assets/images/favicon';
+    ?>
+    <!-- Favicon classique -->
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $base; ?>/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $base; ?>/favicon-32x32.png">
+    <!-- Android -->
+    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo $base; ?>/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="<?php echo $base; ?>/android-chrome-512x512.png">
+    <!-- Apple Touch -->
+    <link rel="apple-touch-icon" href="<?php echo $base; ?>/apple-touch-icon.png">
+    <?php
+});
 ?>
