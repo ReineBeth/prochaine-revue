@@ -543,4 +543,72 @@ add_action('wp_head', function() {
     <link rel="apple-touch-icon" href="<?php echo $base; ?>/apple-touch-icon.png">
     <?php
 });
+
+function tuiles_articles_dynamiques_shortcode() {
+    // Enqueuer les styles du bloc pr-tuile
+    wp_enqueue_style('pr-tuile-block-style');
+    
+    // Récupérer les 3 derniers articles
+    $articles = get_posts(array(
+        'post_type' => 'pr_article',
+        'posts_per_page' => 3,
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC'
+    ));
+    
+    if (empty($articles)) {
+        return '<p>Aucun article disponible.</p>';
+    }
+    
+    $output = '<div class="pr-tuile-container wp-block-pr-tuile">';
+    
+    foreach ($articles as $article) {
+        $title = get_the_title($article->ID);
+        $description = get_field('article_description', $article->ID);
+        $thumbnail = get_the_post_thumbnail_url($article->ID, 'medium');
+        
+        // Créer l'URL de la page correspondante sous /articles/
+        $slug = $article->post_name;
+        $articles_page_url = home_url('/articles/' . $slug . '/');
+        
+        $output .= '<a class="pr-tuile-lien" href="' . esc_url($articles_page_url) . '" rel="noopener noreferrer">';
+        
+        // N'afficher l'image que si elle existe
+        if ($thumbnail) {
+            $output .= '<div class="pr-tuile-lien-image">';
+            $output .= '<img src="' . esc_url($thumbnail) . '" alt="' . esc_attr($title) . '" loading="lazy" />';
+            $output .= '</div>';
+        }
+        
+        $output .= '<div class="pr-tuile-lien-text">';
+        $output .= '<h3>' . esc_html($title) . '</h3>';
+        if ($description) {
+            $output .= '<p>' . esc_html(wp_trim_words($description, 20)) . '</p>';
+        }
+        $output .= '</div>';
+        $output .= '</a>';
+    }
+    
+    $output .= '</div>';
+    
+    return $output;
+}
+add_shortcode('tuiles_articles_dynamiques', 'tuiles_articles_dynamiques_shortcode');
+
+function enqueue_pr_tuile_styles() {
+    // Vérifier si le fichier CSS du bloc existe
+    $tuile_css_path = get_template_directory() . '/includes/pr-tuile/build/style-index.css';
+    $tuile_css_url = get_template_directory_uri() . '/includes/pr-tuile/build/style-index.css';
+    
+    if (file_exists($tuile_css_path)) {
+        wp_register_style(
+            'pr-tuile-block-style',
+            $tuile_css_url,
+            array(),
+            filemtime($tuile_css_path)
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_pr_tuile_styles');
 ?>

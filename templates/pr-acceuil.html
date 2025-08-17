@@ -27,7 +27,13 @@
 					[my_acf field="articles_titre"]
 				</h2>
 				<!-- /wp:heading -->
-				<!-- wp:template-part {"slug":"tuiles-articles"} /-->
+				<!-- wp:group {"className":"pr-tuiles-articles"} -->
+				<div class="wp-block-group pr-tuiles-articles">
+					<!-- wp:html -->
+					[tuiles_articles_dynamiques]
+					<!-- /wp:html -->
+				</div>
+				<!-- /wp:group -->
 			</div>
 			<!-- /wp:group -->
 		</section>
