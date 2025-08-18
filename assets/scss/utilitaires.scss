@@ -19,6 +19,7 @@
 }
 .pr-bg-neutral-2 {
 	background-color: var.$color-neutral-2;
+	color: var.$color-white;
 }
 .pr-bg-neutral-3 {
 	background-color: var.$color-neutral-3;
@@ -30,6 +31,45 @@
 }
 .pr-text-black {
 	color: var.$color-black;
+}
+
+// Autres
+
+.pr-section {
+	padding: 16px 8px;
+
+	@media (min-width: var.$breakpoint-md) {
+		padding: 36px 24px;
+	}
+}
+
+.pr-container {
+	max-width: 1440px;
+	margin-inline: auto;
+}
+
+.pr-display-none {
+	display: none;
+}
+
+.pr-large {
+	font-size: pxToRem(18);
+}
+
+.pr-bold {
+	font-weight: bold;
+}
+
+.pr-center {
+	text-align: center;
+}
+
+.pr-h3-style {
+	/* Copie les styles de vos h3 existants */
+	font-size: var(--wp--preset--font-size--h3, 1.5rem);
+	font-weight: var(--wp--preset--font-weight--h3, 600);
+	line-height: var(--wp--preset--line-height--h3, 1.3);
+	margin: var(--wp--preset--spacing--h3, 1rem 0);
 }
 
 // Classes d'espacement - Margin
@@ -190,20 +230,61 @@
 	padding-right: 40px;
 }
 
-// Autres
-.pr-section {
-	padding: 16px 8px;
+.pr-flex {
+	display: flex;
+	gap: 8px;
 
-	@media (min-width: var.$breakpoint-md) {
-		padding: 36px 24px;
+	&-md {
+		@media (min-width: var.$breakpoint-md) {
+			display: flex;
+			gap: 16px;
+		}
+	}
+	&-lg {
+		@media (min-width: var.$breakpoint-lg) {
+			display: flex;
+			gap: 24px;
+		}
+	}
+
+	&-wrap {
+		flex-wrap: wrap;
+	}
+
+	&-basis {
+		&-10 {
+			flex-basis: 10%;
+		}
+		&-20 {
+			flex-basis: 20%;
+		}
+		&-30 {
+			flex-basis: 30%;
+		}
+		&-40 {
+			flex-basis: 40%;
+		}
+		&-50 {
+			flex-basis: 50%;
+		}
+		&-60 {
+			flex-basis: 60%;
+		}
+		&-70 {
+			flex-basis: 70%;
+		}
+		&-80 {
+			flex-basis: 80%;
+		}
+		&-90 {
+			flex-basis: 90%;
+		}
+		&-100 {
+			flex-basis: 100%;
+		}
 	}
 }
 
-.pr-container {
-	max-width: 1440px;
-	margin-inline: auto;
-}
-
-.pr-display-none {
-	display: none;
+.pr-width-100 {
+	width: 100%;
 }

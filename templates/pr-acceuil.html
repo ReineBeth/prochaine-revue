@@ -17,6 +17,17 @@
 			<!-- /wp:group -->
 		</section>
 		<!-- /wp:group -->
+		<!-- wp:group {"tagName":"section", "className":"pr-hero"} -->
+		<div
+			class="pr-bg-neutral-3 wp-block-group pr-section pr-pb-8 pr-pt-8 pr-mt-0"
+		>
+			<div class="pr-container">
+				<p class="pr-bold pr-large pr-center">
+					[my_acf field="home_slogan"]
+				</p>
+			</div>
+		</div>
+		<!-- /wp:group -->
 
 		<!-- wp:group {"tagName":"section", "className":"pr-section"} -->
 		<section class="wp-block-group pr-section pr-bg-secondary pr-mt-0">
@@ -39,55 +50,105 @@
 		</section>
 		<!-- /wp:group -->
 
-		<!-- wp:group {"tagName":"section", "className":"pr-section-mentorat"} -->
-		<section
-			class="wp-block-group pr-section pr-section-mentorat pr-bg-primary pr-mt-0"
-		>
+		<!-- wp:group {"tagName":"section", "className":"pr-section-quoi"} -->
+		<section class="wp-block-group pr-section pr-section-quoi pr-mt-0">
 			<!-- wp:group -->
 			<div class="wp-block-group pr-container">
 				<!-- wp:columns -->
 				<div class="wp-block-columns">
 					<!-- wp:column -->
-					<div class="wp-block-column pr-section-mentorat-text">
-						<!-- wp:heading -->
-						<h2 class="wp-block-heading">
-							[my_acf field="mentorat_titre"]
-						</h2>
-						<!-- /wp:heading -->
-						<!-- wp:paragraph -->
-						<p class="pr-pb-8">
-							[my_acf field="mentorat_description"]
-						</p>
-						<!-- /wp:paragraph -->
-						<!-- wp:button -->
-						<a
-							class="wp-block-button__link wp-element-button"
-							href="[my_acf field='mentorat_lien']"
-						>
-							[my_acf field="mentorat_bouton_texte"]
-						</a>
-						<!-- /wp:button -->
-					</div>
-					<!-- /wp:column -->
-
-					<!-- wp:column -->
-					<div class="wp-block-column pr-section-mentorat-image">
-						<!-- wp:group -->
-						<div class="wp-block-group">
-							<!-- wp:shortcode -->
-							<figure>
-								<img
-									src="[my_acf field='mentorat_image' return_format='url']"
-									alt="[my_acf field='mentorat_image' return_format='alt']"
-								/>
-							</figure>
-							<!-- /wp:shortcode -->
-						</div>
-						<!-- /wp:group -->
+					<div class="wp-block-column">
+						<!-- wp:template-part {"slug":"pr-acceuil-quoi"} /-->
 					</div>
 					<!-- /wp:column -->
 				</div>
 				<!-- /wp:columns -->
+			</div>
+			<!-- /wp:group -->
+		</section>
+		<!-- /wp:group -->
+		<!-- wp:group {"tagName":"section", "className":"pr-section-services"} -->
+		<section
+			class="wp-block-group pr-section pr-section-services pr-mt-0 pr-bg-neutral-2"
+		>
+			<!-- wp:group -->
+			<div class="wp-block-group pr-container">
+				<!-- wp:heading -->
+				<h2 class="wp-block-heading">Nos services</h2>
+				<!-- /wp:heading -->
+
+				<!-- wp:columns -->
+				<div class="wp-block-columns">
+					<!-- wp:column -->
+					<div class="wp-block-column">
+						<!-- wp:heading {"level":3} -->
+						<h3 class="wp-block-heading">Mentorat</h3>
+						<!-- /wp:heading -->
+
+						<div>
+							<div class="pr-pb-16">
+								[my_acf field="descr-service-mentorat"]
+							</div>
+							<p>
+								<a
+									href="[my_acf field='lien-service-mentorat']"
+									class="wp-block-button__link wp-element-button"
+								>
+									[my_acf field="texte-cta-mentorat"]
+								</a>
+							</p>
+						</div>
+					</div>
+					<!-- /wp:column -->
+
+					<!-- wp:column -->
+					<div class="wp-block-column">
+						<!-- wp:heading {"level":3} -->
+						<h3 class="wp-block-heading">Publier un article</h3>
+						<!-- /wp:heading -->
+
+						<div>
+							<div class="pr-pb-16">
+								[my_acf field="descr-service-article"]
+							</div>
+							<p>
+								<a
+									href="[my_acf field='lien-service-article']"
+									class="wp-block-button__link wp-element-button"
+								>
+									[my_acf field="texte-cta-article"]
+								</a>
+							</p>
+						</div>
+					</div>
+					<!-- /wp:column -->
+				</div>
+				<!-- /wp:columns -->
+			</div>
+			<!-- /wp:group -->
+		</section>
+		<!-- /wp:group -->
+		<!-- wp:group {"tagName":"section", "className":"pr-section-banner"} -->
+		<section
+			class="wp-block-group pr-section pr-section-banner pr-mt-0 pr-bg-neutral-3"
+		>
+			<!-- wp:group -->
+			<div class="wp-block-group pr-container pr-flex-md">
+				<div class="wp-block-image pr-flex-basis-30">
+					<img
+						class="pr-width-100"
+						src="[my_acf field='banner_image']"
+						alt="[my_acf field='banner_image_alt']"
+					/>
+				</div>
+				<div class="pr-flex-basis-70">
+					<!-- wp:heading -->
+					<h2 class="wp-block-heading pr-h3-style">
+						[my_acf field="banner_title"]
+					</h2>
+					<!-- /wp:heading -->
+					[my_acf field="banner_content"]
+				</div>
 			</div>
 			<!-- /wp:group -->
 		</section>
