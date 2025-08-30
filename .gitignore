@@ -9,4 +9,3 @@ node_modules/
 
 # Précompilations CSS/JS si nécessaires
 *.map
-dist/
