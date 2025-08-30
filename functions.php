@@ -2,10 +2,10 @@
 
 <?php
 // Inclure les fonctionnalités des plugins
-require_once get_template_directory() . './includes/pr-accordeon/pr-accordeon.php';
-require_once get_template_directory() . './includes/pr-carte/pr-carte.php';
-require_once get_template_directory() . './includes/pr-tuile/pr-tuile.php';
-require_once get_template_directory() . './includes/pr-bloc-recherche/pr-bloc-recherche.php';
+require_once get_template_directory() . '/includes/pr-accordeon/pr-accordeon.php';
+require_once get_template_directory() . '/includes/pr-carte/pr-carte.php';
+require_once get_template_directory() . '/includes/pr-tuile/pr-tuile.php';
+require_once get_template_directory() . '/includes/pr-bloc-recherche/pr-bloc-recherche.php';
 
 // Connecter le style au thème
 function prochaine_revue_enqueue_styles() {
