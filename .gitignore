@@ -10,10 +10,3 @@ node_modules/
 # Précompilations CSS/JS si nécessaires
 *.map
 dist/
-style.css
-
-
-# Page avec liens image 
-parts/partenaires.html
-parts/footer.html
-parts/header.html
