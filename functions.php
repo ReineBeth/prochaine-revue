@@ -611,4 +611,11 @@ function enqueue_pr_tuile_styles() {
     }
 }
 add_action('wp_enqueue_scripts', 'enqueue_pr_tuile_styles');
+
+add_action('enqueue_block_editor_assets', function() {
+    wp_enqueue_style(
+        'admin-hide-template-parts',
+        get_template_directory_uri() . '/admin-hide-template-parts.css'
+    );
+});
 ?>
