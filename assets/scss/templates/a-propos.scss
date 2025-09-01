@@ -80,7 +80,7 @@
 
             img { 
                 width: 350px;
-                height: 350px;
+                height: 412px;
                 object-fit: cover;
             }
         }
@@ -103,6 +103,7 @@
 			    width: 326px;
                 height: 326px;
                 object-fit: cover;
+                border-color: var.$color-secondary;
 		}
     }
 

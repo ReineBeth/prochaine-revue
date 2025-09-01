@@ -464,6 +464,7 @@ body {
 .section-origine .img-container .wp-block-image img {
   width: 350px;
   height: 350px;
+  height: 412px;
   object-fit: cover;
 }
 
@@ -483,6 +484,7 @@ body {
   width: 326px;
   height: 326px;
   object-fit: cover;
+  border-color: #a3b18a;
 }
 
 .mentorat-articles-containeur {
