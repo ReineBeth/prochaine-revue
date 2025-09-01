@@ -199,8 +199,8 @@ export default function Edit( { attributes, setAttributes}) {
                         />
                         <TextControl
                             label={`Sous titre ${index + 1}`}
-                            help="Phrase d'un maximum de 100 caractères"
-                            maxLength={100}
+                            help="Phrase d'un maximum de 80 caractères"
+                            maxLength={80}
                             value={card.subtitleField}
                             onChange={(value) => updateCard(index, 'subtitleField', value)}
                         />

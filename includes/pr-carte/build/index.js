@@ -246,8 +246,8 @@ function Edit({
             onChange: value => updateCard(index, 'titleField', value)
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
             label: `Sous titre ${index + 1}`,
-            help: "Phrase d'un maximum de 100 caract\xE8res",
-            maxLength: 100,
+            help: "Phrase d'un maximum de 80 caract\xE8res",
+            maxLength: 80,
             value: card.subtitleField,
             onChange: value => updateCard(index, 'subtitleField', value)
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
