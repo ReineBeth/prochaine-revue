@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .container {
   max-width: 1440px;
   margin-inline: auto;
@@ -1036,12 +1035,6 @@ body {
 
 .pr-width-100 {
   width: 100%;
-}
-
-/* Masque header/footer template-parts dans l’éditeur Gutenberg uniquement */
-.wp-block-template-part[slug=header],
-.wp-block-template-part[slug=footer] {
-  display: none !important;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,4 @@
+.wp-block-template-part[slug='header'],
+.wp-block-template-part[slug='footer'] {
+	display: none !important;
+}
