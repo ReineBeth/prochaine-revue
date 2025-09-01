@@ -133,10 +133,10 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					<PanelBody title={__("Paramètres de l'accordéon", "pr-accordeon")}>
 						<TextControl
 							label={__("Titre de l'accordéon", "pr-accordeon")}
-							help={__("Maximum 25 caractères", "pr-accordeon")}
+							help={__("Maximum 100 caractères", "pr-accordeon")}
 							value={titleField || ""}
 							onChange={(value) => setAttributes({ titleField: value })}
-							maxLength={25}
+							maxLength={100}
 						/>
 						<SelectControl
 							label={__("Niveau de titre", "pr-accordeon")}

@@ -145,12 +145,12 @@ function Edit({
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Paramètres de l'accordéon", "pr-accordeon"),
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Titre de l'accordéon", "pr-accordeon"),
-          help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Maximum 25 caractères", "pr-accordeon"),
+          help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Maximum 100 caractères", "pr-accordeon"),
           value: titleField || "",
           onChange: value => setAttributes({
             titleField: value
           }),
-          maxLength: 25
+          maxLength: 100
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Niveau de titre", "pr-accordeon"),
           value: headingLevel,
