@@ -503,9 +503,9 @@ body {
 .pr-hero {
   width: 100%;
   aspect-ratio: 3.5;
-  background-image: url("http://localhost/prochaine-revue/wp-content/uploads/2025/01/hero-pr-1.webp");
+  background-image: url("https://laprochainerevue.ca/wp-content/uploads/2024/08/image00173-scaled.jpg");
   background-repeat: no-repeat;
-  background-position: top center;
+  background-position: 50% 30%;
   background-size: cover;
   display: flex;
   align-items: end;
