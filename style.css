@@ -685,7 +685,7 @@ body {
   width: 80px;
 }
 .footer .wp-block-social-links {
-  margin: 0;
+  margin-top: 8px;
 }
 .footer .wp-block-social-link {
   background: #fff;
