@@ -22,7 +22,7 @@
 
 .recherche-auteurs-container {
     margin: 20px 0;
-    width: 600px;
+    
     background: var.$color-primary;
     border-radius: 8px;
     padding: 30px;
@@ -31,6 +31,13 @@
         color: var.$color-white;
         margin-top: 0;
      }
+
+     	@media (min-width: 580px) {
+		width: 500px;
+	}
+     	@media (min-width: 680px) {
+		width: 600px;
+	}
 }
 
 .recherche-auteur-input {

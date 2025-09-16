@@ -334,7 +334,6 @@ body {
 
 .recherche-auteurs-container {
   margin: 20px 0;
-  width: 600px;
   background: #3a5a40;
   border-radius: 8px;
   padding: 30px;
@@ -342,6 +341,16 @@ body {
 .recherche-auteurs-container h3 {
   color: #fff;
   margin-top: 0;
+}
+@media (min-width: 580px) {
+  .recherche-auteurs-container {
+    width: 500px;
+  }
+}
+@media (min-width: 680px) {
+  .recherche-auteurs-container {
+    width: 600px;
+  }
 }
 
 .recherche-auteur-input {
