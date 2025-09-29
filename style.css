@@ -314,10 +314,6 @@ body {
   align-items: center;
 }
 
-.template-auteurs {
-  display: flex;
-  justify-content: center;
-}
 .template-auteurs .auteurs-container {
   padding: 35px 40px;
   max-width: 1440px;

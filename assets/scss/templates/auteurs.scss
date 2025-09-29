@@ -1,80 +1,80 @@
 @use '../variables.scss' as var;
 
 .template-auteurs {
-    display: flex;
-    justify-content: center;
+	// display: flex;
+	// justify-content: center;
 
-    .auteurs-container {
-    padding: 35px 40px;
-    max-width: 1440px;
+	.auteurs-container {
+		padding: 35px 40px;
+		max-width: 1440px;
 
-        .pr-accordeon {
-        padding-top: 50px;
-        }   
-    }
+		.pr-accordeon {
+			padding-top: 50px;
+		}
+	}
 }
 
 .recherche {
-    display: flex;
-    justify-content: center;
-    margin-top: 60px;
+	display: flex;
+	justify-content: center;
+	margin-top: 60px;
 }
 
 .recherche-auteurs-container {
-    margin: 20px 0;
-    
-    background: var.$color-primary;
-    border-radius: 8px;
-    padding: 30px;
-    
-     h3 {
-        color: var.$color-white;
-        margin-top: 0;
-     }
+	margin: 20px 0;
 
-     	@media (min-width: 580px) {
+	background: var.$color-primary;
+	border-radius: 8px;
+	padding: 30px;
+
+	h3 {
+		color: var.$color-white;
+		margin-top: 0;
+	}
+
+	@media (min-width: 580px) {
 		width: 500px;
 	}
-     	@media (min-width: 680px) {
+	@media (min-width: 680px) {
 		width: 600px;
 	}
 }
 
 .recherche-auteur-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var.$color-primary;
-    border-radius: 4px;
-    font-size: 16px;
-    border-color: var.$color-action-pale;
-    border-width: 4px;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid var.$color-primary;
+	border-radius: 4px;
+	font-size: 16px;
+	border-color: var.$color-action-pale;
+	border-width: 4px;
 }
 
 .recherche-auteur-input:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(0,124,186,0.2);
+	outline: none;
+	box-shadow: 0 0 5px rgba(0, 124, 186, 0.2);
 }
 
 .container-input {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .search-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
 }
 
 .recherche-auteur-input {
-    width: 100%;
-    padding-right: 30px;
+	width: 100%;
+	padding-right: 30px;
 }
 
 .search-icon {
-    position: absolute;
-    right: 20px;
-    color: var.$color-primary;
-    pointer-events: none;
+	position: absolute;
+	right: 20px;
+	color: var.$color-primary;
+	pointer-events: none;
 }
