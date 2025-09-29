@@ -314,9 +314,19 @@ body {
   align-items: center;
 }
 
+.template-auteurs {
+  display: flex;
+  justify-content: center;
+}
 .template-auteurs .auteurs-container {
   padding: 35px 40px;
   max-width: 1440px;
+  min-width: calc(100% - 200px);
+}
+@media (min-width: 580px) {
+  .template-auteurs .auteurs-container {
+    min-width: calc(100% - 200px);
+  }
 }
 .template-auteurs .auteurs-container .pr-accordeon {
   padding-top: 50px;

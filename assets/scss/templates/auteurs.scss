@@ -1,12 +1,17 @@
 @use '../variables.scss' as var;
 
 .template-auteurs {
-	// display: flex;
-	// justify-content: center;
+	display: flex;
+	justify-content: center;
 
 	.auteurs-container {
 		padding: 35px 40px;
 		max-width: 1440px;
+		min-width: calc(100% - 200px);
+
+		@media (min-width: 580px) {
+			min-width: calc(100% - 200px);
+		}
 
 		.pr-accordeon {
 			padding-top: 50px;
