@@ -93,7 +93,7 @@ function render_accordeon_block($attributes, $content) {
                 }
                 $output .= '</ul>';
             } else {
-                $output .= '<p>Aucun article pour cet auteur</p>';
+                $output .= '';
             }
 
             wp_reset_postdata();
@@ -101,7 +101,7 @@ function render_accordeon_block($attributes, $content) {
             $output .= '</div></div></div>';
         }
     } else {
-        $output .= '<p>Aucun auteur trouvé</p>';
+        $output .= '<p>Aucun résultat</p>';
     }
 
     $output .= '</div>';
