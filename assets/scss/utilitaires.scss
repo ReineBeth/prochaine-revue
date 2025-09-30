@@ -209,10 +209,9 @@
 
 	&-mobile-only {
 		padding-left: 32px;
-		&-md {
-			@media (min-width: var.$breakpoint-md) {
-				padding-left: 0;
-			}
+
+		@media (min-width: var.$breakpoint-md) {
+			padding-left: 0;
 		}
 	}
 }
