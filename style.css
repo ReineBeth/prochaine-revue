@@ -969,6 +969,14 @@ body {
 .pr-pl-32 {
   padding-left: 32px;
 }
+.pr-pl-32-mobile-only {
+  padding-left: 32px;
+}
+@media (min-width: 768px) {
+  .pr-pl-32-mobile-only-md {
+    padding-left: 0;
+  }
+}
 
 .pr-pl-40 {
   padding-left: 40px;
