@@ -1060,4 +1060,8 @@ body {
   width: 100%;
 }
 
+main {
+  max-width: 100vw;
+}
+
 /*# sourceMappingURL=style.css.map */

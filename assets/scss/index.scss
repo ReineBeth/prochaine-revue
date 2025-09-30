@@ -12,3 +12,7 @@
 @use './component/footer.scss';
 @use './component/button.scss';
 @use './utilitaires.scss';
+
+main {
+	max-width: 100vw;
+}
