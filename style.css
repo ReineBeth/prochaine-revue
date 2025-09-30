@@ -972,7 +972,7 @@ body {
 .pr-pl-32-mobile-only {
   padding-left: 32px;
 }
-@media (min-width: 1025px) {
+@media (min-width: 1339px) {
   .pr-pl-32-mobile-only {
     padding-left: 0;
   }
