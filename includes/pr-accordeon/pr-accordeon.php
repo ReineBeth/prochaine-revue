@@ -83,12 +83,6 @@ function render_accordeon_block($attributes, $content) {
                     $articles_query->the_post();
                     $output .= '<li>';
                     $output .= '<a href="' . get_permalink() . '">' . get_the_title() . '</a>';
-
-                    // $pdf_url = get_field('article_pdf');
-                    // if ($pdf_url) {
-                    //     $output .= ' - <a href="' . esc_url($pdf_url) . '">PDF</a>';
-                    // }
-
                     $output .= '</li>';
                 }
                 $output .= '</ul>';
