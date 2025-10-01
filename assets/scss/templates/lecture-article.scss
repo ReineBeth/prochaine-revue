@@ -54,11 +54,11 @@
     }
 
     .conteneur-btn {
-        display: flex !important;
-        align-items: flex-start !important;
-        gap: 10px !important;
-        justify-content: flex-end !important;
-        gap: 20px !important;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        justify-content: flex-end;
+        gap: 20px;
     }
 }    
 
@@ -164,6 +164,8 @@
     margin: 0;
 }
 .citation-tool-container {
+        margin: 20px 0;
+    }
     
     .citation-button {
     background-color: var.$color-action-fonce;
