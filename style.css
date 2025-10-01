@@ -14,11 +14,6 @@ body {
   grid-template-rows: auto 1fr auto;
 }
 
-.template-lecture-article {
-  /* Afficher les boutons au survol ou au clic */
-  /* Styles pour l'outil de citation */
-  /* Modale */
-}
 .template-lecture-article .lecture-article-containeur {
   padding: 36px;
   max-width: 100vw;
@@ -42,42 +37,46 @@ body {
     font-size: 40px;
   }
 }
-.template-lecture-article .article-title .resume-article {
+.template-lecture-article .resume-article {
   padding: 40px 0;
 }
-.template-lecture-article .article-title .resume-article-titre, .template-lecture-article .article-title .texte-titre {
+.template-lecture-article .resume-article-titre,
+.template-lecture-article .texte-titre {
   font-family: Libre Bodoni;
   font-weight: 400;
 }
 @media screen and (min-width: 1024px) {
-  .template-lecture-article .article-title .resume-article-titre, .template-lecture-article .article-title .texte-titre {
+  .template-lecture-article .resume-article-titre,
+  .template-lecture-article .texte-titre {
     font-size: 40px;
   }
 }
-.template-lecture-article .article-title .auteurs-article {
+.template-lecture-article .auteurs-article {
   margin: 0;
 }
-.template-lecture-article .article-title .lecture-article-retour {
+.template-lecture-article .lecture-article-retour {
   display: flex;
   align-items: center;
   gap: 10px;
   padding-bottom: 30px;
 }
-.template-lecture-article .article-title .conteneur-btn {
+.template-lecture-article .conteneur-btn {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
   justify-content: flex-end;
   gap: 20px;
 }
-.template-lecture-article .floating-share-button {
+
+/* Bouton partage */
+.floating-share-button {
   display: flex;
   justify-content: flex-end;
   bottom: 30px;
   right: 30px;
   z-index: 999;
 }
-.template-lecture-article .share-toggle {
+
+.share-toggle {
   width: 40px;
   height: 40px;
   background-color: #478245;
@@ -91,11 +90,12 @@ body {
   padding: 10px;
   border: none;
 }
-.template-lecture-article .share-toggle:hover {
+.share-toggle:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
-.template-lecture-article .share-buttons {
+
+.share-buttons {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -105,13 +105,16 @@ body {
   transition: all 0.3s ease;
   padding-right: 10px;
 }
-.template-lecture-article .floating-share-button:hover .share-buttons,
-.template-lecture-article .floating-share-button.active .share-buttons {
+
+/* Afficher les boutons au survol ou au clic */
+.floating-share-button:hover .share-buttons,
+.floating-share-button.active .share-buttons {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
-.template-lecture-article .share-button {
+
+.share-button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -122,39 +125,45 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-.template-lecture-article .share-button:hover {
+.share-button:hover {
   transform: scale(1.1);
 }
-.template-lecture-article .share-button svg {
+.share-button svg {
   width: 20px;
   height: 20px;
   fill: white;
 }
-.template-lecture-article .facebook {
+
+.facebook {
   background-color: #3b5998;
 }
-.template-lecture-article .x {
+
+.x {
   background-color: #000000;
 }
-.template-lecture-article .linkedin {
+
+.linkedin {
   background-color: #0077b5;
 }
-.template-lecture-article .whatsapp {
+
+.whatsapp {
   background-color: #25d366;
 }
-.template-lecture-article .messenger {
+
+.messenger {
   background-color: #0084ff;
 }
-.template-lecture-article .email {
+
+.email {
   background-color: #777;
 }
-.template-lecture-article .citation-tool-container {
-  margin: 0;
-}
-.template-lecture-article .citation-tool-container {
+
+/* Bouton citation avec modale */
+.citation-tool-container {
   margin: 20px 0;
 }
-.template-lecture-article .citation-button {
+
+.citation-button {
   background-color: #478245;
   border-radius: 12px;
   display: flex;
@@ -168,11 +177,13 @@ body {
   height: 60px;
   border: none;
 }
-.template-lecture-article .citation-button:hover {
+.citation-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
-.template-lecture-article .citation-modal {
+
+/* Modale */
+.citation-modal {
   display: none;
   position: fixed;
   top: 0;
@@ -182,7 +193,8 @@ body {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 1000;
 }
-.template-lecture-article .citation-modal-content {
+
+.citation-modal-content {
   background-color: #fff;
   max-width: 800px;
   width: 90%;
@@ -195,7 +207,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.template-lecture-article .citation-modal-header {
+
+.citation-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -205,44 +218,51 @@ body {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-.template-lecture-article .citation-modal-header h2 {
+.citation-modal-header h2 {
   margin: 0;
   font-size: 24px;
 }
-.template-lecture-article .citation-close {
+
+.citation-close {
   font-size: 30px;
   font-weight: bold;
   cursor: pointer;
   color: #fff;
 }
-.template-lecture-article .citation-modal-body {
+
+.citation-modal-body {
   padding: 20px;
 }
-.template-lecture-article .citation-format {
+
+.citation-format {
   margin-bottom: 20px;
 }
-.template-lecture-article .citation-format h4 {
+.citation-format h4 {
   margin-bottom: 5px;
   font-size: 18px;
 }
-.template-lecture-article .citation-text {
+
+.citation-text {
   background-color: #f9f9f9;
   padding: 10px;
   border-left: 3px solid #007bff;
   font-size: 14px;
   margin: 5px 0;
 }
-.template-lecture-article .citation-divider {
+
+.citation-divider {
   border: 0;
   border-top: 1px solid #eee;
   margin: 20px 0;
 }
-.template-lecture-article .citation-export-buttons {
+
+.citation-export-buttons {
   display: flex;
   gap: 15px;
   margin: 15px 0;
 }
-.template-lecture-article .citation-export-button {
+
+.citation-export-button {
   display: inline-block;
   padding: 10px 30px;
   border: 1px solid #ddd;
@@ -251,19 +271,21 @@ body {
   font-weight: bold;
   transition: all 0.3s ease;
 }
-.template-lecture-article .citation-export-button:hover {
+.citation-export-button:hover {
   background-color: #f5f5f5;
 }
-.template-lecture-article .citation-format-description {
+
+.citation-format-description {
   font-size: 14px;
   color: #666;
   margin-top: 15px;
 }
-.template-lecture-article .format-desc {
+
+.format-desc {
   margin-bottom: 10px;
   display: none;
 }
-.template-lecture-article .format-desc.active {
+.format-desc.active {
   display: block;
 }
 
