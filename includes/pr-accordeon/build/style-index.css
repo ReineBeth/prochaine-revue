@@ -1,6 +1,3 @@
-/*!***************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/style.scss ***!
-  \***************************************************************************************************************************************************************************************************************************************/
 .pr-accordeon-container {
   border: 3px solid #478245;
   border-radius: 4px;
@@ -54,6 +51,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  word-spacing: 5px;
+  color: #000 !important;
 }
 
 .pr-accordeon-trigger::after {
@@ -61,7 +60,7 @@
   width: 24px;
   aspect-ratio: 1/1;
   display: block;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjNDc4MjQ1Ij48cGF0aCBkPSJNMCA3LjMzbDIuODI5LTIuODMgOS4xNzUgOS4zMzkgOS4xNjctOS4zMzkgMi44MjkgMi44My0xMS45OTYgMTIuMTd6Ii8+PC9zdmc+Cg==);
+  background-image: url("./images/chevron-down.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -94,4 +93,4 @@
   pointer-events: none;
 }
 
-/*# sourceMappingURL=style-index.css.map*/
+/*# sourceMappingURL=style-index.css.map */
