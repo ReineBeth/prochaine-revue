@@ -1,9 +1,7 @@
 <!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
 
 <!-- wp:group {"tagName":"main","className":"template-single-pr-article"} -->
-<main
-	class="wp-site-blocks template-single-pr-article template-lecture-article"
->
+<main class="wp-site-blocks template-single-pr-article template-lecture-article">
 	<!-- wp:group {"layout":{"type":"constrained"}} -->
 	<div class="wp-block-group lecture-article-containeur">
 		<!-- wp:paragraph -->
@@ -61,6 +59,7 @@
 
 		<!-- wp:custom-article/description /-->
 
+		<!-- wp:group {"className":"pdf-viewer"} -->
 		<div class="wp-block-group pdf-viewer">
 			<!-- wp:heading -->
 			<h2 class="texte-titre">Texte intégral (PDF)</h2>
@@ -70,7 +69,8 @@
 			<!-- /wp:shortcode -->
 		</div>
 		<!-- /wp:group -->
-		<!-- wp:group -->
+		
+		<!-- wp:group {"className":"conteneur-btn"} -->
 		<div class="wp-block-group conteneur-btn">
 			<!-- wp:shortcode -->
 			[floating_share]
