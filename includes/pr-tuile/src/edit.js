@@ -1,208 +1,182 @@
 import { __ } from "@wordpress/i18n";
 import {
-	InspectorControls,
 	useBlockProps,
+	InspectorControls,
 	MediaUpload,
+	MediaUploadCheck,
 } from "@wordpress/block-editor";
 import {
 	PanelBody,
-	TextControl,
-	ToggleControl,
 	Button,
-	SelectControl,
-	RangeControl,
+	TextControl,
+	TextareaControl,
+	ToggleControl,
+	IconButton,
 } from "@wordpress/components";
-import { useSelect } from "@wordpress/data";
-import { useEffect } from "react";
+import { useState } from "@wordpress/element";
 
 export default function Edit({ attributes, setAttributes }) {
-	const { tiles, mode, articlesCount, showAllArticles } = attributes;
+	const { tiles = [] } = attributes;
 
-	// Récupérer les articles si mode dynamique
-	const articles = useSelect(
-		(select) => {
-			if (mode !== "dynamic") return null;
-
-			return select("core").getEntityRecords("postType", "pr_article", {
-				per_page: showAllArticles ? -1 : articlesCount,
-				_embed: true,
-				orderby: "date",
-				order: "desc",
-			});
-		},
-		[mode, articlesCount, showAllArticles],
-	);
-
-	console.log(articles);
-
-	// Fonctions existantes pour les tuiles statiques
-	function addTile() {
-		setAttributes({
-			tiles: [
-				...tiles,
-				{ titleField: "", textField: "", linkUrl: "", imageUrl: "" },
-			],
-		});
-	}
-
-	function removeTile(index) {
-		const newTiles = [...tiles];
-		newTiles.splice(index, 1);
+	// Fonction pour ajouter une nouvelle tuile
+	const addTile = () => {
+		const newTiles = [
+			...tiles,
+			{
+				titleField: "",
+				auteurs: "",
+				typeArticle: "",
+				textField: "",
+				linkUrl: "",
+				showImage: false,
+				imageUrl: "",
+				imageAlt: "",
+			},
+		];
 		setAttributes({ tiles: newTiles });
-	}
+	};
 
-	function updateTile(index, field, value) {
-		const newTiles = [...tiles];
-		newTiles[index][field] = value;
+	// Fonction pour supprimer une tuile
+	const removeTile = (index) => {
+		const newTiles = tiles.filter((_, i) => i !== index);
 		setAttributes({ tiles: newTiles });
-	}
+	};
+
+	// Fonction pour mettre à jour une tuile spécifique
+	const updateTile = (index, field, value) => {
+		const newTiles = [...tiles];
+		newTiles[index] = { ...newTiles[index], [field]: value };
+		setAttributes({ tiles: newTiles });
+	};
 
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Configuration générale", "pr-tuile")}>
-					<SelectControl
-						label={__("Mode d'affichage", "pr-tuile")}
-						value={mode}
-						options={[
-							{ label: "Statique (tuiles personnalisées)", value: "static" },
-							{ label: "Dynamique (articles)", value: "dynamic" },
-						]}
-						onChange={(value) => setAttributes({ mode: value })}
-					/>
-
-					{mode === "dynamic" && (
-						<>
-							<ToggleControl
-								label={__("Afficher tous les articles", "pr-tuile")}
-								checked={showAllArticles}
-								onChange={(value) => setAttributes({ showAllArticles: value })}
-							/>
-							{!showAllArticles && (
-								<RangeControl
-									label={__("Nombre d'articles à afficher", "pr-tuile")}
-									value={articlesCount}
-									onChange={(value) => setAttributes({ articlesCount: value })}
-									min={1}
-									max={12}
-								/>
-							)}
-						</>
-					)}
+				<PanelBody title={__("Paramètres des tuiles", "prochaine-revue")}>
+					<Button isPrimary onClick={addTile}>
+						{__("Ajouter une tuile", "prochaine-revue")}
+					</Button>
 				</PanelBody>
+			</InspectorControls>
 
-				{mode === "static" && (
-					<PanelBody title={__("Configuration des tuiles", "pr-tuile")}>
-						{tiles.map((tile, index) => (
-							<div key={index} style={{ marginBottom: "20px" }}>
-								<TextControl
-									label={`Titre ${index + 1}`}
-									help="Phrase d'un maximum de 25 caractères"
-									value={tile.titleField}
-									onChange={(value) => updateTile(index, "titleField", value)}
-								/>
-								<TextControl
-									label={`Texte ${index + 1}`}
-									help="Phrase d'un maximum de 180 caractères"
-									value={tile.textField}
-									onChange={(value) => updateTile(index, "textField", value)}
-								/>
-								<TextControl
-									label={__("URL du lien", "pr-tuile")}
-									value={tile.linkUrl}
-									onChange={(value) => updateTile(index, "linkUrl", value)}
-								/>
+			<div {...useBlockProps()}>
+				<div className="pr-tuile-container">
+					{tiles.length === 0 && (
+						<div className="pr-tuile-placeholder">
+							<p>{__("Aucune tuile ajoutée", "prochaine-revue")}</p>
+							<Button isPrimary onClick={addTile}>
+								{__("Ajouter votre première tuile", "prochaine-revue")}
+							</Button>
+						</div>
+					)}
+
+					{tiles.map((tile, index) => (
+						<div key={index} className="pr-tuile-edit">
+							<div className="pr-tuile-controls">
+								<Button isDestructive isSmall onClick={() => removeTile(index)}>
+									{__("Supprimer", "prochaine-revue")}
+								</Button>
+							</div>
+
+							<div className="pr-tuile-lien">
+								{/* Gestion de l'image */}
 								<ToggleControl
-									label={__("Afficher l'image", "pr-tuile")}
+									label={__("Afficher une image", "prochaine-revue")}
 									checked={tile.showImage}
 									onChange={(value) => updateTile(index, "showImage", value)}
 								/>
+
 								{tile.showImage && (
-									<MediaUpload
-										onSelect={(media) => {
-											updateTile(index, "imageUrl", media.url);
-											updateTile(index, "imageAlt", media.alt);
-										}}
-										allowedTypes={["image"]}
-										value={tile.imageUrl}
-										render={({ open }) => (
-											<Button
-												onClick={open}
-												variant="secondary"
-												style={{ marginBottom: "10px" }}
-											>
-												{tile.imageUrl
-													? "Changer l'image"
-													: "Choisir une image"}
-											</Button>
+									<div className="pr-tuile-lien-image">
+										<MediaUploadCheck>
+											<MediaUpload
+												onSelect={(media) => {
+													updateTile(index, "imageUrl", media.url);
+													updateTile(index, "imageAlt", media.alt);
+												}}
+												allowedTypes={["image"]}
+												value={tile.imageUrl}
+												render={({ open }) => (
+													<div>
+														{tile.imageUrl ? (
+															<div>
+																<img
+																	src={tile.imageUrl}
+																	alt={tile.imageAlt}
+																	style={{ maxWidth: "100%", height: "auto" }}
+																/>
+																<Button onClick={open} isSecondary isSmall>
+																	{__("Changer l'image", "prochaine-revue")}
+																</Button>
+															</div>
+														) : (
+															<Button onClick={open} isPrimary>
+																{__(
+																	"Sélectionner une image",
+																	"prochaine-revue",
+																)}
+															</Button>
+														)}
+													</div>
+												)}
+											/>
+										</MediaUploadCheck>
+									</div>
+								)}
+
+								<div className="pr-tuile-lien-text">
+									{/* Titre */}
+									<TextControl
+										label={__("Titre", "prochaine-revue")}
+										value={tile.titleField}
+										onChange={(value) => updateTile(index, "titleField", value)}
+										placeholder={__("Entrez le titre...", "prochaine-revue")}
+									/>
+
+									{/* Auteurs */}
+									<TextControl
+										label={__("Auteurs", "prochaine-revue")}
+										value={tile.auteurs}
+										onChange={(value) => updateTile(index, "auteurs", value)}
+										placeholder={__(
+											"Nom Auteur, Prénom Auteur",
+											"prochaine-revue",
 										)}
 									/>
-								)}
-								<Button
-									isDestructive
-									onClick={() => removeTile(index)}
-									style={{ marginTop: "10px" }}
-								>
-									Supprimer
-								</Button>
-							</div>
-						))}
-						<Button isPrimary onClick={addTile} style={{ marginTop: "10px" }}>
-							Ajouter une tuile
-						</Button>
-					</PanelBody>
-				)}
-			</InspectorControls>
 
-			<div className="pr-tuile-container" {...useBlockProps()}>
-				{mode === "static" ? (
-					// Affichage des tuiles statiques
-					tiles.map((tile, index) => (
-						<a key={index} className="pr-tuile-lien" href={tile.linkUrl}>
-							{tile.showImage && (
-								<div className="pr-tuile-lien-image">
-									<img
-										src={tile.imageUrl || "https://placecats.com/520/300"}
-										alt={tile.imageAlt || `Image ${index + 1}`}
-									/>
-								</div>
-							)}
-							<div className="pr-tuile-lien-text">
-								<h3>{tile.titleField}</h3>
-								<p>{tile.textField}</p>
-							</div>
-						</a>
-					))
-				) : // Affichage des articles dynamiques
-				articles ? (
-					articles.map((article) => (
-						<a key={article.id} className="pr-tuile-lien" href={article?.link}>
-							{article.featured_media > 0 && (
-								<div className="pr-tuile-lien-image">
-									<img
-										src={
-											article._embedded?.["wp:featuredmedia"]?.[0]
-												?.source_url || "https://placecats.com/520/300"
+									{/* Type d'article */}
+									<TextControl
+										label={__("Type d'article", "prochaine-revue")}
+										value={tile.typeArticle}
+										onChange={(value) =>
+											updateTile(index, "typeArticle", value)
 										}
-										alt={article.title.rendered}
+										placeholder={__("Type d'article...", "prochaine-revue")}
+									/>
+
+									{/* Description (optionnelle) */}
+									<TextareaControl
+										label={__("Description (optionnel)", "prochaine-revue")}
+										value={tile.textField}
+										onChange={(value) => updateTile(index, "textField", value)}
+										placeholder={__(
+											"Description de l'article...",
+											"prochaine-revue",
+										)}
+									/>
+
+									{/* URL du lien */}
+									<TextControl
+										label={__("URL du lien", "prochaine-revue")}
+										value={tile.linkUrl}
+										onChange={(value) => updateTile(index, "linkUrl", value)}
+										placeholder={__("https://...", "prochaine-revue")}
 									/>
 								</div>
-							)}
-
-							<div className="pr-tuile-lien-text">
-								<h3>
-									{article.title.rendered || "Il n'y a pas de description :("}
-								</h3>
-								<p>
-									{article.acf?.article_description ||
-										"Il n'y a pas de description :("}
-								</p>
 							</div>
-						</a>
-					))
-				) : (
-					<p>Chargement des articles...</p>
-				)}
+						</div>
+					))}
+				</div>
 			</div>
 		</>
 	);

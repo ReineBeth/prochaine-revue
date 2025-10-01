@@ -102,10 +102,19 @@ function create_articles_acf_fields() {
                 'show_in_rest' => true
             ),
             array(
-                'key' => 'field_article_auteurs',
-                'label' => 'Auteurs',
-                'name' => 'article_auteurs',
-                'type' => 'text',
+                'key' => 'field_article_type',
+                'label' => 'Type d\'article',
+                'name' => 'article_type',
+                'type' => 'select',
+                'choices' => array(
+                    'recherche' => 'Article de recherche',
+                    'synthese' => 'Article de synthèse',
+                    'opinion' => 'Article d\'opinion',
+                    'editorial' => 'Éditorial',
+                    'note' => 'Note de recherche',
+                    'recension' => 'Recension',
+                ),
+                'default_value' => 'recherche',
                 'required' => 1,
                 'show_in_rest' => true
             ),
@@ -172,6 +181,7 @@ function create_articles_acf_fields() {
     ));
     endif;
 }
+
 add_action('acf/init', 'create_articles_acf_fields');
 function enqueue_custom_article_blocks() {
     // Chemin vers ton fichier JavaScript
@@ -193,12 +203,15 @@ register_block_type('custom-article/auteurs', array(
     'render_callback' => function($attributes, $content) {
         $post_id = get_the_ID();
         $terms = get_the_terms($post_id, 'pr-auteurs');
-
         if ($terms && !is_wp_error($terms)) {
-            $noms = wp_list_pluck($terms, 'name');
-            return '<p class="article-auteurs pr-mt-8">Par ' . esc_html(implode(', ', $noms)) . '</p>';
+            $output = '<div class="article-auteurs pr-mt-8">';
+            $output .= '<p>Par :</p>';
+            foreach ($terms as $auteur) {
+                $output .= '<p class="auteur-nom">' . esc_html($auteur->name) . '</p>';
+            }
+            $output .= '</div>';
+            return $output;
         }
-
         return '';
     }
 ));
@@ -604,7 +617,31 @@ function tuiles_articles_dynamiques_shortcode() {
     
     foreach ($articles as $article) {
         $title = get_the_title($article->ID);
-        $description = get_field('article_description', $article->ID);
+        
+        // Récupérer les auteurs via la taxonomie
+        $auteurs_terms = get_the_terms($article->ID, 'pr-auteurs');
+        $auteurs_list = '';
+        if ($auteurs_terms && !is_wp_error($auteurs_terms)) {
+            $auteurs_names = wp_list_pluck($auteurs_terms, 'name');
+            $auteurs_list = implode(', ', $auteurs_names);
+        }
+        
+        // Récupérer le type d'article via ACF
+        $type_article_raw = get_field('article_type', $article->ID);
+        $type_article = '';
+        if ($type_article_raw) {
+            // Convertir la valeur en label lisible
+            $type_choices = array(
+                'recherche' => 'Article de recherche',
+                'synthese' => 'Article de synthèse',
+                'opinion' => 'Article d\'opinion',
+                'editorial' => 'Éditorial',
+                'note' => 'Note de recherche',
+                'recension' => 'Recension',
+            );
+            $type_article = isset($type_choices[$type_article_raw]) ? $type_choices[$type_article_raw] : $type_article_raw;
+        }
+        
         $thumbnail = get_the_post_thumbnail_url($article->ID, 'medium');
         
         // Créer l'URL de la page correspondante sous /articles/
@@ -622,9 +659,21 @@ function tuiles_articles_dynamiques_shortcode() {
         
         $output .= '<div class="pr-tuile-lien-text">';
         $output .= '<h3>' . esc_html($title) . '</h3>';
-        if ($description) {
-            $output .= '<p>' . esc_html(wp_trim_words($description, 20)) . '</p>';
+        
+        // Affichage des auteurs
+        if ($auteurs_terms && !is_wp_error($auteurs_terms)) {
+            $output .= '<div class="pr-tuile-auteurs">';
+            foreach ($auteurs_terms as $auteur) {
+                $output .= '<div class="pr-tuile-auteur">' . esc_html($auteur->name) . '</div>';
+            }
+            $output .= '</div>';
         }
+        
+        // Affichage du type d'article en gras
+        if ($type_article) {
+            $output .= '<div class="pr-tuile-type"><strong>' . esc_html($type_article) . '</strong></div>';
+        }
+        
         $output .= '</div>';
         $output .= '</a>';
     }
@@ -634,6 +683,28 @@ function tuiles_articles_dynamiques_shortcode() {
     return $output;
 }
 add_shortcode('tuiles_articles_dynamiques', 'tuiles_articles_dynamiques_shortcode');
+
+// Rendu du type d'article
+register_block_type('custom-article/type', array(
+    'render_callback' => function($attributes, $content) {
+        $post_id = get_the_ID();
+        $type_raw = get_field('article_type', $post_id);
+        if ($type_raw) {
+            // Convertir la valeur en label lisible
+            $type_choices = array(
+                'recherche' => 'Article de recherche',
+                'synthese' => 'Article de synthèse',
+                'opinion' => 'Article d\'opinion',
+                'editorial' => 'Éditorial',
+                'note' => 'Note de recherche',
+                'recension' => 'Recension',
+            );
+            $type_label = isset($type_choices[$type_raw]) ? $type_choices[$type_raw] : $type_raw;
+            return '<p class="article-type pr-mt-8"><strong>' . esc_html($type_label) . '</strong></p>';
+        }
+        return '';
+    }
+));
 
 function enqueue_pr_tuile_styles() {
     // Vérifier si le fichier CSS du bloc existe

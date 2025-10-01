@@ -1,10 +1,8 @@
-// save.js
 import { useBlockProps } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 
 export default function save({ attributes }) {
 	const { tiles } = attributes;
-
 	return (
 		<div className="pr-tuile-container" {...useBlockProps.save()}>
 			{tiles.map((tile, index) => (
@@ -25,7 +23,15 @@ export default function save({ attributes }) {
 					)}
 					<div className="pr-tuile-lien-text">
 						<h3>{tile.titleField}</h3>
-						<p>{tile.textField}</p>
+						{tile.auteurs && (
+							<div className="pr-tuile-auteurs">{tile.auteurs}</div>
+						)}
+						{tile.typeArticle && (
+							<div className="pr-tuile-type">
+								<strong>{tile.typeArticle}</strong>
+							</div>
+						)}
+						{tile.textField && <p>{tile.textField}</p>}
 					</div>
 				</a>
 			))}
