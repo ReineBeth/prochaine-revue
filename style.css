@@ -65,9 +65,10 @@ body {
 }
 .template-lecture-article .article-title .conteneur-btn {
   display: flex;
-  justify-content: flex-end;
+  align-items: flex-start;
   gap: 10px;
-  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
 }
 .template-lecture-article .floating-share-button {
   display: flex;
@@ -148,7 +149,7 @@ body {
   background-color: #777;
 }
 .template-lecture-article .citation-tool-container {
-  margin: 20px 0;
+  margin: 0;
 }
 .template-lecture-article .citation-tool-container {
   margin: 20px 0;
