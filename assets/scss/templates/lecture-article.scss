@@ -3,6 +3,7 @@
 .template-lecture-article {
     .lecture-article-containeur {
         padding: 36px;
+        max-width: 100vw;
     }
     
 
@@ -20,10 +21,12 @@
 
     .article-title {
         font-family: Libre Bodoni;
-        font-size: 48px;
         font-weight: 400;
+        
+        @media screen and (min-width: 1024px) {
+            font-size: 40px;
+	}
 
-    }
 
     .resume-article {
         padding: 40px 0;
@@ -31,8 +34,11 @@
 
     .resume-article-titre, .texte-titre {
         font-family: Libre Bodoni;
-        font-size: 40px;
         font-weight: 400;
+
+        @media screen and (min-width: 1024px) {
+            font-size: 40px;
+	}
     }
 
     .auteurs-article {
@@ -289,4 +295,5 @@
     
     .format-desc.active {
         display: block;
+    }
     }
