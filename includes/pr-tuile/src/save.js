@@ -2,7 +2,14 @@ import { useBlockProps } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 
 export default function save({ attributes }) {
-	const { tiles } = attributes;
+	const { tiles, mode } = attributes;
+
+	// Pour le mode dynamique, on retourne null pour laisser PHP s'en occuper
+	if (mode === "dynamic") {
+		return null;
+	}
+
+	// Mode statique uniquement
 	return (
 		<div className="pr-tuile-container" {...useBlockProps.save()}>
 			{tiles.map((tile, index) => (
@@ -24,7 +31,13 @@ export default function save({ attributes }) {
 					<div className="pr-tuile-lien-text">
 						<h3>{tile.titleField}</h3>
 						{tile.auteurs && (
-							<div className="pr-tuile-auteurs">{tile.auteurs}</div>
+							<div className="pr-tuile-auteurs">
+								{tile.auteurs.split(",").map((auteur, idx) => (
+									<div key={idx} className="pr-tuile-auteur">
+										{auteur.trim()}
+									</div>
+								))}
+							</div>
 						)}
 						{tile.typeArticle && (
 							<div className="pr-tuile-type">

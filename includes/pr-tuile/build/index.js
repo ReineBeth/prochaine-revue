@@ -369,8 +369,16 @@ function save({
   attributes
 }) {
   const {
-    tiles
+    tiles,
+    mode
   } = attributes;
+
+  // Pour le mode dynamique, on retourne null pour laisser PHP s'en occuper
+  if (mode === "dynamic") {
+    return null;
+  }
+
+  // Mode statique uniquement
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
     className: "pr-tuile-container",
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save(),
@@ -391,7 +399,10 @@ function save({
           children: tile.titleField
         }), tile.auteurs && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "pr-tuile-auteurs",
-          children: tile.auteurs
+          children: tile.auteurs.split(",").map((auteur, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "pr-tuile-auteur",
+            children: auteur.trim()
+          }, idx))
         }), tile.typeArticle && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "pr-tuile-type",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("strong", {
@@ -485,7 +496,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"pr-tuile/pr-tuile","version":"0.1.0","title":"PR Tuile","category":"widgets","icon":"grid-view","description":"Un bloc de tuiles pour Prochaine Revue","supports":{"html":false},"attributes":{"mode":{"type":"string","default":"static"},"articlesCount":{"type":"number","default":3},"showAllArticles":{"type":"boolean","default":false},"tiles":{"type":"array","default":[]}},"textdomain":"pr-tuile","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"pr/tuile","version":"0.1.0","title":"Pr Tuile","category":"widgets","icon":"smiley","description":"Example block scaffolded with Create Block tool.","example":{},"attributes":{"tiles":{"type":"array","default":[]},"mode":{"type":"string","default":"static"},"articlesCount":{"type":"number","default":3},"showAllArticles":{"type":"boolean","default":false}},"supports":{"html":false},"textdomain":"pr-tuile","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ })
 

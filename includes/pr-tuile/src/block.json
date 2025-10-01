@@ -1,16 +1,18 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "pr-tuile/pr-tuile",
+	"name": "pr/tuile",
 	"version": "0.1.0",
-	"title": "PR Tuile",
+	"title": "Pr Tuile",
 	"category": "widgets",
-	"icon": "grid-view",
-	"description": "Un bloc de tuiles pour Prochaine Revue",
-	"supports": {
-		"html": false
-	},
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
 	"attributes": {
+		"tiles": {
+			"type": "array",
+			"default": []
+		},
 		"mode": {
 			"type": "string",
 			"default": "static"
@@ -22,14 +24,14 @@
 		"showAllArticles": {
 			"type": "boolean",
 			"default": false
-		},
-		"tiles": {
-			"type": "array",
-			"default": []
 		}
+	},
+	"supports": {
+		"html": false
 	},
 	"textdomain": "pr-tuile",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css"
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
 }
