@@ -102,7 +102,7 @@ function create_articles_acf_fields() {
                 'show_in_rest' => true
             ),
             array(
-                'key' => 'field_article_auteur',
+                'key' => 'field_article_auteurs',
                 'label' => 'Auteurs',
                 'name' => 'article_auteurs',
                 'type' => 'text',
@@ -117,6 +117,46 @@ function create_articles_acf_fields() {
                 'return_format' => 'array',
                 'mime_types' => 'pdf',
                 'required' => 1,
+                'show_in_rest' => true
+            ),
+            array(
+                'key' => 'field_titre_revue',
+                'label' => 'Titre de la revue',
+                'name' => 'titre_revue',
+                'type' => 'text',
+                'required' => 0,
+                'show_in_rest' => true
+            ),
+            array(
+                'key' => 'field_volume',
+                'label' => 'Volume',
+                'name' => 'volume',
+                'type' => 'text',
+                'required' => 0,
+                'show_in_rest' => true
+            ),
+            array(
+                'key' => 'field_pages',
+                'label' => 'Pages',
+                'name' => 'pages',
+                'type' => 'text',
+                'required' => 0,
+                'show_in_rest' => true
+            ),
+            array(
+                'key' => 'field_annee_publication',
+                'label' => 'Année de publication',
+                'name' => 'annee_publication',
+                'type' => 'text',
+                'required' => 0,
+                'show_in_rest' => true
+            ),
+            array(
+                'key' => 'field_numero_volume',
+                'label' => 'Numéro de volume',
+                'name' => 'numero_volume',
+                'type' => 'text',
+                'required' => 0,
                 'show_in_rest' => true
             )
         ),
@@ -133,7 +173,6 @@ function create_articles_acf_fields() {
     endif;
 }
 add_action('acf/init', 'create_articles_acf_fields');
-
 function enqueue_custom_article_blocks() {
     // Chemin vers ton fichier JavaScript
     $script_url = get_template_directory_uri() . '/blocks/custom-article-blocks.js';
