@@ -18,8 +18,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
 
@@ -32,150 +32,249 @@ function Edit({
   setAttributes
 }) {
   const {
-    tiles = []
+    tiles,
+    mode,
+    articlesCount,
+    showAllArticles
   } = attributes;
 
-  // Fonction pour ajouter une nouvelle tuile
-  const addTile = () => {
-    const newTiles = [...tiles, {
-      titleField: "",
-      auteurs: "",
-      typeArticle: "",
-      textField: "",
-      linkUrl: "",
-      showImage: false,
-      imageUrl: "",
-      imageAlt: ""
-    }];
-    setAttributes({
-      tiles: newTiles
+  // Récupérer les articles si mode dynamique
+  const articles = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
+    if (mode !== "dynamic") return null;
+    return select("core").getEntityRecords("postType", "pr_article", {
+      per_page: showAllArticles ? -1 : articlesCount,
+      _embed: true,
+      orderby: "date",
+      order: "desc"
     });
-  };
+  }, [mode, articlesCount, showAllArticles]);
 
-  // Fonction pour supprimer une tuile
-  const removeTile = index => {
-    const newTiles = tiles.filter((_, i) => i !== index);
-    setAttributes({
-      tiles: newTiles
+  // Récupérer les auteurs pour chaque article
+  const authorsData = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
+    if (mode !== "dynamic" || !articles) return {};
+    const authorsMap = {};
+    articles.forEach(article => {
+      if (article.id) {
+        const terms = select("core").getEntityRecords("taxonomy", "pr-auteurs", {
+          post: article.id
+        });
+        authorsMap[article.id] = terms;
+      }
     });
-  };
+    return authorsMap;
+  }, [mode, articles]);
 
-  // Fonction pour mettre à jour une tuile spécifique
-  const updateTile = (index, field, value) => {
-    const newTiles = [...tiles];
-    newTiles[index] = {
-      ...newTiles[index],
-      [field]: value
+  // Fonction pour convertir les types d'articles
+  const getTypeLabel = typeValue => {
+    const typeChoices = {
+      recherche: "Note de recherche",
+      synthese: "Texte réflexif",
+      rendu: "Compte rendu"
     };
+    return typeChoices[typeValue] || typeValue;
+  };
+
+  // Fonctions existantes pour les tuiles statiques
+  function addTile() {
+    setAttributes({
+      tiles: [...tiles, {
+        titleField: "",
+        auteurs: "",
+        typeArticle: "",
+        textField: "",
+        linkUrl: "",
+        imageUrl: "",
+        showImage: false
+      }]
+    });
+  }
+  function removeTile(index) {
+    const newTiles = [...tiles];
+    newTiles.splice(index, 1);
     setAttributes({
       tiles: newTiles
     });
-  };
+  }
+  function updateTile(index, field, value) {
+    const newTiles = [...tiles];
+    newTiles[index][field] = value;
+    setAttributes({
+      tiles: newTiles
+    });
+  }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Paramètres des tuiles", "prochaine-revue"),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Configuration générale", "pr-tuile"),
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Mode d'affichage", "pr-tuile"),
+          value: mode,
+          options: [{
+            label: "Statique (tuiles personnalisées)",
+            value: "static"
+          }, {
+            label: "Dynamique (articles)",
+            value: "dynamic"
+          }],
+          onChange: value => setAttributes({
+            mode: value
+          })
+        }), mode === "dynamic" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Afficher tous les articles", "pr-tuile"),
+            checked: showAllArticles,
+            onChange: value => setAttributes({
+              showAllArticles: value
+            })
+          }), !showAllArticles && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Nombre d'articles à afficher", "pr-tuile"),
+            value: articlesCount,
+            onChange: value => setAttributes({
+              articlesCount: value
+            }),
+            min: 1,
+            max: 12
+          })]
+        })]
+      }), mode === "static" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Configuration des tuiles", "pr-tuile"),
+        children: [tiles.map((tile, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          style: {
+            marginBottom: "20px",
+            borderBottom: "1px solid #ddd",
+            paddingBottom: "15px"
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("h4", {
+            children: ["Tuile ", index + 1]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: `Titre ${index + 1}`,
+            help: "Phrase d'un maximum de 25 caract\xE8res",
+            value: tile.titleField,
+            onChange: value => updateTile(index, "titleField", value)
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: `Auteurs ${index + 1}`,
+            help: "S\xE9parez les auteurs par des virgules",
+            value: tile.auteurs,
+            onChange: value => updateTile(index, "auteurs", value)
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: `Type d'article ${index + 1}`,
+            help: "Ex: Note de recherche, Texte r\xE9flexif...",
+            value: tile.typeArticle,
+            onChange: value => updateTile(index, "typeArticle", value)
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: `Description ${index + 1}`,
+            help: "Phrase d'un maximum de 180 caract\xE8res (optionnel)",
+            value: tile.textField,
+            onChange: value => updateTile(index, "textField", value)
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("URL du lien", "pr-tuile"),
+            value: tile.linkUrl,
+            onChange: value => updateTile(index, "linkUrl", value)
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Afficher l'image", "pr-tuile"),
+            checked: tile.showImage,
+            onChange: value => updateTile(index, "showImage", value)
+          }), tile.showImage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+            onSelect: media => {
+              updateTile(index, "imageUrl", media.url);
+              updateTile(index, "imageAlt", media.alt);
+            },
+            allowedTypes: ["image"],
+            value: tile.imageUrl,
+            render: ({
+              open
+            }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              onClick: open,
+              variant: "secondary",
+              style: {
+                marginBottom: "10px"
+              },
+              children: tile.imageUrl ? "Changer l'image" : "Choisir une image"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            isDestructive: true,
+            onClick: () => removeTile(index),
+            style: {
+              marginTop: "10px"
+            },
+            children: "Supprimer la tuile"
+          })]
+        }, index)), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
           isPrimary: true,
           onClick: addTile,
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Ajouter une tuile", "prochaine-revue")
-        })
-      })
+          style: {
+            marginTop: "10px"
+          },
+          children: "Ajouter une tuile"
+        })]
+      })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "pr-tuile-container",
       ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-        className: "pr-tuile-container",
-        children: [tiles.length === 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          className: "pr-tuile-placeholder",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Aucune tuile ajoutée", "prochaine-revue")
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-            isPrimary: true,
-            onClick: addTile,
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Ajouter votre première tuile", "prochaine-revue")
+      children: mode === "static" ?
+      // Affichage des tuiles statiques avec nouveau format
+      tiles.map((tile, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+        className: "pr-tuile-lien",
+        href: tile.linkUrl,
+        children: [tile.showImage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "pr-tuile-lien-image",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+            src: tile.imageUrl || "https://placecats.com/520/300",
+            alt: tile.imageAlt || `Image ${index + 1}`
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "pr-tuile-lien-text",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+            children: tile.titleField
+          }), tile.auteurs && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "pr-tuile-auteurs",
+            children: tile.auteurs.split(",").map((auteur, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "pr-tuile-auteur",
+              children: auteur.trim()
+            }, idx))
+          }), tile.typeArticle && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "pr-tuile-type",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+              children: tile.typeArticle
+            })
+          }), tile.textField && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+            children: tile.textField
           })]
-        }), tiles.map((tile, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          className: "pr-tuile-edit",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-            className: "pr-tuile-controls",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-              isDestructive: true,
-              isSmall: true,
-              onClick: () => removeTile(index),
-              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Supprimer", "prochaine-revue")
+        })]
+      }, index)) :
+      // Affichage des articles dynamiques avec nouveau format
+      articles ? articles.map(article => {
+        const articleAuthors = authorsData[article.id] || [];
+        const articleType = article.acf?.article_type;
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+          className: "pr-tuile-lien",
+          href: `/articles/${article.slug}/`,
+          children: [article.featured_media > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "pr-tuile-lien-image",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+              src: article._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "https://placecats.com/520/300",
+              alt: article.title.rendered
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-            className: "pr-tuile-lien",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Afficher une image", "prochaine-revue"),
-              checked: tile.showImage,
-              onChange: value => updateTile(index, "showImage", value)
-            }), tile.showImage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-              className: "pr-tuile-lien-image",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUploadCheck, {
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
-                  onSelect: media => {
-                    updateTile(index, "imageUrl", media.url);
-                    updateTile(index, "imageAlt", media.alt);
-                  },
-                  allowedTypes: ["image"],
-                  value: tile.imageUrl,
-                  render: ({
-                    open
-                  }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-                    children: tile.imageUrl ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
-                        src: tile.imageUrl,
-                        alt: tile.imageAlt,
-                        style: {
-                          maxWidth: "100%",
-                          height: "auto"
-                        }
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                        onClick: open,
-                        isSecondary: true,
-                        isSmall: true,
-                        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Changer l'image", "prochaine-revue")
-                      })]
-                    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                      onClick: open,
-                      isPrimary: true,
-                      children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Sélectionner une image", "prochaine-revue")
-                    })
-                  })
-                })
+            className: "pr-tuile-lien-text",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+              children: article.title.rendered
+            }), articleAuthors && articleAuthors.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "pr-tuile-auteurs",
+              children: articleAuthors.map((auteur, idx) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "pr-tuile-auteur",
+                children: auteur.name
+              }, idx))
+            }), articleType && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "pr-tuile-type",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+                children: getTypeLabel(articleType)
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-              className: "pr-tuile-lien-text",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-                label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Titre", "prochaine-revue"),
-                value: tile.titleField,
-                onChange: value => updateTile(index, "titleField", value),
-                placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Entrez le titre...", "prochaine-revue")
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-                label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Auteurs", "prochaine-revue"),
-                value: tile.auteurs,
-                onChange: value => updateTile(index, "auteurs", value),
-                placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Nom Auteur, Prénom Auteur", "prochaine-revue")
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-                label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Type d'article", "prochaine-revue"),
-                value: tile.typeArticle,
-                onChange: value => updateTile(index, "typeArticle", value),
-                placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Type d'article...", "prochaine-revue")
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
-                label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Description (optionnel)", "prochaine-revue"),
-                value: tile.textField,
-                onChange: value => updateTile(index, "textField", value),
-                placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Description de l'article...", "prochaine-revue")
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-                label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("URL du lien", "prochaine-revue"),
-                value: tile.linkUrl,
-                onChange: value => updateTile(index, "linkUrl", value),
-                placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("https://...", "prochaine-revue")
-              })]
             })]
           })]
-        }, index))]
+        }, article.id);
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+        children: "Chargement des articles..."
       })
     })]
   });
@@ -360,13 +459,13 @@ module.exports = window["wp"]["components"];
 
 /***/ }),
 
-/***/ "@wordpress/element":
-/*!*********************************!*\
-  !*** external ["wp","element"] ***!
-  \*********************************/
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
 /***/ ((module) => {
 
-module.exports = window["wp"]["element"];
+module.exports = window["wp"]["data"];
 
 /***/ }),
 
