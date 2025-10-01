@@ -107,12 +107,9 @@ function create_articles_acf_fields() {
                 'name' => 'article_type',
                 'type' => 'select',
                 'choices' => array(
-                    'recherche' => 'Article de recherche',
-                    'synthese' => 'Article de synthèse',
-                    'opinion' => 'Article d\'opinion',
-                    'editorial' => 'Éditorial',
-                    'note' => 'Note de recherche',
-                    'recension' => 'Recension',
+                    'recherche' => 'Note de recherche',
+                    'synthese' => 'Compte Rendu',
+                    'opinion' => 'Texte Réflexif',
                 ),
                 'default_value' => 'recherche',
                 'required' => 1,
@@ -632,12 +629,9 @@ function tuiles_articles_dynamiques_shortcode() {
         if ($type_article_raw) {
             // Convertir la valeur en label lisible
             $type_choices = array(
-                'recherche' => 'Article de recherche',
-                'synthese' => 'Article de synthèse',
-                'opinion' => 'Article d\'opinion',
-                'editorial' => 'Éditorial',
-                'note' => 'Note de recherche',
-                'recension' => 'Recension',
+                'recherche' => 'Note de recherche',
+                'synthese' => 'Compte Rendu',
+                'opinion' => 'Texte Réflexif',
             );
             $type_article = isset($type_choices[$type_article_raw]) ? $type_choices[$type_article_raw] : $type_article_raw;
         }
@@ -692,12 +686,9 @@ register_block_type('custom-article/type', array(
         if ($type_raw) {
             // Convertir la valeur en label lisible
             $type_choices = array(
-                'recherche' => 'Article de recherche',
-                'synthese' => 'Article de synthèse',
-                'opinion' => 'Article d\'opinion',
-                'editorial' => 'Éditorial',
-                'note' => 'Note de recherche',
-                'recension' => 'Recension',
+                'recherche' => 'Note de recherche',
+                'synthese' => 'Compte Rendu',
+                'opinion' => 'Texte Réflexif',
             );
             $type_label = isset($type_choices[$type_raw]) ? $type_choices[$type_raw] : $type_raw;
             return '<p class="article-type pr-mt-8"><strong>' . esc_html($type_label) . '</strong></p>';
