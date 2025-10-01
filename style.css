@@ -159,10 +159,6 @@ body {
 }
 
 /* Bouton citation avec modale */
-.citation-tool-container {
-  margin: 20px 0;
-}
-
 .citation-button {
   background-color: #478245;
   border-radius: 12px;
