@@ -87,7 +87,7 @@ function render_accordeon_block($attributes, $content) {
                 }
                 $output .= '</ul>';
             } else {
-                $output .= '<p>Article à venir.</p>';
+                $output .= '<p>Texte à paraitre.</p>';
             }
 
             wp_reset_postdata();
