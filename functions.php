@@ -247,15 +247,20 @@ function enqueue_custom_article_blocks() {
 add_action('enqueue_block_editor_assets', 'enqueue_custom_article_blocks');
 
 // Rendu des auteurs
+// Rendu des auteurs
 register_block_type('custom-article/auteurs', array(
     'render_callback' => function($attributes, $content) {
         $post_id = get_the_ID();
         $terms = get_the_terms($post_id, 'pr-auteurs');
         if ($terms && !is_wp_error($terms)) {
             $output = '<div class="article-auteurs pr-mt-8">';
-            $output .= '<p>Par :</p>';
             foreach ($terms as $auteur) {
-                $output .= '<p class="auteur-nom">' . esc_html($auteur->name) . '</p>';
+                $institution = get_field('auteur_institution', 'pr-auteurs_' . $auteur->term_id);
+                $auteur_display = esc_html($auteur->name);
+                if ($institution) {
+                    $auteur_display .= ' (' . esc_html($institution) . ')';
+                }
+                $output .= '<p class="auteur-nom">' . $auteur_display . '</p>';
             }
             $output .= '</div>';
             return $output;
