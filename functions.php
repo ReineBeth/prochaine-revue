@@ -99,7 +99,7 @@ function create_articles_acf_fields() {
                 'name' => 'article_description',
                 'type' => 'textarea',
                 'required' => 1,
-                'show_in_rest' => true
+                'show_in_rest' => 1
             ),
             array(
                 'key' => 'field_article_type',
@@ -113,7 +113,7 @@ function create_articles_acf_fields() {
                 ),
                 'default_value' => 'recherche',
                 'required' => 1,
-                'show_in_rest' => true
+                'show_in_rest' => 1
             ),
             array(
                 'key' => 'field_article_pdf',
@@ -123,7 +123,7 @@ function create_articles_acf_fields() {
                 'return_format' => 'array',
                 'mime_types' => 'pdf',
                 'required' => 1,
-                'show_in_rest' => true
+                'show_in_rest' => 1
             ),
             array(
                 'key' => 'field_titre_revue',
@@ -131,7 +131,7 @@ function create_articles_acf_fields() {
                 'name' => 'titre_revue',
                 'type' => 'text',
                 'required' => 0,
-                'show_in_rest' => true
+                'show_in_rest' => 1
             ),
             array(
                 'key' => 'field_volume',
@@ -139,7 +139,7 @@ function create_articles_acf_fields() {
                 'name' => 'volume',
                 'type' => 'text',
                 'required' => 0,
-                'show_in_rest' => true
+                'show_in_rest' => 1
             ),
             array(
                 'key' => 'field_pages',
@@ -147,7 +147,7 @@ function create_articles_acf_fields() {
                 'name' => 'pages',
                 'type' => 'text',
                 'required' => 0,
-                'show_in_rest' => true
+                'show_in_rest' => 1
             ),
             array(
                 'key' => 'field_annee_publication',
@@ -155,7 +155,7 @@ function create_articles_acf_fields() {
                 'name' => 'annee_publication',
                 'type' => 'text',
                 'required' => 0,
-                'show_in_rest' => true
+                'show_in_rest' => 1
             ),
             array(
                 'key' => 'field_numero_volume',
@@ -163,7 +163,58 @@ function create_articles_acf_fields() {
                 'name' => 'numero_volume',
                 'type' => 'text',
                 'required' => 0,
-                'show_in_rest' => true
+                'show_in_rest' => 1
+            ),
+            // NOUVEAUX CHAMPS
+            array(
+                'key' => 'field_disciplines',
+                'label' => 'Discipline(s) concernée(s)',
+                'name' => 'disciplines',
+                'type' => 'text',
+                'required' => 0,
+                'show_in_rest' => 1,
+                'instructions' => 'Ex: Éducation, Psychologie, Sociologie'
+            ),
+            array(
+                'key' => 'field_mots_cles',
+                'label' => 'Mots clés',
+                'name' => 'mots_cles',
+                'type' => 'textarea',
+                'required' => 0,
+                'show_in_rest' => 1,
+                'instructions' => 'Séparez les mots clés par des virgules'
+            ),
+            array(
+                'key' => 'field_droits_auteur',
+                'label' => 'Droits d\'auteur',
+                'name' => 'droits_auteur',
+                'type' => 'text',
+                'required' => 0,
+                'show_in_rest' => 1,
+                'default_value' => 'Tous droits réservés © Les Prochaines Éditions, 2025',
+                'instructions' => 'Mention des droits d\'auteur'
+            ),
+            array(
+                'key' => 'field_mois_publication',
+                'label' => 'Mois de publication',
+                'name' => 'mois_publication',
+                'type' => 'select',
+                'choices' => array(
+                    'janvier' => 'Janvier',
+                    'février' => 'Février',
+                    'mars' => 'Mars',
+                    'avril' => 'Avril',
+                    'mai' => 'Mai',
+                    'juin' => 'Juin',
+                    'juillet' => 'Juillet',
+                    'août' => 'Août',
+                    'septembre' => 'Septembre',
+                    'octobre' => 'Octobre',
+                    'novembre' => 'Novembre',
+                    'décembre' => 'Décembre',
+                ),
+                'required' => 0,
+                'show_in_rest' => 1
             )
         ),
         'location' => array(
@@ -691,7 +742,7 @@ register_block_type('custom-article/type', array(
                 'opinion' => 'Texte réflexif',
             );
             $type_label = isset($type_choices[$type_raw]) ? $type_choices[$type_raw] : $type_raw;
-            return '<p class="article-type pr-mt-8"><strong>' . esc_html($type_label) . '</strong></p>';
+            return '<p class="article-type pr-mt-8">' . esc_html($type_label) . '</p>';
         }
         return '';
     }
@@ -785,7 +836,7 @@ register_block_type('pr/tuile', array(
                 
                 // Type d'article
                 if ($type_article) {
-                    $output .= '<div class="pr-tuile-type"><strong>' . esc_html($type_article) . '</strong></div>';
+                    $output .= '<div class="pr-tuile-type">' . esc_html($type_article) . '</div>';
                 }
                 
                 $output .= '</div>'; // Fermeture pr-tuile-lien-text
@@ -800,4 +851,109 @@ register_block_type('pr/tuile', array(
         return $content;
     }
 ));
+
+// Rendu des disciplines
+register_block_type('custom-article/disciplines', array(
+    'render_callback' => function($attributes, $content) {
+        $post_id = get_the_ID();
+        $disciplines = get_field('disciplines', $post_id);
+        if ($disciplines) {
+            return '<p class="article-disciplines pr-mt-8">Discipline(s) concernée(s) :' . esc_html($disciplines) . '</p>';
+        }
+        return '';
+    }
+));
+
+// Rendu des mots clés
+register_block_type('custom-article/mots-cles', array(
+    'render_callback' => function($attributes, $content) {
+        $post_id = get_the_ID();
+        $mots_cles = get_field('mots_cles', $post_id);
+        if ($mots_cles) {
+            return '<p class="article-mots-cles pr-mt-8">Mots clés :' . esc_html($mots_cles) . '</p>';
+        }
+        return '';
+    }
+));
+
+// Rendu des droits d'auteur
+register_block_type('custom-article/droits-auteur', array(
+    'render_callback' => function($attributes, $content) {
+        $post_id = get_the_ID();
+        $droits = get_field('droits_auteur', $post_id);
+        if ($droits) {
+            return '<p class="article-droits-auteur pr-mt-8">' . esc_html($droits) . '</p>';
+        }
+        return '';
+    }
+));
+
+// Rendu des informations de publication (Volume, numéro, mois, année, pages)
+register_block_type('custom-article/infos-publication', array(
+    'render_callback' => function($attributes, $content) {
+        $post_id = get_the_ID();
+        $volume = get_field('volume', $post_id);
+        $numero_volume = get_field('numero_volume', $post_id);
+        $mois = get_field('mois_publication', $post_id);
+        $annee = get_field('annee_publication', $post_id);
+        $pages = get_field('pages', $post_id);
+        
+        $infos = array();
+        
+        if ($volume && $numero_volume) {
+            $infos[] = 'Volume ' . $volume . ', numéro ' . $numero_volume;
+        } elseif ($volume) {
+            $infos[] = 'Volume ' . $volume;
+        }
+        
+        if ($mois && $annee) {
+            $infos[] = $mois . ' ' . $annee;
+        } elseif ($annee) {
+            $infos[] = $annee;
+        }
+        
+        if ($pages) {
+            $infos[] = 'p. ' . $pages;
+        }
+        
+        if (!empty($infos)) {
+            $publication_info = implode(', ', $infos) . '.';
+            return '<p class="article-infos-publication pr-mt-8">' . esc_html($publication_info) . '</p>';
+        }
+        
+        return '';
+    }
+));
+
+// Forcer l'exposition des champs ACF dans l'API REST
+function expose_acf_fields_to_rest() {
+    // Liste de tous les champs ACF à exposer
+    $acf_fields = array(
+        'article_description',
+        'article_type', 
+        'article_pdf',
+        'titre_revue',
+        'volume',
+        'pages',
+        'annee_publication',
+        'numero_volume',
+        'disciplines',
+        'mots_cles',
+        'droits_auteur',
+        'mois_publication'
+    );
+    
+    foreach($acf_fields as $field) {
+        register_rest_field('pr_article', $field, array(
+            'get_callback' => function($post) use ($field) {
+                return get_field($field, $post['id']);
+            },
+            'update_callback' => function($value, $post) use ($field) {
+                return update_field($field, $value, $post->ID);
+            },
+            'schema' => null,
+        ));
+    }
+}
+add_action('rest_api_init', 'expose_acf_fields_to_rest');
 ?>

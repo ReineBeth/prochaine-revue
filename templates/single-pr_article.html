@@ -1,7 +1,8 @@
 <!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
-
 <!-- wp:group {"tagName":"main","className":"template-single-pr-article"} -->
-<main class="wp-site-blocks template-single-pr-article template-lecture-article">
+<main
+	class="wp-site-blocks template-single-pr-article template-lecture-article"
+>
 	<!-- wp:group {"layout":{"type":"constrained"}} -->
 	<div class="wp-block-group lecture-article-containeur">
 		<!-- wp:paragraph -->
@@ -51,6 +52,7 @@
 		<!-- /wp:paragraph -->
 
 		<!-- wp:post-title {"level":1,"className":"article-title"} /-->
+
 		<!-- wp:custom-article/auteurs /-->
 
 		<!-- wp:heading {"level":2} -->
@@ -59,17 +61,45 @@
 
 		<!-- wp:custom-article/description /-->
 
-		<!-- wp:group {"className":"pdf-viewer"} -->
-		<div class="wp-block-group pdf-viewer">
-			<!-- wp:heading -->
-			<h2 class="texte-titre">Texte intégral (PDF)</h2>
-			<!-- /wp:heading -->
-			<!-- wp:shortcode -->
-			[my_acf field="article_pdf"]
-			<!-- /wp:shortcode -->
+		<!-- wp:columns {"verticalAlignment":"top"} -->
+		<div class="wp-block-columns are-vertically-aligned-top">
+			<!-- wp:column {"verticalAlignment":"top","width":"66.66%"} -->
+			<div
+				class="wp-block-column is-vertically-aligned-top"
+				style="flex-basis: 66.66%"
+			>
+				<!-- wp:group {"className":"pdf-viewer"} -->
+				<div class="wp-block-group pdf-viewer">
+					<!-- wp:heading -->
+					<h2 class="texte-titre">Texte intégral (PDF)</h2>
+					<!-- /wp:heading -->
+					<!-- wp:shortcode -->
+					[my_acf field="article_pdf"]
+					<!-- /wp:shortcode -->
+				</div>
+				<!-- /wp:group -->
+			</div>
+			<!-- /wp:column -->
+
+			<!-- wp:column {"verticalAlignment":"top","width":"33.33%"} -->
+			<div
+				class="wp-block-column is-vertically-aligned-top"
+				style="flex-basis: 33.33%"
+			>
+				<!-- wp:group {"className":"block-metas","layout":{"type":"flex","orientation":"vertical"}} -->
+				<div class="wp-block-group block-metas">
+					<!-- wp:custom-article/type /-->
+					<!-- wp:custom-article/infos-publication /-->
+					<!-- wp:custom-article/disciplines /-->
+					<!-- wp:custom-article/mots-cles /-->
+					<!-- wp:custom-article/droits-auteur /-->
+				</div>
+				<!-- /wp:group -->
+			</div>
+			<!-- /wp:column -->
 		</div>
-		<!-- /wp:group -->
-		
+		<!-- /wp:columns -->
+
 		<!-- wp:group {"className":"conteneur-btn"} -->
 		<div class="wp-block-group conteneur-btn">
 			<!-- wp:shortcode -->
@@ -84,5 +114,4 @@
 	<!-- /wp:group -->
 </main>
 <!-- /wp:group -->
-
 <!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->

@@ -1061,6 +1061,12 @@ body {
   width: 100%;
 }
 
+.block-metas {
+  border: #3a5a40 2px solid;
+  padding: 16px;
+  border-radius: 8px;
+}
+
 main {
   max-width: 100vw;
 }
