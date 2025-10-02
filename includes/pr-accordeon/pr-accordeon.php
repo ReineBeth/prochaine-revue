@@ -78,7 +78,7 @@ function render_accordeon_block($attributes, $content) {
             $articles_query = new WP_Query($args);
 
             if ($articles_query->have_posts()) {
-                $output .= '<h4 class="author-articles-title">Liste des articles</h4>' . '<ul class="author-articles">';
+                $output .= '<h4 class="author-articles-title">Liste des contributions</h4>' . '<ul class="author-articles">';
                 while ($articles_query->have_posts()) {
                     $articles_query->the_post();
                     $output .= '<li>';
