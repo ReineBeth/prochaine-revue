@@ -68,8 +68,9 @@ function Edit({
   const getTypeLabel = typeValue => {
     const typeChoices = {
       recherche: "Note de recherche",
-      synthese: "Texte réflexif",
-      rendu: "Compte rendu"
+      synthese: "Compte Rendu",
+      // ← Corrigé pour correspondre au PHP
+      opinion: "Texte réflexif"
     };
     return typeChoices[typeValue] || typeValue;
   };

@@ -109,7 +109,7 @@ function create_articles_acf_fields() {
                 'choices' => array(
                     'recherche' => 'Note de recherche',
                     'synthese' => 'Compte Rendu',
-                    'opinion' => 'Texte Réflexif',
+                    'opinion' => 'Texte réflexif',
                 ),
                 'default_value' => 'recherche',
                 'required' => 1,
@@ -631,7 +631,7 @@ function tuiles_articles_dynamiques_shortcode() {
             $type_choices = array(
                 'recherche' => 'Note de recherche',
                 'synthese' => 'Compte Rendu',
-                'opinion' => 'Texte Réflexif',
+                'opinion' => 'Texte réflexif',
             );
             $type_article = isset($type_choices[$type_article_raw]) ? $type_choices[$type_article_raw] : $type_article_raw;
         }
@@ -688,7 +688,7 @@ register_block_type('custom-article/type', array(
             $type_choices = array(
                 'recherche' => 'Note de recherche',
                 'synthese' => 'Compte Rendu',
-                'opinion' => 'Texte Réflexif',
+                'opinion' => 'Texte réflexif',
             );
             $type_label = isset($type_choices[$type_raw]) ? $type_choices[$type_raw] : $type_raw;
             return '<p class="article-type pr-mt-8"><strong>' . esc_html($type_label) . '</strong></p>';
@@ -698,12 +698,11 @@ register_block_type('custom-article/type', array(
 ));
 
 function enqueue_pr_tuile_styles() {
-    // Vérifier si le fichier CSS du bloc existe
     $tuile_css_path = get_template_directory() . '/includes/pr-tuile/build/style-index.css';
     $tuile_css_url = get_template_directory_uri() . '/includes/pr-tuile/build/style-index.css';
     
     if (file_exists($tuile_css_path)) {
-        wp_register_style(
+        wp_enqueue_style( // ← Enqueue au lieu de register
             'pr-tuile-block-style',
             $tuile_css_url,
             array(),
@@ -721,4 +720,84 @@ add_action('enqueue_block_editor_assets', function() {
         null
     );
 });
+
+// Ajouter le rendu PHP pour le bloc pr-tuile en mode dynamique
+register_block_type('pr/tuile', array(
+    'render_callback' => function($attributes, $content) {
+        $mode = isset($attributes['mode']) ? $attributes['mode'] : 'static';
+        
+        if ($mode === 'dynamic') {
+            // Utiliser la même logique que votre shortcode
+            $articlesCount = isset($attributes['articlesCount']) ? $attributes['articlesCount'] : 3;
+            $showAllArticles = isset($attributes['showAllArticles']) ? $attributes['showAllArticles'] : false;
+            
+            $posts_per_page = $showAllArticles ? -1 : $articlesCount;
+            
+            // Récupérer les articles
+            $articles = get_posts(array(
+                'post_type' => 'pr_article',
+                'posts_per_page' => $posts_per_page,
+                'post_status' => 'publish',
+                'orderby' => 'date',
+                'order' => 'DESC'
+            ));
+            
+            if (empty($articles)) {
+                return '<p>Aucun article disponible.</p>';
+            }
+            
+            $output = '<div class="pr-tuile-container wp-block-pr-tuile">';
+            
+            foreach ($articles as $article) {
+                $title = get_the_title($article->ID);
+                
+                // Récupérer les auteurs via la taxonomie
+                $auteurs_terms = get_the_terms($article->ID, 'pr-auteurs');
+                
+                // Récupérer le type d'article via ACF avec conversion
+                $type_article_raw = get_field('article_type', $article->ID);
+                $type_article = '';
+                if ($type_article_raw) {
+                    $type_choices = array(
+                        'recherche' => 'Note de recherche',
+                        'synthese' => 'Compte Rendu',
+                        'opinion' => 'Texte Réflexif',
+                    );
+                    $type_article = isset($type_choices[$type_article_raw]) ? $type_choices[$type_article_raw] : $type_article_raw;
+                }
+                
+                $slug = $article->post_name;
+                $articles_page_url = home_url('/articles/' . $slug . '/');
+                
+                // Générer le HTML exactement comme votre exemple
+                $output .= '<a class="pr-tuile-lien" href="' . esc_url($articles_page_url) . '" rel="noopener noreferrer">';
+                $output .= '<div class="pr-tuile-lien-text">';
+                $output .= '<h3>' . esc_html($title) . '</h3>';
+                
+                // Auteurs
+                if ($auteurs_terms && !is_wp_error($auteurs_terms)) {
+                    $output .= '<div class="pr-tuile-auteurs">';
+                    foreach ($auteurs_terms as $auteur) {
+                        $output .= '<div class="pr-tuile-auteur">' . esc_html($auteur->name) . '</div>';
+                    }
+                    $output .= '</div>';
+                }
+                
+                // Type d'article
+                if ($type_article) {
+                    $output .= '<div class="pr-tuile-type"><strong>' . esc_html($type_article) . '</strong></div>';
+                }
+                
+                $output .= '</div>'; // Fermeture pr-tuile-lien-text
+                $output .= '</a>';   // Fermeture pr-tuile-lien
+            }
+            
+            $output .= '</div>'; // Fermeture pr-tuile-container
+            return $output;
+        }
+        
+        // Pour le mode statique, retourner le contenu normal
+        return $content;
+    }
+));
 ?>
