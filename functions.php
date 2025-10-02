@@ -705,11 +705,16 @@ function tuiles_articles_dynamiques_shortcode() {
         $output .= '<div class="pr-tuile-lien-text">';
         $output .= '<h3>' . esc_html($title) . '</h3>';
         
-        // Affichage des auteurs
+        // Affichage des auteurs avec institution
         if ($auteurs_terms && !is_wp_error($auteurs_terms)) {
             $output .= '<div class="pr-tuile-auteurs">';
             foreach ($auteurs_terms as $auteur) {
-                $output .= '<div class="pr-tuile-auteur">' . esc_html($auteur->name) . '</div>';
+                $institution = get_field('auteur_institution', 'pr-auteurs_' . $auteur->term_id);
+                $auteur_display = esc_html($auteur->name);
+                if ($institution) {
+                    $auteur_display .= ' (' . esc_html($institution) . ')';
+                }
+                $output .= '<div class="pr-tuile-auteur">' . $auteur_display . '</div>';
             }
             $output .= '</div>';
         }
