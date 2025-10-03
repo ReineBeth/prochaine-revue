@@ -332,6 +332,10 @@ body {
 .template-auteurs .auteurs-container .pr-accordeon {
   padding-top: 50px;
 }
+.template-auteurs .auteurs-container h1 {
+  max-width: 1300px;
+  margin: auto;
+}
 
 .recherche {
   display: flex;
@@ -1065,6 +1069,11 @@ body {
   border: #3a5a40 2px solid;
   padding: 16px;
   border-radius: 8px;
+}
+@media screen and (min-width: 782px) {
+  .block-metas {
+    margin-top: 80px;
+  }
 }
 
 main {
