@@ -1,9 +1,6 @@
 @use '../variables.scss' as var;
 
 .template-auteurs {
-	display: flex;
-	justify-content: center;
-
 	.auteurs-container {
 		padding: 35px 40px;
 		max-width: 1440px;
@@ -18,8 +15,13 @@
 		}
 
 		h1 {
+			text-align: center;
 			max-width: 1300px;
 			margin: auto;
+
+		@media (min-width: 580px) {
+			text-align: start;
+		}
 		}
 	}
 }
@@ -32,6 +34,7 @@
 
 .recherche-auteurs-container {
 	margin: 20px 0;
+	width: auto;
 
 	background: var.$color-primary;
 	border-radius: 8px;

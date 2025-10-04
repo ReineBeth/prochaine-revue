@@ -315,10 +315,6 @@ body {
   align-items: center;
 }
 
-.template-auteurs {
-  display: flex;
-  justify-content: center;
-}
 .template-auteurs .auteurs-container {
   padding: 35px 40px;
   max-width: 1440px;
@@ -333,8 +329,14 @@ body {
   padding-top: 50px;
 }
 .template-auteurs .auteurs-container h1 {
+  text-align: center;
   max-width: 1300px;
   margin: auto;
+}
+@media (min-width: 580px) {
+  .template-auteurs .auteurs-container h1 {
+    text-align: start;
+  }
 }
 
 .recherche {
@@ -345,6 +347,7 @@ body {
 
 .recherche-auteurs-container {
   margin: 20px 0;
+  width: auto;
   background: #3a5a40;
   border-radius: 8px;
   padding: 30px;
