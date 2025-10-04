@@ -302,7 +302,7 @@
 	padding: 16px;
 	border-radius: 8px;
 	
-@media screen and (min-width: 782px) {
-		margin-top: 80px;
-	}
+	@media screen and (min-width: 782px) {
+			margin-top: 80px !important;
+		}
 }

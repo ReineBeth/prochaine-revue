@@ -1075,7 +1075,7 @@ body {
 }
 @media screen and (min-width: 782px) {
   .block-metas {
-    margin-top: 80px;
+    margin-top: 80px !important;
   }
 }
 
