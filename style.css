@@ -347,7 +347,7 @@ body {
 
 .recherche-auteurs-container {
   margin: 20px 0;
-  width: auto;
+  width: 100%;
   background: #3a5a40;
   border-radius: 8px;
   padding: 30px;
