@@ -60,6 +60,7 @@ export default function Edit({ attributes, setAttributes }) {
 			recherche: "Note de recherche",
 			synthese: "Compte Rendu", // ← Corrigé pour correspondre au PHP
 			opinion: "Texte réflexif",
+			article: "Article",
 		};
 		return typeChoices[typeValue] || typeValue;
 	};

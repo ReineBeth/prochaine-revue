@@ -110,6 +110,7 @@ function create_articles_acf_fields() {
                     'recherche' => 'Note de recherche',
                     'synthese' => 'Compte Rendu',
                     'opinion' => 'Texte réflexif',
+                    'article' => 'Article',
                 ),
                 'default_value' => 'recherche',
                 'required' => 1,
@@ -688,6 +689,7 @@ function tuiles_articles_dynamiques_shortcode() {
                 'recherche' => 'Note de recherche',
                 'synthese' => 'Compte Rendu',
                 'opinion' => 'Texte réflexif',
+                'article' => 'Article',
             );
             $type_article = isset($type_choices[$type_article_raw]) ? $type_choices[$type_article_raw] : $type_article_raw;
         }
@@ -750,6 +752,7 @@ register_block_type('custom-article/type', array(
                 'recherche' => 'Note de recherche',
                 'synthese' => 'Compte Rendu',
                 'opinion' => 'Texte réflexif',
+                'article' => 'Article',
             );
             $type_label = isset($type_choices[$type_raw]) ? $type_choices[$type_raw] : $type_raw;
             return '<p class="article-type pr-mt-8">' . esc_html($type_label) . '</p>';
@@ -823,6 +826,7 @@ register_block_type('pr/tuile', array(
                         'recherche' => 'Note de recherche',
                         'synthese' => 'Compte Rendu',
                         'opinion' => 'Texte Réflexif',
+                        'article' => 'Article',
                     );
                     $type_article = isset($type_choices[$type_article_raw]) ? $type_choices[$type_article_raw] : $type_article_raw;
                 }

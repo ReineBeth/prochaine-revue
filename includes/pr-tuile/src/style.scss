@@ -12,7 +12,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 24px;
-		justify-content: space-between;
+		justify-content: start;
 	}
 }
 
@@ -68,7 +68,7 @@
 }
 
 .pr-tuile-auteur {
-	font-family: 'Raleway';
+	font-family: "Raleway";
 	font-size: 1rem;
 	font-weight: 400;
 }
@@ -78,5 +78,5 @@
 }
 
 .pr-tuile-type {
-	font-family: 'Raleway';
+	font-family: "Raleway";
 }

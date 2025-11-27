@@ -71,6 +71,7 @@ function render_pr_tuile_block($attributes, $content) {
                     'recherche' => 'Note de recherche',
                     'synthese' => 'Texte réflexif',
                     'rendu' => 'Compte rendu',
+					'article' => 'Article'
                 );
                 $type_article = isset($type_choices[$type_article_raw]) ? $type_choices[$type_article_raw] : $type_article_raw;
             }

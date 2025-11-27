@@ -82,6 +82,7 @@ registerBlockType('custom-article/type', {
 				recherche: 'Note de recherche',
 				synthese: 'Compte Rendu',
 				opinion: 'Texte réflexif',
+				article: 'Article',
 			};
 			typeLabel = typeChoices[articleType] || articleType;
 		}

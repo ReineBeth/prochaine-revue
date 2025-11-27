@@ -70,7 +70,8 @@ function Edit({
       recherche: "Note de recherche",
       synthese: "Compte Rendu",
       // ← Corrigé pour correspondre au PHP
-      opinion: "Texte réflexif"
+      opinion: "Texte réflexif",
+      article: "Article"
     };
     return typeChoices[typeValue] || typeValue;
   };
