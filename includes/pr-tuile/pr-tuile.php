@@ -89,20 +89,20 @@ function render_pr_tuile_block($attributes, $content) {
             }
 
             $output .= '<div class="pr-tuile-lien-text">';
-            $output .= '<h3>' . esc_html($title) . '</h3>';
+            $output .= '<h3>' . wp_kses_post($title) . '</h3>';
 
             // Affichage des auteurs
             if ($auteurs_terms && !is_wp_error($auteurs_terms)) {
                 $output .= '<div class="pr-tuile-auteurs">';
                 foreach ($auteurs_terms as $auteur) {
-                    $output .= '<div class="pr-tuile-auteur">' . esc_html($auteur->name) . '</div>';
+                    $output .= '<div class="pr-tuile-auteur">' . wp_kses_post($auteur->name) . '</div>';
                 }
                 $output .= '</div>';
             }
 
             // Affichage du type d'article
             if ($type_article) {
-                $output .= '<div class="pr-tuile-type"><strong>' . esc_html($type_article) . '</strong></div>';
+                $output .= '<div class="pr-tuile-type"><strong>' . wp_kses_post($type_article) . '</strong></div>';
             }
 
             $output .= '</div>';

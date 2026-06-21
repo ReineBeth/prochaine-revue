@@ -46,7 +46,7 @@ function render_accordeon_block($attributes, $content) {
                 '<%1$s><button type="button" aria-expanded="false" class="pr-accordeon-trigger js-trigger" aria-controls="content-%2$s" id="trigger-%2$s">%3$s</button></%1$s>',
                 'h' . ($attributes['headingLevel'] ?? '3'),
                 esc_attr($accordionId),
-                esc_html($term->name)
+                wp_kses_post($term->name)
             );
 
             // Contenu de l'accordéon
@@ -59,7 +59,7 @@ function render_accordeon_block($attributes, $content) {
             $output .= '<div class="pr-accordeon-content-inner">';
 
 			if (!empty($term->description)) {
-       		$output .= '<p class="author-description">' . esc_html($term->description) . '</p>';
+			$output .= '<p class="author-description">' . wp_kses_post(wpautop($term->description)) . '</p>';
     }
 
             // Articles de l'auteur
