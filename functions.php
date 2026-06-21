@@ -46,7 +46,7 @@ pr_require_file(PR_INCLUDES_PATH . 'acf/auteur-fields.php');
 
 // === BLOCS GUTENBERG ===
 pr_require_file(PR_INCLUDES_PATH . 'blocks/article-blocks.php');
-pr_require_file(PR_INCLUDES_PATH . 'blocks/tuile-block.php');
+// pr_require_file(PR_INCLUDES_PATH . 'blocks/tuile-block.php'); //doublon
 
 // === SHORTCODES ===
 pr_require_file(PR_INCLUDES_PATH . 'shortcodes/acf-shortcode.php');
