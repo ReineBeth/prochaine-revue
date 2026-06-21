@@ -63,13 +63,6 @@ function render_pr_tuile_block($attributes, $content) {
             'b' => array(),
         );
 
-        $type_choices = array(
-            'recherche' => 'Note de recherche',
-            'synthese' => 'Texte réflexif',
-            'rendu' => 'Compte rendu',
-            'article' => 'Article'
-        );
-
         // Utiliser un array pour construire le HTML proprement
         $html_parts = array();
         $html_parts[] = '<div class="wp-block-pr-tuile pr-tuile-container">';
@@ -78,10 +71,11 @@ function render_pr_tuile_block($attributes, $content) {
             $title = get_the_title($article->ID);
             $auteurs_terms = get_the_terms($article->ID, 'pr-auteurs');
 
-            $type_article_raw = get_field('article_type', $article->ID);
+            // NOUVEAU : Récupérer le type depuis la taxonomie
             $type_article = '';
-            if ($type_article_raw && isset($type_choices[$type_article_raw])) {
-                $type_article = $type_choices[$type_article_raw];
+            $type_terms = get_the_terms($article->ID, 'pr-type-article');
+            if ($type_terms && !is_wp_error($type_terms)) {
+                $type_article = $type_terms[0]->name;
             }
 
             $thumbnail = get_the_post_thumbnail_url($article->ID, 'medium');
@@ -109,7 +103,7 @@ function render_pr_tuile_block($attributes, $content) {
                 $html_parts[] = '</div>';
             }
 
-            // Type d'article - SANS balise strong ici car on va le mettre en CSS
+            // Type d'article
             if ($type_article) {
                 $html_parts[] = '<div class="pr-tuile-type">' . esc_html($type_article) . '</div>';
             }
