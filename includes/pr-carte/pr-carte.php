@@ -117,13 +117,13 @@ function render_block_pr_carte($attributes) {
                                         />
                                     </div>
                                 <?php endif; ?>
-                                <h3 class="pr-carte-titre"><?php echo esc_html($title); ?></h3>
-                                <h4 class="pr-carte-soustitre"><?php echo esc_html($subtitle); ?></h4>
+                                <h3 class="pr-carte-titre"><?php echo wp_kses_post($title); ?></h3>
+                                <h4 class="pr-carte-soustitre"><?php echo wp_kses_post($subtitle); ?></h4>
                             </div>
                             <div class="pr-carte-icone"><?php echo $flip_icon; ?></div>
                         </div>
                         <div class="pr-carte-back">
-                            <p><?php echo esc_html($text); ?></p>
+                            <p><?php echo wp_kses_post($text); ?></p>
                             <div class="pr-carte-icone"><?php echo $flip_icon; ?></div>
                         </div>
                     </div>

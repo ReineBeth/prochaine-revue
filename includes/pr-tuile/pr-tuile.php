@@ -55,63 +55,72 @@ function render_pr_tuile_block($attributes, $content) {
             return '<p>Aucun article disponible.</p>';
         }
 
-        $output = '<div class="wp-block-pr-tuile pr-tuile-container">';
+        // Définir les balises autorisées pour wp_kses
+        $allowed_tags = array(
+            'em' => array(),
+            'i' => array(),
+            'strong' => array(),
+            'b' => array(),
+        );
+
+        $type_choices = array(
+            'recherche' => 'Note de recherche',
+            'synthese' => 'Texte réflexif',
+            'rendu' => 'Compte rendu',
+            'article' => 'Article'
+        );
+
+        // Utiliser un array pour construire le HTML proprement
+        $html_parts = array();
+        $html_parts[] = '<div class="wp-block-pr-tuile pr-tuile-container">';
 
         foreach ($articles as $article) {
             $title = get_the_title($article->ID);
-
-            // Récupérer les auteurs via la taxonomie
             $auteurs_terms = get_the_terms($article->ID, 'pr-auteurs');
 
-            // Récupérer le type d'article via ACF
             $type_article_raw = get_field('article_type', $article->ID);
             $type_article = '';
-            if ($type_article_raw) {
-                $type_choices = array(
-                    'recherche' => 'Note de recherche',
-                    'synthese' => 'Texte réflexif',
-                    'rendu' => 'Compte rendu',
-					'article' => 'Article'
-                );
-                $type_article = isset($type_choices[$type_article_raw]) ? $type_choices[$type_article_raw] : $type_article_raw;
+            if ($type_article_raw && isset($type_choices[$type_article_raw])) {
+                $type_article = $type_choices[$type_article_raw];
             }
 
             $thumbnail = get_the_post_thumbnail_url($article->ID, 'medium');
-            $slug = $article->post_name;
-            $articles_page_url = home_url('/articles/' . $slug . '/');
+            $permalink = get_permalink($article->ID);
 
-            $output .= '<a class="pr-tuile-lien" href="' . esc_url($articles_page_url) . '" rel="noopener noreferrer">';
+            $html_parts[] = '<a class="pr-tuile-lien" href="' . esc_url($permalink) . '" rel="noopener noreferrer">';
 
             if ($thumbnail) {
-                $output .= '<div class="pr-tuile-lien-image">';
-                $output .= '<img src="' . esc_url($thumbnail) . '" alt="' . esc_attr($title) . '" loading="lazy" />';
-                $output .= '</div>';
+                $html_parts[] = '<div class="pr-tuile-lien-image">';
+                $html_parts[] = '<img src="' . esc_url($thumbnail) . '" alt="' . esc_attr($title) . '" loading="lazy" />';
+                $html_parts[] = '</div>';
             }
 
-            $output .= '<div class="pr-tuile-lien-text">';
-            $output .= '<h3>' . esc_html($title) . '</h3>';
+            $html_parts[] = '<div class="pr-tuile-lien-text">';
 
-            // Affichage des auteurs
+            // Titre avec support em/strong
+            $html_parts[] = '<h3>' . wp_kses($title, $allowed_tags) . '</h3>';
+
+            // Affichage des auteurs avec support em/strong
             if ($auteurs_terms && !is_wp_error($auteurs_terms)) {
-                $output .= '<div class="pr-tuile-auteurs">';
+                $html_parts[] = '<div class="pr-tuile-auteurs">';
                 foreach ($auteurs_terms as $auteur) {
-                    $output .= '<div class="pr-tuile-auteur">' . esc_html($auteur->name) . '</div>';
+                    $html_parts[] = '<div class="pr-tuile-auteur">' . wp_kses($auteur->name, $allowed_tags) . '</div>';
                 }
-                $output .= '</div>';
+                $html_parts[] = '</div>';
             }
 
-            // Affichage du type d'article
+            // Type d'article - SANS balise strong ici car on va le mettre en CSS
             if ($type_article) {
-                $output .= '<div class="pr-tuile-type"><strong>' . esc_html($type_article) . '</strong></div>';
+                $html_parts[] = '<div class="pr-tuile-type">' . esc_html($type_article) . '</div>';
             }
 
-            $output .= '</div>';
-            $output .= '</a>';
+            $html_parts[] = '</div>'; // Ferme pr-tuile-lien-text
+            $html_parts[] = '</a>'; // Ferme pr-tuile-lien
         }
 
-        $output .= '</div>';
+        $html_parts[] = '</div>'; // Ferme pr-tuile-container
 
-        return $output;
+        return implode('', $html_parts);
 
     } else {
         // Mode statique : utiliser le contenu sauvegardé par save.js
