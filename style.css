@@ -1079,8 +1079,17 @@ body {
   }
 }
 
+@media (min-width: 600px) {
+  .pr-don {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+  }
+}
+
 main {
   max-width: 100vw;
+  text-wrap: pretty;
 }
 
 /*# sourceMappingURL=style.css.map */
