@@ -1079,11 +1079,15 @@ body {
   }
 }
 
+.pr-don {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+}
 @media (min-width: 600px) {
   .pr-don {
-    position: fixed;
     top: 16px;
-    right: 16px;
+    bottom: auto;
   }
 }
 

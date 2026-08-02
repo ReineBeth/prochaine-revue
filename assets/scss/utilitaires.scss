@@ -308,9 +308,12 @@
 }
 
 .pr-don {
+	position: fixed;
+	bottom: 16px;
+	right: 16px;
+
 	@media (min-width: var.$breakpoint-sm) {
-		position: fixed;
 		top: 16px;
-		right: 16px;
+		bottom: auto;
 	}
 }
