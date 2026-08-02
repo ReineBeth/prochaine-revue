@@ -7,12 +7,20 @@ if (!defined('ABSPATH')) exit;
 
 add_shortcode('tuiles_articles_dynamiques', 'pr_tuiles_articles_dynamiques_shortcode');
 
-function pr_tuiles_articles_dynamiques_shortcode() {
+function pr_tuiles_articles_dynamiques_shortcode($atts) {
+    // Attributs du shortcode
+    $atts = shortcode_atts(array(
+        'nombre' => 3,
+        'tout_afficher' => 'non'
+    ), $atts);
+    
     wp_enqueue_style('pr-tuile-block-style');
+    
+    $posts_per_page = ($atts['tout_afficher'] === 'oui') ? -1 : intval($atts['nombre']);
     
     $articles = get_posts(array(
         'post_type' => 'pr_article',
-        'posts_per_page' => 3,
+        'posts_per_page' => $posts_per_page,
         'post_status' => 'publish',
         'orderby' => 'date',
         'order' => 'DESC'
@@ -27,30 +35,20 @@ function pr_tuiles_articles_dynamiques_shortcode() {
     foreach ($articles as $article) {
         $title = get_the_title($article->ID);
         
+        // Récupérer les auteurs
         $auteurs_terms = get_the_terms($article->ID, 'pr-auteurs');
-        $auteurs_list = '';
-        if ($auteurs_terms && !is_wp_error($auteurs_terms)) {
-            $auteurs_names = wp_list_pluck($auteurs_terms, 'name');
-            $auteurs_list = implode(', ', $auteurs_names);
-        }
         
-        $type_article_raw = get_field('article_type', $article->ID);
+        // NOUVEAU : Récupérer le type depuis la taxonomie
         $type_article = '';
-        if ($type_article_raw) {
-            $type_choices = array(
-                'recherche' => 'Note de recherche',
-                'synthese' => 'Compte Rendu',
-                'opinion' => 'Texte réflexif',
-                'article' => 'Article',
-            );
-            $type_article = isset($type_choices[$type_article_raw]) ? $type_choices[$type_article_raw] : $type_article_raw;
+        $type_terms = get_the_terms($article->ID, 'pr-type-article');
+        if ($type_terms && !is_wp_error($type_terms)) {
+            $type_article = $type_terms[0]->name;
         }
         
         $thumbnail = get_the_post_thumbnail_url($article->ID, 'medium');
-        $slug = $article->post_name;
-        $articles_page_url = home_url('/articles/' . $slug . '/');
+        $permalink = get_permalink($article->ID);
         
-        $output .= '<a class="pr-tuile-lien" href="' . esc_url($articles_page_url) . '" rel="noopener noreferrer">';
+        $output .= '<a class="pr-tuile-lien" href="' . esc_url($permalink) . '" rel="noopener noreferrer">';
         
         if ($thumbnail) {
             $output .= '<div class="pr-tuile-lien-image">';
@@ -75,7 +73,7 @@ function pr_tuiles_articles_dynamiques_shortcode() {
         }
         
         if ($type_article) {
-            $output .= '<div class="pr-tuile-type"><strong>' . wp_kses_post($type_article) . '</strong></div>';
+            $output .= '<div class="pr-tuile-type"><strong>' . esc_html($type_article) . '</strong></div>';
         }
         
         $output .= '</div>';
