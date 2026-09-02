@@ -70,8 +70,15 @@ register_block_type('custom-article/type', array(
 
 function pr_render_type_block($attributes, $content) {
     $post_id = get_the_ID();
+    $type = pr_get_article_type($post_id);
+
+    if ($type) {
+        return '<p class="article-type pr-mt-8">' . wp_kses_post($type['name']) . '</p>';
+    }
+
+    // Compatibilite avec les anciennes valeurs ACF enregistrees comme texte.
     $type_raw = get_field('article_type', $post_id);
-    
+
     if ($type_raw) {
         $type_choices = array(
             'recherche' => 'Note de recherche',
@@ -79,8 +86,10 @@ function pr_render_type_block($attributes, $content) {
             'opinion' => 'Texte réflexif',
             'article' => 'Article',
         );
-        $type_label = isset($type_choices[$type_raw]) ? $type_choices[$type_raw] : $type_raw;
-        return '<p class="article-type pr-mt-8">' . wp_kses_post($type_label) . '</p>';
+
+        if (isset($type_choices[$type_raw])) {
+            return '<p class="article-type pr-mt-8">' . wp_kses_post($type_choices[$type_raw]) . '</p>';
+        }
     }
     return '';
 }

@@ -70,21 +70,26 @@ registerBlockType('custom-article/type', {
 		const postId = useSelect((select) =>
 			select('core/editor').getCurrentPostId()
 		);
-		const articleType = useSelect(
+		const articleData = useSelect(
 			(select) =>
 				select('core').getEntityRecord('postType', 'pr_article', postId)
-					?.article_type
 		);
+		const articleType = articleData?.article_type;
+		const articleTypeDetails = articleData?.type_article_details;
 
-		let typeLabel = "Chargement du type d'article...";
-		if (articleType) {
+		let typeLabel = articleData
+			? "Type d'article non disponible"
+			: "Chargement du type d'article...";
+		if (articleTypeDetails?.name) {
+			typeLabel = articleTypeDetails.name;
+		} else if (typeof articleType === 'string') {
 			const typeChoices = {
 				recherche: 'Note de recherche',
 				synthese: 'Compte Rendu',
 				opinion: 'Texte réflexif',
 				article: 'Article',
 			};
-			typeLabel = typeChoices[articleType] || articleType;
+			typeLabel = typeChoices[articleType] || typeLabel;
 		}
 
 		return wp.element.createElement(
