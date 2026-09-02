@@ -9,8 +9,6 @@ import {
 	PanelBody,
 	TextControl,
 	SelectControl,
-	ToggleControl,
-	RangeControl,
 } from "@wordpress/components";
 import { useState } from "@wordpress/element";
 import { useSelect } from "@wordpress/data";
@@ -58,8 +56,6 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		titleField,
 		headingLevel,
 		mode,
-		authorCount,
-		showAllAuthors,
 		uniqueId,
 	} = attributes;
 
@@ -74,13 +70,13 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			if (mode !== "dynamic") return null;
 
 			return select("core").getEntityRecords("taxonomy", "pr-auteurs", {
-				per_page: showAllAuthors ? -1 : authorCount,
+				per_page: -1,
 				_embed: true,
 				orderby: "name",
 				order: "asc",
 			});
 		},
-		[mode, authorCount, showAllAuthors],
+		[mode],
 	);
 
 	const blockProps = useBlockProps({
@@ -109,24 +105,6 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						onChange={(value) => setAttributes({ mode: value })}
 					/>
 
-					{mode === "dynamic" && (
-						<>
-							<ToggleControl
-								label={__("Afficher tous les auteurs", "pr-accordeon")}
-								checked={showAllAuthors}
-								onChange={(value) => setAttributes({ showAllAuthors: value })}
-							/>
-							{!showAllAuthors && (
-								<RangeControl
-									label={__("Nombre d'auteurs à afficher", "pr-accordeon")}
-									value={authorCount}
-									onChange={(value) => setAttributes({ authorCount: value })}
-									min={1}
-									max={12}
-								/>
-							)}
-						</>
-					)}
 				</PanelBody>
 
 				{mode === "static" && (

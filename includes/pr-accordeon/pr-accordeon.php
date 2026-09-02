@@ -32,7 +32,8 @@ function render_accordeon_block($attributes, $content) {
     $terms = get_terms([
         'taxonomy' => 'pr-auteurs',
         'hide_empty' => false,
-        'number' => $attributes['showAllAuthors'] ? 0 : $attributes['authorCount']
+        // Tous les auteurs doivent etre presents dans le DOM pour etre recherchables.
+        'number' => 0
     ]);
 
     if (!empty($terms) && !is_wp_error($terms)) {
