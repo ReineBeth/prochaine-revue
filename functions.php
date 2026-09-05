@@ -38,6 +38,7 @@ pr_require_file(PR_INCLUDES_PATH . 'setup/enqueue-assets.php');
 
 // === POST TYPES & TAXONOMIES ===
 pr_require_file(PR_INCLUDES_PATH . 'post-types/pr-article.php');
+pr_require_file(PR_INCLUDES_PATH . 'post-types/pr-actualite.php');
 pr_require_file(PR_INCLUDES_PATH . 'taxonomies/pr-auteurs.php');
 pr_require_file(PR_INCLUDES_PATH . 'taxonomies/pr-type-article.php'); 
 
@@ -55,6 +56,7 @@ pr_require_file(PR_INCLUDES_PATH . 'shortcodes/acf-shortcode.php');
 pr_require_file(PR_INCLUDES_PATH . 'shortcodes/citation-tool.php');
 pr_require_file(PR_INCLUDES_PATH . 'shortcodes/social-sharing.php');
 pr_require_file(PR_INCLUDES_PATH . 'shortcodes/tuiles-dynamiques.php');
+pr_require_file(PR_INCLUDES_PATH . 'shortcodes/actualites-dynamiques.php');
 
 // === SCRIPTS & PERSONNALISATIONS ===
 pr_require_file(PR_INCLUDES_PATH . 'scripts/search-auteurs.php');
