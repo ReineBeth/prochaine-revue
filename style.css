@@ -563,10 +563,6 @@ body {
   padding-bottom: 0;
 }
 
-.pr-actualites-shortcode {
-  margin-block: 0;
-}
-
 .pr-actualites-grid {
   display: grid;
   grid-template-columns: 1fr;

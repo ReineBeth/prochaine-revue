@@ -50,18 +50,6 @@ function pr_create_actualite_acf_fields() {
                 'instructions' => 'Facultative. L’image mise en avant est utilisée en repli si ce champ est vide.',
             ),
             array(
-                'key' => 'field_actualite_image_modale',
-                'label' => 'Image de la modale',
-                'name' => 'actualite_image_modale',
-                'type' => 'image',
-                'required' => 0,
-                'show_in_rest' => 1,
-                'return_format' => 'array',
-                'preview_size' => 'medium',
-                'library' => 'all',
-                'instructions' => 'Facultative. Cette image apparaît dans le contenu détaillé de la modale.',
-            ),
-            array(
                 'key' => 'field_actualite_contenu_modale',
                 'label' => 'Contenu de la modale',
                 'name' => 'actualite_contenu_modale',

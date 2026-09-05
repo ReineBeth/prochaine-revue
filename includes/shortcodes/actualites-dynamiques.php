@@ -88,7 +88,6 @@ function pr_actualites_dynamiques_shortcode($atts = array()) {
         if (empty($tile_image)) {
             $tile_image = get_post_thumbnail_id($post_id);
         }
-        $modal_image = pr_get_actualite_field('actualite_image_modale', $post_id);
         $modal_content = pr_get_actualite_field('actualite_contenu_modale', $post_id);
         if ($modal_content === '') {
             $modal_content = $actualite->post_content;
@@ -134,8 +133,8 @@ function pr_actualites_dynamiques_shortcode($atts = array()) {
         }
 
         $html_parts[] = '</header>';
-        if (!empty($modal_image)) {
-            $html_parts[] = '<div class="pr-actualite-dialog__image">' . pr_render_actualite_image($modal_image, 'large', 'pr-actualite-dialog__image-img', $title_text) . '</div>';
+        if (!empty($tile_image)) {
+            $html_parts[] = '<div class="pr-actualite-dialog__image">' . pr_render_actualite_image($tile_image, 'large', 'pr-actualite-dialog__image-img', $title_text) . '</div>';
         }
         $html_parts[] = '<div class="pr-actualite-dialog__body">' . apply_filters('the_content', $modal_content) . '</div>';
         $html_parts[] = '</template>';
