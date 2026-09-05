@@ -40,11 +40,13 @@ function create_block_pr_bloc_recherche_block_init() {
 add_action( 'init', 'create_block_pr_bloc_recherche_block_init' );
 
 function enqueue_recherche_script() {
+    $script_path = __DIR__ . '/assets/js/recherche.js';
+
     wp_enqueue_script(
         'pr-recherche-script',
         get_template_directory_uri() . '/includes/pr-bloc-recherche/assets/js/recherche.js',
         array(), // Pas de dépendances
-        '1.0.0',
+        file_exists($script_path) ? filemtime($script_path) : null,
         true
     );
 }

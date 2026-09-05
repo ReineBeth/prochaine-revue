@@ -5,6 +5,22 @@
 
 if (!defined('ABSPATH')) exit;
 
+/**
+ * Retourne la date de modification d'un asset pour invalider son cache.
+ *
+ * @param string $relative_path Chemin relatif à la racine du thème.
+ * @return string
+ */
+function pr_asset_version($relative_path) {
+    $asset_path = get_theme_file_path($relative_path);
+
+    if (file_exists($asset_path)) {
+        return (string) filemtime($asset_path);
+    }
+
+    return (string) wp_get_theme()->get('Version');
+}
+
 // Style principal
 add_action('wp_enqueue_scripts', 'pr_enqueue_styles');
 function pr_enqueue_styles() {
@@ -12,7 +28,7 @@ function pr_enqueue_styles() {
         'prochaine-revue-style', 
         get_stylesheet_directory_uri() . '/style.css', 
         array(),
-        wp_get_theme()->get('Version') 
+        pr_asset_version('style.css')
     );
 }
 
@@ -46,7 +62,7 @@ function pr_block_editor_assets() {
         'prochaine-revue-admin-style',
         get_template_directory_uri() . '/assets/style-admin/style.css',
         array(),
-        null
+        pr_asset_version('assets/style-admin/style.css')
     );
 }
 
@@ -74,7 +90,7 @@ function pr_enqueue_citation_tool() {
             'citation-tool',
             get_template_directory_uri() . '/assets/js/citation-tool.js',
             array(),
-            '1.0',
+            pr_asset_version('assets/js/citation-tool.js'),
             true
         );
     }
