@@ -550,11 +550,21 @@ body {
 }
 
 .pr-section-actualites {
+  margin-block: 0;
   background: #3a5a40;
   color: #fff;
 }
 .pr-section-actualites .pr-container {
   padding-block: 3rem;
+}
+
+.pr-section-publications {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.pr-actualites-shortcode {
+  margin-block: 0;
 }
 
 .pr-actualites-grid {
@@ -572,6 +582,7 @@ body {
   border: 3px solid #92d16e;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
 }
 .pr-actualite-card__image {
   background: #a3b18a;
@@ -643,9 +654,8 @@ body {
   place-items: center;
   width: 2.25rem;
   height: 2.25rem;
-  border: 2px solid #478245;
-  border-radius: 50%;
-  background: #fff;
+  border: 0;
+  background: transparent;
   color: #478245;
 }
 .pr-actualite-card__trigger-icon svg {
