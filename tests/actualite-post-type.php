@@ -47,7 +47,7 @@ if (!isset($registered_post_types['pr_actualite'])) {
 
 $post_type = $registered_post_types['pr_actualite'];
 
-if ($post_type['show_in_rest'] !== true || $post_type['supports'] !== array('title', 'editor', 'excerpt', 'thumbnail')) {
+if ($post_type['show_in_rest'] !== true || $post_type['supports'] !== array('title', 'editor', 'thumbnail')) {
     fwrite(STDERR, "Echec : les supports ou l'exposition REST du CPT sont incorrects.\n");
     exit(1);
 }

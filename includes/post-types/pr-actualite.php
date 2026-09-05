@@ -39,7 +39,7 @@ function pr_register_actualite_post_type() {
         'show_in_rest' => true,
         'menu_icon' => 'dashicons-megaphone',
         'rewrite' => array('slug' => 'actualites'),
-        'supports' => array('title', 'editor', 'excerpt', 'thumbnail'),
+        'supports' => array('title', 'editor', 'thumbnail'),
     ));
 }
 

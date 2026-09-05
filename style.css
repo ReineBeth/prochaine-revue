@@ -614,17 +614,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
+  width: 2.25rem;
+  height: 2.25rem;
   margin-block-start: 1.25rem;
-  padding: 0.75rem 1rem;
+  margin-inline-start: auto;
+  padding: 0.25rem;
   border: 2px solid #478245;
-  border-radius: 8px;
+  border-radius: 50%;
   background: #92d16e;
   color: #000;
   font: inherit;
   font-weight: 700;
-  text-align: start;
+  line-height: 1;
   cursor: pointer;
 }
 .pr-actualite-card__trigger:hover, .pr-actualite-card__trigger:focus-visible {
@@ -678,6 +679,15 @@ body {
   padding-inline-end: 2.5rem;
   color: #3a5a40;
 }
+.pr-actualite-dialog__image {
+  margin-block: 1.5rem;
+}
+.pr-actualite-dialog__image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
 .pr-actualite-dialog__date, .pr-actualite-dialog__type {
   margin-block: 0 0.5rem;
   font-size: 0.875rem;
@@ -701,6 +711,19 @@ body {
 @media (min-width: 768px) {
   .pr-actualites-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pr-actualite-card {
+    flex-direction: row;
+    min-height: 12rem;
+  }
+  .pr-actualite-card__image {
+    flex: 0 0 34%;
+  }
+  .pr-actualite-card__image img {
+    height: 100%;
+  }
+  .pr-actualite-card__body {
+    flex: 1;
   }
   .pr-actualite-dialog__surface {
     padding: 3rem 2rem 2rem;

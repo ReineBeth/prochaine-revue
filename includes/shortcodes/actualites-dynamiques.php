@@ -9,6 +9,36 @@ if (!defined('ABSPATH')) {
 
 add_shortcode('actualites_dynamiques', 'pr_actualites_dynamiques_shortcode');
 
+function pr_get_actualite_field($field_name, $post_id) {
+    return function_exists('get_field') ? get_field($field_name, $post_id) : '';
+}
+
+function pr_get_actualite_image_id($image) {
+    if (is_array($image) && !empty($image['ID'])) {
+        return absint($image['ID']);
+    }
+
+    if (is_numeric($image)) {
+        return absint($image);
+    }
+
+    return 0;
+}
+
+function pr_render_actualite_image($image, $size, $class_name, $alt) {
+    $image_id = pr_get_actualite_image_id($image);
+
+    if (!$image_id) {
+        return '';
+    }
+
+    return wp_get_attachment_image($image_id, $size, false, array(
+        'class' => $class_name,
+        'loading' => 'lazy',
+        'alt' => $alt,
+    ));
+}
+
 /**
  * Afficher les actualités publiées dans une section avec dialogue réutilisable.
  *
@@ -45,19 +75,30 @@ function pr_actualites_dynamiques_shortcode($atts = array()) {
     foreach ($actualites as $actualite) {
         $post_id = $actualite->ID;
         $title = get_the_title($post_id);
-        $title_text = wp_strip_all_tags($title);
+        $title_field = pr_get_actualite_field('actualite_tuile_titre', $post_id);
+        $tile_title = $title_field !== '' ? $title_field : $title;
+        $title_text = wp_strip_all_tags($tile_title);
+        $tile_description = pr_get_actualite_field('actualite_tuile_description', $post_id);
+        if ($tile_description === '') {
+            $tile_description = get_the_excerpt($post_id);
+        }
         $template_id = $section_id . '-content-' . $post_id;
         $type_terms = get_the_terms($post_id, 'pr-type-actualite');
-        $thumbnail_id = get_post_thumbnail_id($post_id);
+        $tile_image = pr_get_actualite_field('actualite_image_tuile', $post_id);
+        if (empty($tile_image)) {
+            $tile_image = get_post_thumbnail_id($post_id);
+        }
+        $modal_image = pr_get_actualite_field('actualite_image_modale', $post_id);
+        $modal_content = pr_get_actualite_field('actualite_contenu_modale', $post_id);
+        if ($modal_content === '') {
+            $modal_content = $actualite->post_content;
+        }
 
         $html_parts[] = '<article class="pr-actualite-card">';
 
-        if ($thumbnail_id) {
+        if (!empty($tile_image)) {
             $html_parts[] = '<div class="pr-actualite-card__image">';
-            $html_parts[] = get_the_post_thumbnail($post_id, 'medium', array(
-                'loading' => 'lazy',
-                'alt' => $title_text,
-            ));
+            $html_parts[] = pr_render_actualite_image($tile_image, 'medium', 'pr-actualite-card__image-img', $title_text);
             $html_parts[] = '</div>';
         }
 
@@ -69,14 +110,13 @@ function pr_actualites_dynamiques_shortcode($atts = array()) {
 
         $html_parts[] = '<h3 class="pr-actualite-card__title">' . esc_html($title_text) . '</h3>';
 
-        $excerpt = get_the_excerpt($post_id);
-        if ($excerpt !== '') {
-            $html_parts[] = '<div class="pr-actualite-card__excerpt">' . wp_kses_post(wpautop($excerpt)) . '</div>';
+        if ($tile_description !== '') {
+            $html_parts[] = '<div class="pr-actualite-card__excerpt">' . wp_kses_post(wpautop($tile_description)) . '</div>';
         }
 
         $html_parts[] = '<time class="pr-actualite-card__date" datetime="' . esc_attr(get_the_date('c', $post_id)) . '">' . esc_html(get_the_date('', $post_id)) . '</time>';
-        $html_parts[] = '<button type="button" class="pr-actualite-card__trigger" data-pr-actualite-trigger data-dialog-template="' . esc_attr($template_id) . '">';
-        $html_parts[] = '<span>' . esc_html(sprintf(__('Lire l’actualité : %s', 'prochaine-revue'), $title_text)) . '</span>';
+        $html_parts[] = '<button type="button" class="pr-actualite-card__trigger" data-pr-actualite-trigger data-dialog-template="' . esc_attr($template_id) . '" aria-label="' . esc_attr(sprintf(__('Lire l’actualité : %s', 'prochaine-revue'), $title_text)) . '">';
+        $html_parts[] = '<span class="screen-reader-text">' . esc_html(sprintf(__('Lire l’actualité : %s', 'prochaine-revue'), $title_text)) . '</span>';
         $html_parts[] = '<span class="pr-actualite-card__trigger-icon" aria-hidden="true">→</span>';
         $html_parts[] = '</button>';
         $html_parts[] = '</div>';
@@ -92,7 +132,10 @@ function pr_actualites_dynamiques_shortcode($atts = array()) {
         }
 
         $html_parts[] = '</header>';
-        $html_parts[] = '<div class="pr-actualite-dialog__body">' . apply_filters('the_content', $actualite->post_content) . '</div>';
+        if (!empty($modal_image)) {
+            $html_parts[] = '<div class="pr-actualite-dialog__image">' . pr_render_actualite_image($modal_image, 'large', 'pr-actualite-dialog__image-img', $title_text) . '</div>';
+        }
+        $html_parts[] = '<div class="pr-actualite-dialog__body">' . apply_filters('the_content', $modal_content) . '</div>';
         $html_parts[] = '</template>';
     }
 

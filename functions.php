@@ -44,6 +44,7 @@ pr_require_file(PR_INCLUDES_PATH . 'taxonomies/pr-type-article.php');
 
 // === CHAMPS ACF ===
 pr_require_file(PR_INCLUDES_PATH . 'acf/article-fields.php');
+pr_require_file(PR_INCLUDES_PATH . 'acf/actualite-fields.php');
 pr_require_file(PR_INCLUDES_PATH . 'acf/auteur-fields.php');
 pr_require_file(PR_INCLUDES_PATH . 'acf/type-article-fields.php');
 
