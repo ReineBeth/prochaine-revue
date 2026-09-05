@@ -106,16 +106,21 @@ function render_accordeon_block($attributes, $content) {
 
 // Enregistrer les assets
 function enqueue_accordeon_assets() {
+    $style_path = __DIR__ . '/assets/css/style.css';
+    $script_path = __DIR__ . '/assets/js/script.js';
+
     wp_enqueue_style(
         'pr-accordeon-style',
-        plugins_url('assets/css/style.css', __FILE__)
+        plugins_url('assets/css/style.css', __FILE__),
+        array(),
+        file_exists($style_path) ? filemtime($style_path) : null
     );
 
     wp_enqueue_script(
         'pr-accordeon-script',
         plugins_url('assets/js/script.js', __FILE__),
         array(),
-        '1.0.0',
+        file_exists($script_path) ? filemtime($script_path) : null,
         true
     );
 }

@@ -133,9 +133,6 @@ function pr_actualites_dynamiques_shortcode($atts = array()) {
         }
 
         $html_parts[] = '</header>';
-        if (!empty($tile_image)) {
-            $html_parts[] = '<div class="pr-actualite-dialog__image">' . pr_render_actualite_image($tile_image, 'large', 'pr-actualite-dialog__image-img', $title_text) . '</div>';
-        }
         $html_parts[] = '<div class="pr-actualite-dialog__body">' . apply_filters('the_content', $modal_content) . '</div>';
         $html_parts[] = '</template>';
     }
