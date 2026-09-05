@@ -13,17 +13,43 @@ register_block_type('custom-article/auteurs', array(
 function pr_render_auteurs_block($attributes, $content) {
     $post_id = get_the_ID();
     $terms = get_the_terms($post_id, 'pr-auteurs');
-    
-    if ($terms && !is_wp_error($terms)) {
+
+    $mentors = pr_get_article_mentors($post_id);
+
+    if (($terms && !is_wp_error($terms)) || !empty($mentors)) {
         $output = '<div class="article-auteurs pr-mt-8">';
-        foreach ($terms as $auteur) {
-            $institution = get_field('auteur_institution', 'pr-auteurs_' . $auteur->term_id);
-            $auteur_display = wp_kses_post($auteur->name);
-            if ($institution) {
-                $auteur_display .= ' (' . wp_kses_post($institution) . ')';
+
+        if ($terms && !is_wp_error($terms)) {
+            $output .= '<div class="article-auteurs-list">';
+
+            foreach ($terms as $auteur) {
+                $institution = get_field('auteur_institution', 'pr-auteurs_' . $auteur->term_id);
+                $auteur_display = wp_kses_post($auteur->name);
+                if ($institution) {
+                    $auteur_display .= ' (' . wp_kses_post($institution) . ')';
+                }
+                $output .= '<p class="auteur-nom">' . $auteur_display . '</p>';
             }
-            $output .= '<p class="auteur-nom">' . $auteur_display . '</p>';
+
+            $output .= '</div>';
         }
+
+        if (!empty($mentors)) {
+            $output .= '<p class="article-mentors-label">avec la collaboration de</p>';
+            $output .= '<div class="article-mentors-list">';
+
+            foreach ($mentors as $mentor) {
+                $institution = get_field('auteur_institution', 'pr-auteurs_' . $mentor->term_id);
+                $mentor_display = wp_kses_post($mentor->name);
+                if ($institution) {
+                    $mentor_display .= ' (' . wp_kses_post($institution) . ')';
+                }
+                $output .= '<p class="mentor-nom">' . $mentor_display . '</p>';
+            }
+
+            $output .= '</div>';
+        }
+
         $output .= '</div>';
         return $output;
     }

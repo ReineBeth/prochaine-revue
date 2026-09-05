@@ -80,6 +80,70 @@ function pr_get_article_auteurs($post_id = null) {
 }
 
 /**
+ * Récupérer les mentor·es associés à un article.
+ *
+ * Le champ ACF utilise les mêmes termes que la taxonomie des auteur·es,
+ * mais conserve cette relation séparément de la taxonomie de l'article.
+ *
+ * @param int|null $post_id ID de l'article (null = article courant).
+ * @return array Tableau de termes mentor·es.
+ */
+function pr_get_article_mentors($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $mentor_ids = get_field('article_mentors', $post_id);
+
+    if (!is_array($mentor_ids)) {
+        $mentor_ids = $mentor_ids ? array($mentor_ids) : array();
+    }
+
+    $mentor_ids = array_values(array_filter(array_map('absint', $mentor_ids)));
+
+    if (empty($mentor_ids)) {
+        return array();
+    }
+
+    $mentors = get_terms(array(
+        'taxonomy' => 'pr-auteurs',
+        'include' => $mentor_ids,
+        'hide_empty' => false,
+    ));
+
+    return is_wp_error($mentors) ? array() : $mentors;
+}
+
+/**
+ * Récupérer les articles auxquels une personne a collaboré comme mentore.
+ *
+ * @param int $term_id Identifiant du terme de personne.
+ * @return WP_Query
+ */
+function pr_get_mentor_articles_query($term_id) {
+    $term_id = absint($term_id);
+
+    return new WP_Query(array(
+        'post_type' => 'pr_article',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+        'meta_query' => array(
+            'relation' => 'OR',
+            array(
+                'key' => 'article_mentors',
+                'value' => (string) $term_id,
+                'compare' => '=',
+            ),
+            array(
+                'key' => 'article_mentors',
+                'value' => '"' . $term_id . '"',
+                'compare' => 'LIKE',
+            ),
+        ),
+    ));
+}
+
+/**
  * Shortcode pour afficher les auteurs avec leurs institutions
  * 
  * Usage: 
@@ -235,6 +299,25 @@ function pr_register_auteurs_rest_fields() {
         },
         'schema' => array(
             'description' => 'Détails des auteurs avec institutions',
+            'type' => 'array'
+        )
+    ));
+
+    register_rest_field('pr_article', 'mentors_details', array(
+        'get_callback' => function($post) {
+            $mentors = pr_get_article_mentors($post['id']);
+
+            return array_map(function($mentor) {
+                return array(
+                    'id' => $mentor->term_id,
+                    'name' => $mentor->name,
+                    'slug' => $mentor->slug,
+                    'link' => get_term_link($mentor),
+                );
+            }, $mentors);
+        },
+        'schema' => array(
+            'description' => 'Détails des mentor·es avec leurs liens',
             'type' => 'array'
         )
     ));

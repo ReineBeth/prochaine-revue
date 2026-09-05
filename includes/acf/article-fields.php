@@ -22,6 +22,22 @@ function pr_create_articles_acf_fields() {
                 'show_in_rest' => 1
             ),
             array(
+                'key' => 'field_article_mentors',
+                'label' => 'Mentor·es',
+                'name' => 'article_mentors',
+                'type' => 'taxonomy',
+                'taxonomy' => 'pr-auteurs',
+                'field_type' => 'multi_select',
+                'allow_null' => 1,
+                'add_term' => 0,
+                'save_terms' => 0,
+                'load_terms' => 0,
+                'return_format' => 'id',
+                'multiple' => 1,
+                'show_in_rest' => 1,
+                'instructions' => 'Sélectionner les personnes qui ont collaboré comme mentor·es à cet article. Une personne peut aussi être autrice du même article.'
+            ),
+            array(
                 'key' => 'field_article_type',
                 'label' => 'Type d\'article',
                 'name' => 'article_type',

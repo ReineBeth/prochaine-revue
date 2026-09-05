@@ -78,7 +78,11 @@ function render_accordeon_block($attributes, $content) {
 
             $articles_query = new WP_Query($args);
 
-            if ($articles_query->have_posts()) {
+            $mentor_articles_query = pr_get_mentor_articles_query($term->term_id);
+            $has_author_articles = $articles_query->have_posts();
+            $has_mentor_articles = $mentor_articles_query->have_posts();
+
+            if ($has_author_articles) {
                 $output .= '<h4 class="author-articles-title">Liste des contributions</h4>' . '<ul class="author-articles">';
                 while ($articles_query->have_posts()) {
                     $articles_query->the_post();
@@ -87,8 +91,21 @@ function render_accordeon_block($attributes, $content) {
                     $output .= '</li>';
                 }
                 $output .= '</ul>';
-            } else {
+            } elseif (!$has_mentor_articles) {
                 $output .= '<p>Texte à paraitre.</p>';
+            }
+
+            wp_reset_postdata();
+
+            if ($has_mentor_articles) {
+                $output .= '<h4 class="author-articles-title">Liste des collaboration</h4>' . '<ul class="author-articles author-collaborations">';
+                while ($mentor_articles_query->have_posts()) {
+                    $mentor_articles_query->the_post();
+                    $output .= '<li>';
+                    $output .= '<a href="' . esc_url(get_permalink()) . '">' . esc_html(get_the_title()) . '</a>';
+                    $output .= '</li>';
+                }
+                $output .= '</ul>';
             }
 
             wp_reset_postdata();
