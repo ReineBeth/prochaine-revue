@@ -79,3 +79,19 @@ function pr_enqueue_citation_tool() {
         );
     }
 }
+
+// Script du dialogue Actualité : enregistré sur le frontal, chargé par le shortcode uniquement.
+add_action('wp_enqueue_scripts', 'pr_register_actualites_dialog_script');
+function pr_register_actualites_dialog_script() {
+    $script_path = get_template_directory() . '/assets/js/actualites-dialog.js';
+
+    if (file_exists($script_path)) {
+        wp_register_script(
+            'pr-actualites-dialog',
+            get_template_directory_uri() . '/assets/js/actualites-dialog.js',
+            array(),
+            filemtime($script_path),
+            true
+        );
+    }
+}
