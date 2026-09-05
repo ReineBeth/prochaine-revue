@@ -564,6 +564,7 @@ body {
 }
 
 .pr-actualite-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -611,33 +612,49 @@ body {
   font-style: italic;
 }
 .pr-actualite-card__trigger {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 2.25rem;
-  height: 2.25rem;
-  margin-block-start: 1.25rem;
-  margin-inline-start: auto;
-  padding: 0.25rem;
-  border: 2px solid #478245;
-  border-radius: 50%;
-  background: #92d16e;
-  color: #000;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: #478245;
   font: inherit;
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
 }
-.pr-actualite-card__trigger:hover, .pr-actualite-card__trigger:focus-visible {
-  background: #478245;
-  color: #fff;
+.pr-actualite-card__trigger:focus-visible {
+  outline: 3px dashed #92d16e;
+  outline-offset: -6px;
 }
 .pr-actualite-card__trigger-icon {
-  font-size: 1.25rem;
-  line-height: 1;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid #478245;
+  border-radius: 50%;
+  background: #fff;
+  color: #478245;
+}
+.pr-actualite-card__trigger-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .pr-actualite-dialog {
+  width: 70rem;
   max-width: calc(100% - 2rem);
   max-height: calc(100% - 2rem);
   padding: 0;
@@ -727,6 +744,10 @@ body {
   }
   .pr-actualite-dialog__surface {
     padding: 3rem 2rem 2rem;
+  }
+  .pr-actualite-dialog {
+    width: 72rem;
+    max-width: calc(100% - 4rem);
   }
 }
 @media (prefers-reduced-motion: reduce) {

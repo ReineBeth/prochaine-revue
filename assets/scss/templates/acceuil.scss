@@ -46,6 +46,7 @@
 }
 
 .pr-actualite-card {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	background: var.$color-white;
@@ -101,37 +102,53 @@
 	}
 
 	&__trigger {
+		position: absolute;
+		inset: 0;
+		z-index: 2;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		width: 2.25rem;
-		height: 2.25rem;
-		margin-block-start: 1.25rem;
-		margin-inline-start: auto;
-		padding: 0.25rem;
-		border: 2px solid var.$color-action-fonce;
-		border-radius: 50%;
-		background: var.$color-action-pale;
-		color: var.$color-black;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		border-radius: inherit;
+		background: transparent;
+		color: var.$color-action-fonce;
 		font: inherit;
 		font-weight: 700;
 		line-height: 1;
 		cursor: pointer;
 
-		&:hover,
 		&:focus-visible {
-			background: var.$color-action-fonce;
-			color: var.$color-white;
+			outline: 3px dashed var.$color-action-pale;
+			outline-offset: -6px;
 		}
 	}
 
 	&__trigger-icon {
-		font-size: 1.25rem;
-		line-height: 1;
+		position: absolute;
+		right: 1rem;
+		bottom: 1rem;
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border: 2px solid var.$color-action-fonce;
+		border-radius: 50%;
+		background: var.$color-white;
+		color: var.$color-action-fonce;
+
+		svg {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
 	}
 }
 
 .pr-actualite-dialog {
+	width: 70rem;
 	max-width: calc(100% - 2rem);
 	max-height: calc(100% - 2rem);
 	padding: 0;
@@ -240,6 +257,11 @@
 
 	.pr-actualite-dialog__surface {
 		padding: 3rem 2rem 2rem;
+	}
+
+	.pr-actualite-dialog {
+		width: 72rem;
+		max-width: calc(100% - 4rem);
 	}
 }
 

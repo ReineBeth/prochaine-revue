@@ -7,7 +7,7 @@
     }
 
     const content = dialog.querySelector('[data-pr-actualite-dialog-content]');
-    const dialogTitle = dialog.querySelector('#' + dialog.getAttribute('aria-labelledby'));
+    const dialogTitleId = dialog.getAttribute('aria-labelledby');
     const closeButton = dialog.querySelector('[data-pr-actualite-close]');
     let activeTrigger = null;
     let previousBodyOverflow = '';
@@ -30,8 +30,8 @@
         content.replaceChildren(template.content.cloneNode(true));
 
         const selectedTitle = content.querySelector('.pr-actualite-dialog__title');
-        if (dialogTitle && selectedTitle) {
-            dialogTitle.textContent = selectedTitle.textContent;
+        if (dialogTitleId && selectedTitle) {
+            selectedTitle.id = dialogTitleId;
         }
 
         previousBodyOverflow = document.body.style.overflow;
