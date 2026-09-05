@@ -29,7 +29,7 @@ function pr_create_articles_post_type() {
 add_action('rest_api_init', 'pr_expose_acf_fields_to_rest');
 function pr_expose_acf_fields_to_rest() {
     $acf_fields = array(
-        'article_description', 'article_type', 'article_pdf',
+        'article_description', 'article_mentors', 'article_type', 'article_pdf',
         'citation_apa', 'citation_protocole', 'citation_ris',
         'titre_revue', 'volume', 'pages', 'annee_publication',
         'numero_volume', 'disciplines', 'mots_cles',
