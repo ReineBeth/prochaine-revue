@@ -48,6 +48,39 @@ function pr_create_articles_acf_fields() {
                 'show_in_rest' => 1
             ),
             array(
+                'key' => 'field_citation_apa',
+                'label' => 'Citation APA',
+                'name' => 'citation_apa',
+                'type' => 'textarea',
+                'required' => 0,
+                'show_in_rest' => 1,
+                'instructions' => 'Texte affiché dans la section « Pour citer cet article ».',
+                'rows' => 3,
+                'new_lines' => ''
+            ),
+            array(
+                'key' => 'field_citation_protocole',
+                'label' => 'Protocole La Prochaine Revue',
+                'name' => 'citation_protocole',
+                'type' => 'textarea',
+                'required' => 0,
+                'show_in_rest' => 1,
+                'instructions' => 'Texte affiché dans la section « Pour citer cet article ».',
+                'rows' => 3,
+                'new_lines' => ''
+            ),
+            array(
+                'key' => 'field_citation_ris',
+                'label' => 'Fichier RIS',
+                'name' => 'citation_ris',
+                'type' => 'file',
+                'return_format' => 'array',
+                'mime_types' => 'ris',
+                'required' => 0,
+                'show_in_rest' => 1,
+                'instructions' => 'Fichier .RIS pour Zotero, Mendeley et autres gestionnaires bibliographiques.'
+            ),
+            array(
                 'key' => 'field_titre_revue',
                 'label' => 'Titre de la revue',
                 'name' => 'titre_revue',

@@ -1,4 +1,7 @@
 {
+	"scripts": {
+		"watch:scss": "sass --watch .\\assets\\scss\\index.scss .\\style.css"
+	},
 	"devDependencies": {
 		"@wordpress/scripts": "^30.1.0"
 	}
