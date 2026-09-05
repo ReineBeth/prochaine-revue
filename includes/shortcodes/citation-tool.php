@@ -6,6 +6,62 @@
 if (!defined('ABSPATH')) exit;
 
 add_shortcode('citation_tool', 'pr_citation_tool_shortcode');
+add_shortcode('article_citations', 'pr_article_citations_shortcode');
+
+/**
+ * Affiche les informations de citation saisies manuellement pour un article.
+ */
+function pr_article_citations_shortcode() {
+    $post_id = get_the_ID();
+    if (!$post_id) return '';
+
+    $apa = trim((string) get_field('citation_apa', $post_id));
+    $protocole = trim((string) get_field('citation_protocole', $post_id));
+    $ris = get_field('citation_ris', $post_id);
+    $ris_url = '';
+    $ris_name = '';
+
+    if (is_array($ris)) {
+        $ris_url = isset($ris['url']) ? (string) $ris['url'] : '';
+        $ris_name = isset($ris['filename']) ? (string) $ris['filename'] : '';
+    } elseif (is_numeric($ris)) {
+        $ris_url = (string) wp_get_attachment_url((int) $ris);
+        $ris_name = $ris_url ? wp_basename($ris_url) : '';
+    }
+
+    if (!$apa && !$protocole && !$ris_url) return '';
+
+    $output = '<section class="article-citations" aria-labelledby="article-citations-title">';
+    $output .= '<h2 id="article-citations-title">Pour citer cet article</h2>';
+
+    if ($apa) {
+        $output .= '<div class="article-citations__item">';
+        $output .= '<h3>APA</h3>';
+        $output .= '<p>' . nl2br(esc_html($apa)) . '</p>';
+        $output .= '</div>';
+    }
+
+    if ($protocole) {
+        $output .= '<div class="article-citations__item">';
+        $output .= '<h3>Protocole La Prochaine Revue</h3>';
+        $output .= '<p>' . nl2br(esc_html($protocole)) . '</p>';
+        $output .= '</div>';
+    }
+
+    if ($ris_url) {
+        $download_name = $ris_name ?: 'citation.ris';
+        $output .= '<div class="article-citations__item">';
+        $output .= '<h3>Fichier .RIS</h3>';
+        $output .= '<a class="article-citations__download" href="' . esc_url($ris_url) . '" download="' . esc_attr($download_name) . '" rel="nofollow">';
+        $output .= 'Télécharger le fichier RIS';
+        $output .= '</a>';
+        $output .= '</div>';
+    }
+
+    $output .= '</section>';
+
+    return $output;
+}
 
 function pr_citation_tool_shortcode() {
     global $post;

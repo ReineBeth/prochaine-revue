@@ -30,6 +30,7 @@ add_action('rest_api_init', 'pr_expose_acf_fields_to_rest');
 function pr_expose_acf_fields_to_rest() {
     $acf_fields = array(
         'article_description', 'article_type', 'article_pdf',
+        'citation_apa', 'citation_protocole', 'citation_ris',
         'titre_revue', 'volume', 'pages', 'annee_publication',
         'numero_volume', 'disciplines', 'mots_cles',
         'droits_auteur', 'mois_publication'
@@ -55,4 +56,10 @@ function pr_add_acf_to_rest($response, $post, $request) {
         $response->data['acf'] = $acf_fields;
     }
     return $response;
+}
+
+add_filter('upload_mimes', 'pr_allow_ris_upload');
+function pr_allow_ris_upload($mimes) {
+    $mimes['ris'] = 'application/x-research-info-systems';
+    return $mimes;
 }
